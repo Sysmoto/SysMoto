@@ -2,8 +2,8 @@
 
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
           <div class="app-brand demo">
-             <a href="/sysmoto_v0/index.php" class="app-brand-link">
-              <img src="/sysmoto_v0/assets/img/logo/logo2.png"  width="50%" height="50%">
+             <a href="/sysmoto/index.php" class="app-brand-link">
+              <img src="/sysmoto/assets/img/logo/logo2.png"  width="50%" height="50%">
               <span class="app-brand-text demo menu-text fw-bolder ms-2"></span> 
             </a></img>
 
@@ -17,7 +17,7 @@
           <ul class="menu-inner py-1">
             <!-- Dashboard -->
             <li class="menu-item active">
-              <a href="/sysmoto_v0/index.php" class="menu-link">
+              <a href="/sysmoto/index.php" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Inicio</div>
               </a>
@@ -163,12 +163,12 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="usuarios/usuarios.php" class="menu-link">
+                  <a href="/sysmoto/usuarios/usuarios.php" class="menu-link">
                     <div data-i18n="Account">Usuarios</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="usuarios/usuarios.php" class="menu-link">
+                  <a href="/sysmoto/usuarios/roles.php" class="menu-link">
                     <div data-i18n="Notifications">Roles</div>
                   </a>
                 </li>

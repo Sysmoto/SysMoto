@@ -7,7 +7,7 @@ function DatosLogin($vUsuario, $vClave, $MiConexion){
      FROM usuarios
      LEFT JOIN roles  on Usuarios.IdRol = roles.Id
      WHERE Usuario='$vUsuario' AND Clave= MD5('$vClave')  ";
-     echo $SQL;
+     //echo $SQL;
      
     $rs = mysqli_query($MiConexion, $SQL);
         
@@ -44,7 +44,7 @@ function DatosLogin($vUsuario, $vClave, $MiConexion){
        {
             //echo "Record updated successfully";
         } else {
-      echo "Error updating record: " . mysqli_error($conn);
+      //echo "Error updating record: " . mysqli_error($conn);
     }
     }
    

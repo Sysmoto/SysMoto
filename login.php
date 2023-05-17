@@ -46,7 +46,7 @@ if (!empty($_POST['BotonLogin'])) {
   class="light-style customizer-hide"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="/sysmoto_v0/assets/"
+  data-assets-path="/sysmoto/assets/"
   data-template="vertical-menu-template-free"
 >
   <head>
@@ -61,7 +61,7 @@ if (!empty($_POST['BotonLogin'])) {
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/sysmoto_v0/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/sysmoto/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -72,24 +72,24 @@ if (!empty($_POST['BotonLogin'])) {
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="/sysmoto_v0/assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="/sysmoto/assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="/sysmoto_v0/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="/sysmoto_v0/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="/sysmoto_v0/assets/css/demo.css" />
+    <link rel="stylesheet" href="/sysmoto/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/sysmoto/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/sysmoto/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="/sysmoto_v0/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/sysmoto/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
     <!-- Page CSS -->
     <!-- Page -->
-    <link rel="stylesheet" href="/sysmoto_v0/assets/vendor/css/pages/page-auth.css" />
+    <link rel="stylesheet" href="/sysmoto/assets/vendor/css/pages/page-auth.css" />
     <!-- Helpers -->
-    <script src="/sysmoto_v0/assets/vendor/js/helpers.js"></script>
+    <script src="/sysmoto/assets/vendor/js/helpers.js"></script>
 
     
-    <script src="/sysmoto_v0/assets/js/config.js"></script>
+    <script src="/sysmoto/assets/js/config.js"></script>
   </head>
 
   <body>
@@ -105,7 +105,7 @@ if (!empty($_POST['BotonLogin'])) {
               <div class="app-brand justify-content-center">
                 <a href="index.html" class="app-brand-link gap-2">
                   <span class="app-brand-logo demo">
-                  <img src="/sysmoto_v0/assets/img/logo/logo2.png"  width="70%" height="70%">
+                  <img src="/sysmoto/assets/img/logo/logo2.png"  width="70%" height="70%">
                       
                       <g id="g-app-brand" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                         <g id="Brand-Logo" transform="translate(-27.000000, -15.000000)">
@@ -202,18 +202,18 @@ if (!empty($_POST['BotonLogin'])) {
    
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="/sysmoto_v0/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="/sysmoto_v0/assets/vendor/libs/popper/popper.js"></script>
-    <script src="/sysmoto_v0/assets/vendor/js/bootstrap.js"></script>
-    <script src="/sysmoto_v0/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/sysmoto/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/sysmoto/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/sysmoto/assets/vendor/js/bootstrap.js"></script>
+    <script src="/sysmoto/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="/sysmoto_v0/assets/vendor/js/menu.js"></script>
+    <script src="/sysmoto/assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
 
     <!-- Main JS -->
-    <script src="/sysmoto_v0/assets/js/main.js"></script>
+    <script src="/sysmoto/assets/js/main.js"></script>
 
     <!-- Page JS -->
 
