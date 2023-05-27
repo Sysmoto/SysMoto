@@ -1,0 +1,13 @@
+INSERT INTO `ROLES` (`Id`, `Rol`) VALUES
+	(1, 'Administrador'),
+	(2, 'Compras'),
+	(3, 'Ventas'),
+	(4, 'Almacen'),
+	(5, 'Gerencia');
+	``,
+INSERT INTO `USUARIOS` (`ID`, `DOM_ID`, `ROL_ID`, `CONTACTO_ID`, `NOMBRE`, `APELLIDO`, `USUARIO`, `CLAVE`, `EMAIL`, `IDROL`, `IMAGEN`, `ACTIVO`, `FECHACREACION`, `SEXO`, `ULT_LOGIN`) VALUES
+	(1, '1','2','1', 'Juan', 'Perez', 'j.perez', '2a1433abf5954a4f65b7aa0895b27a64', 'j.perez@sysmoto.com.ar', 2, 'user-01.png', 1, '2023-04-24', 'O', '2023-05-17'),
+	(2, '1','4','2', 'Cecilia', 'Ramirez', 'c.ramirez', '68bdc8bc82c7907f161f9bfd22ce48ab', 'c.ramirez@sysmoto.com.ar', 4, 'user-02.png', 1, '2023-04-24', 'M', '2023-05-18'),
+	(3, '1','1','3', 'Raul', 'Gonzalez', 'r.gonzalez', 'e4bb63f4528ea09c472855f543717b97', 'r.gonzalez@sysmoto.com.ar', 1, 'user-03.png', 1, '2023-04-24', 'M', '2023-05-18'),
+	(4, '2','3','4', 'Maria', 'Dominguez', 'm.dominguez', '1766b530772042e85dbcce3f35c923a4', 'm.domingez@sysmoto.com.ar', 3, 'user-04.png', 1, '2023-04-24', 'F', '2023-05-17'),
+	(5, '2','5','5', 'Roberto', 'Garcia', 'r.garcia', '2d5b8ccd9fab019bc5626d66b6b7aa70', 'r.garcia@sysmoto.com.ar', 5, 'user-05.png', 1, '2023-04-24', 'M', '2023-05-17');

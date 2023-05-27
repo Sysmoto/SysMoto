@@ -1,0 +1,77 @@
+
+
+
+
+// Ejemplos:
+
+
+################################################
+// salida de tabla articulos
+
+SELECT a.ART_ID AS Id, a.ART_CODIGO AS Codigo, a.ART_PRECIOCOMPRA AS Precio, a.ART_INFOADICIONAL AS Descripcion,
+ mo.MODELO_NOMBRE AS Modelo, ma.MARCA_NOMBRE AS Marca
+ FROM ARTICULO AS a, MODELO AS mo, MARCA AS ma
+ WHERE
+ a.MODELO_ID  = mo.MODELO_ID AND
+ mo.MARCA_ID = ma.MARCA_ID
+ ;
+
++----+----------+---------+---------------------------+---------+-------+
+| Id | Codigo   | Precio  | Descripcion               | Modelo  | Marca |
++----+----------+---------+---------------------------+---------+-------+
+|  1 |  1009324 | 1080.00 | DISCO EMBRAGUE XR         | 7A17    | 3B    |
+|  2 |  1002683 | 2502.78 | OPTICA DEL VOLKANO *      | VOLKANO | 3B    |
+|  3 | 10011050 |    8.98 | PUOS TUNINNG C/LUZ JYM * | 7A17    | 3B    |
+|  4 |  1009327 | 1028.40 | REPUESTOS VARIOS          | 7A17    | 3B    |
+|  5 |  1009328 | 2758.49 | SERVICE COMPLETO          | 7A17    | 3B    |
++----+----------+---------+---------------------------+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql>  
+
+
+################################################
+// salida de tabla articulos mas stock
+
+SELECT a.ART_ID AS Id, a.ART_CODIGO AS Codigo, a.ART_PRECIOCOMPRA AS Precio, a.ART_INFOADICIONAL AS Descripcion,
+ s.CANT_STOCK AS Stock, mo.MODELO_NOMBRE AS Modelo, ma.MARCA_NOMBRE AS Marca
+ FROM ARTICULO AS a, MODELO AS mo, MARCA AS ma, STOCK AS s
+ WHERE
+ a.MODELO_ID  = mo.MODELO_ID AND
+ a.ART_ID = s.ART_ID AND
+ mo.MARCA_ID = ma.MARCA_ID
+ ;
+
++----+----------+---------+---------------------------+-------+---------+-------+
+| Id | Codigo   | Precio  | Descripcion               | Stock | Modelo  | Marca |
++----+----------+---------+---------------------------+-------+---------+-------+
+|  1 |  1009324 | 1080.00 | DISCO EMBRAGUE XR         |     2 | 7A17    | 3B    |
+|  2 |  1002683 | 2502.78 | OPTICA DEL VOLKANO *      |     4 | VOLKANO | 3B    |
+|  3 | 10011050 |    8.98 | PUOS TUNINNG C/LUZ JYM * |     3 | 7A17    | 3B    |
+|  4 |  1009327 | 1028.40 | REPUESTOS VARIOS          |    34 | 7A17    | 3B    |
+|  5 |  1009328 | 2758.49 | SERVICE COMPLETO          |     2 | 7A17    | 3B    |
++----+----------+---------+---------------------------+-------+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> 
+
+################################################
+// salida de tabla MARCA Y MODELO
+
+SELECT ma.MARCA_ID, ma.MARCA_NOMBRE, mo.MODELO_NOMBRE
+ FROM MARCA AS ma, MODELO AS mo
+ WHERE
+ mo.MARCA_ID = ma.MARCA_ID AND
+ ma.MARCA_ID = 1
+ ;
+
++----------+--------------+---------------+
+| MARCA_ID | MARCA_NOMBRE | MODELO_NOMBRE |
++----------+--------------+---------------+
+|        1 | 3B           | VOLKANO       |
+|        1 | 3B           | 7A17          |
++----------+--------------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> 
+ 

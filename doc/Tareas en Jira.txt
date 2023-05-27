@@ -1,0 +1,17 @@
+
+Epica 1:
+Arquitectura DDBB
+	- validacion y testeo de DDBB
+	- carga inicial de algunos valores
+
+Epica 2:
+ABM ARTICULO
+	- ALTA ARTICULO
+	- LISTADO ARTICULO
+	- BUSQUEDA ARTICULO
+	- MODIFICACION ARTICULO
+
+Epica 3:
+TRAMSACCION - venta y detalle venta
+	- LISTADO VENTAS
+

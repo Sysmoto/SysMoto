@@ -1,0 +1,71 @@
+
+
+https://www.mysqltutorial.org/php-calling-mysql-stored-procedures/
+
+
+DELIMITER $$
+
+CREATE PROCEDURE GetMarcas()
+BEGIN
+	SELECT MARCA_ID, MARCA_NOMBRE
+	FROM MARCA;
+
+END$$
+
+
+mysql> use finalv1;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> CALL GetMarcas();
++----------+--------------+
+| MARCA_ID | MARCA_NOMBRE |
++----------+--------------+
+|        1 | 3B           |
+|        2 | ALFA         |
+|        3 | ATHON        |
+|        4 | ATLANTIC     |
+|        5 | BAJAJ        |
+|        6 | BEON         |
+|        7 | BGP          |
+|        8 | BHI          |
+|        9 | BRAVA        |
+|       10 | BRN          |
+|       11 | BRONCO       |
+|       12 | BROT         |
+|       13 | CARWO        |
+|       14 | CASTROL      |
+|       15 | CATALANO     |
+|       16 | CATIMOTO     |
+|       17 | CICLOTECNICA |
+|       18 | DEVRO        |
+|       19 | DUCAL JUNTAS |
+|       20 | DYNAVOLTS    |
+|       21 | FAR          |
+|       22 | FORTE        |
+|       23 | GM RACING    |
+|       24 | HADA         |
+|       25 | HALCON       |
+|       26 | HOR FORTUNE  |
+|       27 | IMPERIAL COR |
+|       28 | JC JUNTAS    |
+|       29 | JOURNEY      |
+|       30 | JRS          |
+|       31 | JYM          |
+|       32 | MAX5         |
+|       33 | MMG          |
+|       34 | MOTOMEL      |
+|       35 | NSU          |
+|       36 | OSAKA        |
+|       37 | ROQUE PARRIL |
+|       38 | RUMISOIL     |
+|       39 | SIN MARCA    |
+|       40 | YAKAWA       |
+|       41 | YAMASIDA     |
++----------+--------------+
+41 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
