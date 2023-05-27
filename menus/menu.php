@@ -114,8 +114,8 @@
                 </a>
                 <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="pages-account-settings-account.html" class="menu-link">
-                    <div data-i18n="Account">Productos</div>
+                  <a href="/sysmoto/stock/articulos.php" class="menu-link">
+                    <div data-i18n="Account">Articulos</div>
                   </a>
                 </li>
                 <li class="menu-item">

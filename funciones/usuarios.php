@@ -88,7 +88,7 @@ function Alta_Usuario($datos_usuario,$ConexionBD) {
     $rol=$datos_usuario["Rol"];
     $clave=md5($datos_usuario["Clave"]);
     $SQL="INSERT INTO usuarios () VALUES 
-    (NULL,'$nombre','$apellido','$usuario','$clave','$mail',$rol, '- ',$activo, DATE(NOW()),'$sexo',NULL);";
+    (NULL,NULL,$rol,NULL,$rol,'$nombre','$apellido','$usuario','$clave','$mail', '- ',$activo, DATE(NOW()),'$sexo',NULL);";
      $resultado=$SQL;  
     if ($ConexionBD->query($SQL) === TRUE) {
         $resultado="Correctamente";
