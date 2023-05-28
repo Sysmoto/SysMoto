@@ -2,7 +2,8 @@
 function listar_articulos($ConexionBD) {
     $SQL = "SELECT articulo.ART_ID,articulo.ART_INFOADICIONAL, stock.CANT_STOCK,
     proveedores.PROVE_NOMBRE,estadoalerta.ESTADOALERTA_NOMBRE,estadoarticulo.ESTADOART_NOMBRE,
-    articulo.ART_PRECIOCOMPRA,articulo.ART_CODQR,articulo.ART_CODARTPROV,articulo.ART_UBICACION
+    articulo.ART_PRECIOCOMPRA,articulo.ART_CODQR,articulo.ART_CODARTPROV,articulo.ART_UBICACION,
+    estadoalerta.ESTADOALERTA_ID, estadoarticulo.EST_ART
     FROM articulo
     LEFT JOIN stock on stock.ART_ID = articulo.ART_ID
     LEFT JOIN  proveedores ON proveedores.PROVE_ID = articulo.PROVE_ID
@@ -24,6 +25,8 @@ function listar_articulos($ConexionBD) {
             $articulos[$i]['ART_CODQR'] = $data['ART_CODQR'];
             $articulos[$i]['ART_CODARTPROV'] = $data['ART_CODARTPROV'];
             $articulos[$i]['ART_UBICACION'] = $data['ART_UBICACION'];
+            $articulos[$i]['ESTADOALERTA_ID'] = $data['ESTADOALERTA_ID'];
+            $articulos[$i]['EST_ART'] = $data['EST_ART'];
             $i++;
     }
     return $articulos;
@@ -32,7 +35,8 @@ function listar_articulos($ConexionBD) {
 function Datos_articulo($id_articulo,$ConexionBD) {
     $SQL = "SELECT articulo.ART_ID,articulo.ART_INFOADICIONAL, stock.CANT_STOCK,
     proveedores.PROVE_NOMBRE,estadoalerta.ESTADOALERTA_NOMBRE,estadoarticulo.ESTADOART_NOMBRE,
-    articulo.ART_PRECIOCOMPRA,articulo.ART_CODQR,articulo.ART_CODARTPROV,articulo.ART_UBICACION
+    articulo.ART_PRECIOCOMPRA,articulo.ART_CODQR,articulo.ART_CODARTPROV,articulo.ART_UBICACION,
+    estadoalerta.ESTADOALERTA_ID, estadoarticulo.EST_ART
     FROM articulo
     LEFT JOIN stock on stock.ART_ID = articulo.ART_ID
     LEFT JOIN  proveedores ON proveedores.PROVE_ID = articulo.PROVE_ID

@@ -149,12 +149,45 @@ $CantidadArticulos=count($articulos);
                     </thead>
                     <tbody class="table-border-bottom-0">
                     <?php for ($i=0; $i<$CantidadArticulos; $i++) { ?>               
-                    <tr>
+                    
+                      <tr>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> 
                         <strong><?php echo $articulos[$i]['ART_INFOADICIONAL']?></strong></td>
                         <td><?php echo $articulos[$i]['CANT_STOCK'] ;?></td>
-                        <td><?php echo $articulos[$i]['ESTADOALERTA_NOMBRE'];?></td>
-                        <td><?php echo $articulos[$i]['ESTADOART_NOMBRE'];?></td>
+                        <td><?php 
+                        switch ($articulos[$i]['ESTADOALERTA_ID']){
+                          case 1: ?> 
+                                <span class="badge rounded-pill bg-label-success"> 
+                                <?php echo $articulos[$i]['ESTADOALERTA_NOMBRE']."</span>";
+                                break; 
+                          case 2: ?> 
+                                <span class="badge rounded-pill bg-label-warning"> 
+                                <?php echo $articulos[$i]['ESTADOALERTA_NOMBRE']."</span>";
+                                break; 
+                          case 3: ?> 
+                                <span class="badge rounded-pill bg-label-danger"> 
+                                <?php echo $articulos[$i]['ESTADOALERTA_NOMBRE']."</span>";
+                                break; ?>
+                        <?php } ?> 
+                      
+                        </td>
+                        <td>
+                        <?php 
+                        switch ($articulos[$i]['EST_ART']){
+                          case 1: ?> 
+                                <span class="badge rounded-pill bg-label-success"> 
+                                <?php echo $articulos[$i]['ESTADOART_NOMBRE']."</span>";
+                                break; 
+                          case 2: ?> 
+                                <span class="badge rounded-pill bg-label-warning"> 
+                                <?php echo $articulos[$i]['ESTADOART_NOMBRE']."</span>";
+                                break; 
+                          case 3: ?> 
+                                <span class="badge rounded-pill bg-label-danger"> 
+                                <?php echo $articulos[$i]['ESTADOART_NOMBRE']."</span>";
+                                break; ?>
+                        <?php } ?> 
+                        </td>
                         <td><?php echo $articulos[$i]['ART_UBICACION'];?></td>
                         <td><?php echo $articulos[$i]['ART_PRECIOCOMPRA'];?></td>   
                         <td>
