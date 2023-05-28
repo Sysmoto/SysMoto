@@ -131,7 +131,7 @@ $CantidadArticulos=count($articulos);
                     </li>
                   </ul>
             </div> 
-              <form method='post' action="usuario.php">
+              <form method='post' action="articulo.php">
               <div class="card">
                 
                 <div class="table-responsive text-nowrap">
@@ -158,7 +158,7 @@ $CantidadArticulos=count($articulos);
                         <td><?php echo $articulos[$i]['ART_UBICACION'];?></td>
                         <td><?php echo $articulos[$i]['ART_PRECIOCOMPRA'];?></td>   
                         <td>
-                          <button type="submit" class="btn btn-secondary" name="id_user" value="<?php echo $articulos[$i]['ART_ID'];?>" >
+                          <button type="submit" class="btn btn-secondary" name="id_articulo" value="<?php echo $articulos[$i]['ART_ID'];?>" >
                             <span class="bx bx-package fade-right"></span>&nbsp; Ver 
                           </button> 
                         </td>
