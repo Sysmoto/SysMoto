@@ -18,33 +18,45 @@ $datos_articulo=Datos_articulo($id_articulo,$MiConexion);
 //$CantidadRoles=count($roles);
 
 if(isset($_POST["CambiarDatos"])) {
-  $modificar_usuario=Modificar_Usuario($_POST,$MiConexion);
-  $usuario=$_POST["Nombre"]." ".$_POST["Apellido"];
-   
-   echo "<script> 
-          alert('Se a cambiado datos de $usuario $modificar_usuario') 
-          window.open('/sysmoto/usuarios/usuarios.php','_top')
-         </script>";
-}
-
-
-if(isset($_POST["BorrarUsuario"])) {
-  if(isset($_POST["confirmacion"])) {
-    $id_usuario=$_POST["id_user"];
+  
+  if(!empty($_FILES["cambiar_imagen"]["name"])) { 
+    $fileName = basename($_FILES["cambiar_imagen"]["name"]); 
+    $fileType = pathinfo($fileName, PATHINFO_EXTENSION); 
     
-    $borrar_usuario=Borrar_Usuario($id_usuario,$MiConexion);
-    $usuario=$_POST["Nombre"]." ".$_POST["Apellido"];
-
-    echo "<script> alert('Se borro $usuario $borrar_usuario ') 
-          window.open('/sysmoto/usuarios/usuarios.php','_top')
+    $allowTypes = array('jpg','png','jpeg','gif'); 
+    if(in_array($fileType, $allowTypes)){ 
+      $image = $_FILES['cambiar_imagen']['tmp_name']; 
+      $imgContent = addslashes(file_get_contents($image)); 
+      $modificar_imagen=imagen($_POST,$imgContent,$MiConexion);   
+      $statusMsg=$modificar_imagen;     
+      }else{ 
+        $statusMsg = "File upload failed, please try again."; 
+      }  
+    }else{ 
+      $statusMsg = 'Sorry, only JPG, JPEG, PNG, & GIF files are allowed to upload.'; 
+    } 
+    echo "<script> 
+         alert('$statusMsg') 
+         window.open('/sysmoto/stock/articulos.php','_top')
           </script>";
-      
+         
   }
-  else{
-    echo "<script> alert('Tiene que confirmar previamente') </script>";
 
+  if(isset($_POST["borrar_imagen"])) {
+    $borrar_imagen=borrarimagen($_POST,$MiConexion);  
+    echo "<script> 
+         alert('$borrar_imagen') 
+         window.open('/sysmoto/stock/articulos.php','_top')
+          </script>"; 
   }
-}
+   
+ //  echo "<script> 
+   //       alert('Se a cambiado datos de $usuario $modificar_usuario') 
+    //      window.open('/sysmoto/usuarios/usuarios.php','_top')
+      //   </script>";
+//}
+
+
 ?>
 <!DOCTYPE html>
 
@@ -158,16 +170,15 @@ if(isset($_POST["BorrarUsuario"])) {
               <div class="col-md-12">
                   
             </div> 
-              <form method='post' action="articulo.php">
+              <form method='post' action="articulo.php" enctype="multipart/form-data">
               <div class="card">
                 
-                
-              
+                      
                     <hr class="my-0" />
                     <div class="card-body">
                     <h5 class="card-header">Detalles Articulo</h5>
                     <!-- Account -->
-                      <form id="formAccountSettings" method="POST" onsubmit="return false">
+                     
                         <div class="row">
                           <div class="mb-3 col-md-6">
                             <label for="Nombre" class="form-label">Nombre</label>
@@ -199,19 +210,16 @@ if(isset($_POST["BorrarUsuario"])) {
                    
                     <div class="card-body">
                       <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img
-                          src="/sysmoto/assets/img/avatars/<?php ?>"  class="d-block rounded"
-                          height="100" width="100" alt="image" id="uploadedAvatar"
-                        />
+                       
+                        <?php echo '<img src = "data:image/png;base64,' . base64_encode($datos_articulo["ART_FOTO"]) . '" width = "80px" height = "80px"/>' ; ?>
+      
                         <div class="button-wrapper">
                           <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                             <span class="d-none d-sm-block">Cambiar foto</span>
                             <i class="bx bx-upload d-block d-sm-none"></i>
-                            <input type="file" id="upload" class="account-file-input" name="upload"
-                              hidden  accept="image/png, image/jpeg"
-                            />
+                            <input type="file" id="upload" class="account-file-input" name="cambiar_imagen"  hidden accept="image/png, image/jpeg" />
                           </label>
-                          <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                          <button type="submit" class="btn btn-outline-secondary account-image-reset mb-4" name="borrar_imagen">
                             <i class="bx bx-reset d-block d-sm-none"></i>
                             <span class="d-none d-sm-block">Borrar</span>
                           </button>
@@ -221,7 +229,7 @@ if(isset($_POST["BorrarUsuario"])) {
                       </div>
                     </div>
 
-                        <input type="hidden" name="id_user" value="<?php echo $id_usuario;?>" > 
+                        <input type="hidden" name="id_articulo" value="<?php echo $id_articulo;?>" > 
                         <div class="mt-2">
                           <button type="submit" name="CambiarDatos" class="btn btn-primary me-2">Salvar cambios</button>
                           

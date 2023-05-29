@@ -131,7 +131,7 @@ $CantidadArticulos=count($articulos);
                     </li>
                   </ul>
             </div> 
-              <form method='post' action="articulo.php">
+              <form method='post' action="articulo.php" enctype="multipart/form-data" >
               <div class="card">
                 
                 <div class="table-responsive text-nowrap">

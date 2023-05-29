@@ -36,7 +36,7 @@ function Datos_articulo($id_articulo,$ConexionBD) {
     $SQL = "SELECT articulo.ART_ID,articulo.ART_INFOADICIONAL, stock.CANT_STOCK,
     proveedores.PROVE_NOMBRE,estadoalerta.ESTADOALERTA_NOMBRE,estadoarticulo.ESTADOART_NOMBRE,
     articulo.ART_PRECIOCOMPRA,articulo.ART_CODQR,articulo.ART_CODARTPROV,articulo.ART_UBICACION,
-    estadoalerta.ESTADOALERTA_ID, estadoarticulo.EST_ART
+    estadoalerta.ESTADOALERTA_ID, estadoarticulo.EST_ART, articulo.ART_FOTO
     FROM articulo
     LEFT JOIN stock on stock.ART_ID = articulo.ART_ID
     LEFT JOIN  proveedores ON proveedores.PROVE_ID = articulo.PROVE_ID
@@ -58,11 +58,39 @@ function Datos_articulo($id_articulo,$ConexionBD) {
             $articulo['ART_CODQR'] = $data['ART_CODQR'];
             $articulo['ART_CODARTPROV'] = $data['ART_CODARTPROV'];
             $articulo['ART_UBICACION'] = $data['ART_UBICACION'];
+            $articulo['ESTADOALERTA_ID'] = $data['ESTADOALERTA_ID'];
+            $articulo['EST_ART'] = $data['EST_ART'];
+            $articulo['ART_FOTO'] = $data['ART_FOTO'];
+
+            
+            
             $i++;
     }
 
 
     return $articulo;
 
+}
+
+function imagen($datos_articulos,$imagen,$ConexionBD) {
+    
+    $sql = "  UPDATE articulo SET ART_FOTO = '$imagen' WHERE ART_ID =".$datos_articulos['id_articulo'].";";
+    if($ConexionBD->query($sql) === TRUE) {
+        $resultado="Imagen subida Correctamente";
+        } else {
+            $resultado="Incorrectamente porque ".$ConexionBD->error;
+        }
+    return $resultado;
+}
+
+function borrarimagen($datos_articulos,$ConexionBD) {
+    
+    $sql = "  UPDATE articulo SET ART_FOTO = '' WHERE ART_ID =".$datos_articulos['id_articulo'].";";
+    if($ConexionBD->query($sql) === TRUE) {
+        $resultado="Imagen borrada Correctamente";
+        } else {
+            $resultado="Incorrectamente porque ".$ConexionBD->error;
+        }
+    return $resultado;
 }
 ?>
