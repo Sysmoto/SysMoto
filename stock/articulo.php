@@ -184,22 +184,80 @@ if(isset($_POST["CambiarDatos"])) {
                             <label for="Nombre" class="form-label">Nombre</label>
                             <input class="form-control" type="text" id="Nombre" name="Nombre" value="<?php echo $datos_articulo["ART_INFOADICIONAL"];?>" autofocus  />
                           </div>
-                          <div class="mb-3 col-md-6">
-                            <label for="Apellido" class="form-label">Apellido</label>
-                            <input class="form-control" type="text" name="Apellido" id="Apellido" value="<?php echo $datos_articulo["CANT_STOCK"];?>" />
+                          <div class="mb-3 col-md-1">
+                            <label for="Apellido" class="form-label">Stock</label>
+                            <input class="form-control" type="text" name="Stock" id="Stock" size= 5 readonly value="<?php echo $datos_articulo["CANT_STOCK"];?>" />
+                          </div>
+                          <div class="mb-3 col-md-1">
+                            <label for="Apellido" class="form-label">Alerta</label>
+                            <?php 
+                             switch ($datos_articulo['ESTADOALERTA_ID']){
+                                case 1: ?> 
+                                  <span class="badge rounded-pill bg-label-success"> 
+                                  <?php echo $datos_articulo['ESTADOALERTA_NOMBRE']."</span>";
+                                  break; 
+                                case 2: ?> 
+                                  <span class="badge rounded-pill bg-label-warning"> 
+                                  <?php echo $datos_articulo['ESTADOALERTA_NOMBRE']."</span>";
+                                  break; 
+                                case 3: ?> 
+                                  <span class="badge rounded-pill bg-label-danger"> 
+                                  <?php echo $datos_articulo['ESTADOALERTA_NOMBRE']."</span>";
+                                  break; ?>
+                            <?php } ?> 
+                          </div>
+                          <div class="mb-3 col-md-2">
+                            <label for="Apellido" class="form-label">Alerta Stock</label>
+                          <?php 
+                        switch ($datos_articulo['EST_ART']){
+                          case 1: ?> 
+                                <span class="badge rounded-pill bg-label-success"> 
+                                <?php echo $datos_articulo['ESTADOART_NOMBRE']."</span>";
+                                break; 
+                          case 2: ?> 
+                                <span class="badge rounded-pill bg-label-warning"> 
+                                <?php echo $datos_articulo['ESTADOART_NOMBRE']."</span>";
+                                break; 
+                          case 3: ?> 
+                                <span class="badge rounded-pill bg-label-danger"> 
+                                <?php echo $datos_articulo['ESTADOART_NOMBRE']."</span>";
+                                break; ?>
+                        <?php } ?> 
                           </div>
                           <div class="mb-3 col-md-6">
-                            <label for="Email" class="form-label">E-mail</label>
-                            <input class="form-control" type="text" id="Email" name="Email" value="<?php echo $datos_articulo["PROVE_NOMBRE"];?>" placeholder="john.doe@example.com" />
+                            <label for="Email" class="form-label">Proveedor</label>
+                           
+                            <input class="form-control" type="text" id="Email" name="Email" value="<?php echo $datos_articulo["PROVE_NOMBRE"];?>"  />
+                          
                           </div>
                           
+                          
                           <div class="mb-3 col-md-6">
-                            <label class="form-label" for="Usuario">Usuario</label>
-                            <div class="input-group input-group-merge">
-                              <input type="text" id="Usuario" name="Usuario" class="form-control" value="<?php echo $datos_articulo["ESTADOALERTA_NOMBRE"];?>" />
-                            </div>
+                            <label class="form-label" for="Usuario">Ubicacion</label>
+                            
+                              <input type="text" id="Usuario" name="Usuario" class="form-control" value="<?php echo $datos_articulo["ART_UBICACION"];?>" />
+                            
+                          </div>
+
+                          <div class="mb-3 col-md-6">
+                            
+                              <label for="Email" class="form-label">Precio</label>
+                              <input class="form-control" type="text" id="Email" name="Email" value="<?php echo $datos_articulo["ART_PRECIOCOMPRA"];?>" />
+                            
                           </div>
                           
+                          
+                          <div class="mb-3 col-md-6">
+                            <label class="form-label" for="Usuario">QR</label>
+                            
+                              <input type="text" id="Usuario" name="Usuario" class="form-control" value="<?php echo $datos_articulo["ART_CODQR"];?>" />
+                            
+                          </div>
+
+                          <div class="mb-3 col-md-6">
+                            <label class="form-label" for="Usuario">Codigo</label>
+                              <input type="text" id="Usuario" name="Usuario" class="form-control" value="<?php echo $datos_articulo["ART_CODARTPROV"];?>" />
+                          </div>
                          
                           
                           
