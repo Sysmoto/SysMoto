@@ -3,7 +3,7 @@ function listar_articulos($ConexionBD) {
     $SQL = "SELECT articulo.ART_ID,articulo.ART_INFOADICIONAL, stock.CANT_STOCK,
     proveedores.PROVE_NOMBRE,estadoalerta.ESTADOALERTA_NOMBRE,estadoarticulo.ESTADOART_NOMBRE,
     articulo.ART_PRECIOCOMPRA,articulo.ART_CODQR,articulo.ART_CODARTPROV,articulo.ART_UBICACION,
-    estadoalerta.ESTADOALERTA_ID, estadoarticulo.EST_ART
+    estadoalerta.ESTADOALERTA_ID, estadoarticulo.EST_ART,articulo.ART_CODIGO
     FROM articulo
     LEFT JOIN stock on stock.ART_ID = articulo.ART_ID
     LEFT JOIN  proveedores ON proveedores.PROVE_ID = articulo.PROVE_ID
@@ -27,6 +27,7 @@ function listar_articulos($ConexionBD) {
             $articulos[$i]['ART_UBICACION'] = $data['ART_UBICACION'];
             $articulos[$i]['ESTADOALERTA_ID'] = $data['ESTADOALERTA_ID'];
             $articulos[$i]['EST_ART'] = $data['EST_ART'];
+            $articulos[$i]['ART_CODIGO'] = $data['ART_CODIGO'];
             $i++;
     }
     return $articulos;
@@ -36,12 +37,15 @@ function Datos_articulo($id_articulo,$ConexionBD) {
     $SQL = "SELECT articulo.ART_ID,articulo.ART_INFOADICIONAL, stock.CANT_STOCK,
     proveedores.PROVE_NOMBRE,estadoalerta.ESTADOALERTA_NOMBRE,estadoarticulo.ESTADOART_NOMBRE,
     articulo.ART_PRECIOCOMPRA,articulo.ART_CODQR,articulo.ART_CODARTPROV,articulo.ART_UBICACION,
-    estadoalerta.ESTADOALERTA_ID, estadoarticulo.EST_ART, articulo.ART_FOTO
+    estadoalerta.ESTADOALERTA_ID, estadoarticulo.EST_ART, articulo.ART_FOTO,articulo.ART_CODIGO,
+    marca.MARCA_NOMBRE, modelo.MODELO_NOMBRE
     FROM articulo
     LEFT JOIN stock on stock.ART_ID = articulo.ART_ID
     LEFT JOIN  proveedores ON proveedores.PROVE_ID = articulo.PROVE_ID
     LEFT JOIN estadoalerta ON estadoalerta.ESTADOALERTA_ID = articulo.ESTADOALERTA_ID
     LEFT JOIN estadoarticulo ON estadoarticulo.EST_ART = articulo.EST_ART
+    LEFT JOIN modelo ON  modelo.MODELO_ID = articulo.MODELO_ID
+    LEFT JOIN marca ON modelo.MARCA_ID = marca.MARCA_ID
     WHERE articulo.ART_ID = $id_articulo ;";
     
      $rs = mysqli_query($ConexionBD, $SQL);
@@ -61,6 +65,10 @@ function Datos_articulo($id_articulo,$ConexionBD) {
             $articulo['ESTADOALERTA_ID'] = $data['ESTADOALERTA_ID'];
             $articulo['EST_ART'] = $data['EST_ART'];
             $articulo['ART_FOTO'] = $data['ART_FOTO'];
+            $articulo['ART_CODIGO'] = $data['ART_CODIGO'];
+            $articulo['MARCA_NOMBRE'] = $data['MARCA_NOMBRE'];
+            $articulo['MODELO_NOMBRE'] = $data['MODELO_NOMBRE'];
+
 
             
             

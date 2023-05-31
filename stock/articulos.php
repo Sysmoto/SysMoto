@@ -139,6 +139,7 @@ $CantidadArticulos=count($articulos);
                     <thead>
                       <tr>
                         <th>Articulo</th>
+                        <th>Codigo</th>                        
                         <th>Cantidad</th>
                         <th>Alerta</th>
                         <th>Estado</th>
@@ -153,6 +154,7 @@ $CantidadArticulos=count($articulos);
                       <tr>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> 
                         <strong><?php echo $articulos[$i]['ART_INFOADICIONAL']?></strong></td>
+                        <td><?php echo $articulos[$i]['ART_CODIGO'] ;?></td>
                         <td><?php echo $articulos[$i]['CANT_STOCK'] ;?></td>
                         <td><?php 
                         switch ($articulos[$i]['ESTADOALERTA_ID']){

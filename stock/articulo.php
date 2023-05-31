@@ -227,7 +227,7 @@ if(isset($_POST["CambiarDatos"])) {
                           <div class="mb-3 col-md-6">
                             <label for="Email" class="form-label">Proveedor</label>
                            
-                            <input class="form-control" type="text" id="Email" name="Email" value="<?php echo $datos_articulo["PROVE_NOMBRE"];?>"  />
+                            <input class="form-control" type="text" id="Proveedor" name="Proveedor" READONLY value="<?php echo $datos_articulo["PROVE_NOMBRE"];?>"  />
                           
                           </div>
                           
@@ -235,28 +235,40 @@ if(isset($_POST["CambiarDatos"])) {
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="Usuario">Ubicacion</label>
                             
-                              <input type="text" id="Usuario" name="Usuario" class="form-control" value="<?php echo $datos_articulo["ART_UBICACION"];?>" />
+                              <input type="text" id="Ubicacion" name="Ubicacion" class="form-control" value="<?php echo $datos_articulo["ART_UBICACION"];?>" />
                             
                           </div>
 
                           <div class="mb-3 col-md-6">
                             
                               <label for="Email" class="form-label">Precio</label>
-                              <input class="form-control" type="text" id="Email" name="Email" value="<?php echo $datos_articulo["ART_PRECIOCOMPRA"];?>" />
+                              <input class="form-control" type="text" id="Precio_compra" name="Precio_compra" readonly  value="<?php echo $datos_articulo["ART_PRECIOCOMPRA"];?>" />
                             
                           </div>
                           
                           
                           <div class="mb-3 col-md-6">
-                            <label class="form-label" for="Usuario">QR</label>
+                            <label class="form-label" for="Usuario">CodQR</label>
                             
-                              <input type="text" id="Usuario" name="Usuario" class="form-control" value="<?php echo $datos_articulo["ART_CODQR"];?>" />
+                              <input type="text" id="QR" name="QR" class="form-control" value="<?php echo $datos_articulo["ART_CODQR"];?>" />
                             
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="Usuario">Codigo</label>
-                              <input type="text" id="Usuario" name="Usuario" class="form-control" value="<?php echo $datos_articulo["ART_CODARTPROV"];?>" />
+                              <input type="text" id="Cod_art" name="Cod_art" class="form-control" value="<?php echo $datos_articulo["ART_CODIGO"];?>" />
+                          </div>
+                         
+                          <div class="mb-3 col-md-6">
+                            <label class="form-label" for="Usuario">Marca</label>
+                            
+                              <input type="text" id="Marca" name="Marca" class="form-control" value="<?php echo $datos_articulo["MARCA_NOMBRE"];?>" />
+                            
+                          </div>
+
+                          <div class="mb-3 col-md-6">
+                            <label class="form-label" for="Usuario">Modelo</label>
+                              <input type="text" id="Modelo" name="Modelo" class="form-control" value="<?php echo $datos_articulo["MODELO_NOMBRE"];?>" />
                           </div>
                          
                           
