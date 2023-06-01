@@ -127,7 +127,7 @@ $CantidadArticulos=count($articulos);
               <div class="col-md-12">
                   <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                      <a class="nav-link active" href="/sysmoto/stock/nuevo_articulo.php"><i class="bx bx-package bx-flashing"></i> Nuevo</a>
+                      <a class="nav-link active" href="/sysmoto/stock/alta_articulo.php"><i class="bx bx-package bx-flashing"></i> Nuevo</a>
                     </li>
                   </ul>
             </div> 

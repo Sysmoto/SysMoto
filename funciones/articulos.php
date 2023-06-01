@@ -101,4 +101,18 @@ function borrarimagen($datos_articulos,$ConexionBD) {
         }
     return $resultado;
 }
+
+function listar_marcas($ConexionBD) {
+    $SQL = "SELECT * FROM marca ORDER BY 2;";
+    
+     $rs = mysqli_query($ConexionBD, $SQL);
+    
+    while ($data = mysqli_fetch_array($rs)) {
+        $marca[$data['MARCA_ID']] = $data['MARCA_NOMBRE'];    
+        
+    }
+    return $marca;
+}
+
+
 ?>
