@@ -115,4 +115,16 @@ function listar_marcas($ConexionBD) {
 }
 
 
+function listar_proveedor($ConexionBD) {
+    $SQL = "SELECT PROVE_ID, PROVE_NOMBRE FROM proveedores ORDER BY 2;";
+    
+     $rs = mysqli_query($ConexionBD, $SQL);
+    $i=1;
+    while ($data = mysqli_fetch_array($rs)) {
+        $proveedores[$i]['PROVE_ID'] = $data['PROVE_ID'];    
+        $proveedores[$i]['PROVE_NOMBRE'] = $data['PROVE_NOMBRE'];
+        $i++;
+    }
+    return $proveedores;
+}
 ?>

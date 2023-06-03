@@ -14,7 +14,8 @@ require_once '../funciones/articulos.php';
 //$CantidadDatos=count($datos_articulo);
 $marcas=listar_marcas($MiConexion);
 
-//$CantidadMarcas=count($marcas);
+$proveedores=listar_proveedor($MiConexion);
+$CantidadProvee=count($proveedores);
 
 if(isset($_POST["CambiarDatos"])) {
   
@@ -194,14 +195,25 @@ if(isset($_POST["CambiarDatos"])) {
                      
                         <div class="row">
                           <div class="mb-3 col-md-6">
-                            <label for="Nombre" class="form-label">Nombre</label>
+                            <label for="Nombre" class="form-label">Informacion</label>
                             <input class="form-control" type="text" id="Nombre" name="Nombre"  autofocus  />
                           </div>
-                          <div class="mb-3 col-md-1">
-                            <label for="Apellido" class="form-label">Stock</label>
-                            <input class="form-control" type="text" name="Stock" id="Stock" size= 5 readonly  />
+                          <div class="mb-3 col-md-3">
+                            <label for="Apellido" class="form-label">Stock Inicial</label>
+                            <input class="form-control" type="text" name="Stock" id="Stock" size= 5 value = 0  />
                           </div>
-                         
+                          <div class="mb-3 col-md-3">
+                            <label class="form-label" for="Marca">Proveedor</label>
+                            <select id="Proveedor"  name="Proveedor" class="select2 form-select" required>
+                              <option value=""></option>
+                              <?php 
+                                for($i=1; $i<=$CantidadProvee;$i++){
+                                echo "<option value =". $proveedores[$i]["PROVE_ID"] . " > ". $proveedores[$i]["PROVE_NOMBRE"] . "</option>";
+                              }    ?>
+                            </select>
+                          </div>
+
+
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="Marca">Marca</label>
                             <select id="Marca"  name="Marca" class="select2 form-select" required>
@@ -219,25 +231,17 @@ if(isset($_POST["CambiarDatos"])) {
                             </select>
                           </div>
 
-                          <div class="mb-3 col-md-6">
-                            <label for="Email" class="form-label">Proveedor</label>
-                           
-                            <input class="form-control" type="text" id="Proveedor" name="Proveedor" READONLY  />
-                          
-                          </div>
-                          
-                          
-                          <div class="mb-3 col-md-6">
+                          <div class="mb-3 col-md-3">
                             <label class="form-label" for="Usuario">Ubicacion</label>
                             
                               <input type="text" id="Ubicacion" name="Ubicacion" class="form-control"  />
                             
                           </div>
 
-                          <div class="mb-3 col-md-6">
+                          <div class="mb-3 col-md-3">
                             
                               <label for="Email" class="form-label">Precio</label>
-                              <input class="form-control" type="text" id="Precio_compra" name="Precio_compra" readonly   />
+                              <input class="form-control" type="text" id="Precio_compra" name="Precio_compra"    />
                             
                           </div>
                           
@@ -257,8 +261,8 @@ if(isset($_POST["CambiarDatos"])) {
                          
 
                           <div class="mb-3 col-md-6">
-                            <label class="form-label" for="Usuario">Modelo</label>
-                              <input type="text" id="Modelo" name="Modelo" class="form-control" />
+                            <label class="form-label" for="Usuario">Codigo Provee</label>
+                              <input type="text" id="Cod_prov" name="Cod_prov" class="form-control" />
                           </div>
                          
                           
@@ -271,27 +275,24 @@ if(isset($_POST["CambiarDatos"])) {
                     <div class="card-body">
                       <div class="d-flex align-items-start align-items-sm-center gap-4">
                        
-                        <?php echo '<img src = "data:image/png;base64,' . base64_encode($datos_articulo["ART_FOTO"]) . '" width = "80px" height = "80px"/>' ; ?>
+                        <img src = "" width = "80px" height = "80px"/>' 
       
                         <div class="button-wrapper">
                           <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                            <span class="d-none d-sm-block">Cambiar foto</span>
+                            <span class="d-none d-sm-block">Subir foto</span>
                             <i class="bx bx-upload d-block d-sm-none"></i>
                             <input type="file" id="upload" class="account-file-input" name="cambiar_imagen"  hidden accept="image/png, image/jpeg" />
                           </label>
-                          <button type="submit" class="btn btn-outline-secondary account-image-reset mb-4" name="borrar_imagen">
-                            <i class="bx bx-reset d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Borrar</span>
-                          </button>
-
+                         
+                         
                           <p class="text-muted mb-0">Debe ser JPG, GIF o PNG. Maximo tamaño de 800K</p>
                         </div>
                       </div>
                     </div>
 
-                        <input type="hidden" name="id_articulo" value="<?php echo $id_articulo;?>" > 
+                        
                         <div class="mt-2">
-                          <button type="submit" name="CambiarDatos" class="btn btn-primary me-2">Salvar cambios</button>
+                          <button type="submit" name="DarAlta" class="btn btn-primary me-2">Dar Alta</button>
                           
                        
                       
