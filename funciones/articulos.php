@@ -127,4 +127,32 @@ function listar_proveedor($ConexionBD) {
     }
     return $proveedores;
 }
+
+
+function alta_articulo($datos_articulos,$imagen,$ConexionBD) {
+    print_r($datos_articulos);
+    $nombre = $datos_articulos["Nombre"];
+    $stock = $datos_articulos["Stock"];
+    $proveedor = $datos_articulos["Proveedor"];
+    $marca = $datos_articulos["Marca"];
+    $modelo = $datos_articulos["Modelo"];
+    $ubicacion = $datos_articulos["Ubicacion"];
+    $precio=$datos_articulos["Precio_compra"];
+    $qr = $datos_articulos["QR"];
+    $codart = $datos_articulos["Cod_art"];
+    $codprov = $datos_articulos["Cod_prov"];
+    if($stock > 0 ){ $estart=1;} else{ $estart=2;}
+    $sql = "  INSERT INTO articulo () VALUES (NULL,$proveedor,$modelo,1,$estart,$codart,'$precio','$nombre','$ubicacion','$qr','$imagen',$codprov );";
+    
+    if($ConexionBD->query($sql) === TRUE) {
+        $lastId = $ConexionBD->insert_id;
+        $sql2= "INSERT INTO stock () VALUES ($lastId,$stock)";
+        if($ConexionBD->query($sql2) === TRUE) {
+            $resultado="Datos subidos correctamente";
+        } else {
+            $resultado="Incorrectamente porque ".$ConexionBD->error;
+        }
+    }
+    return $resultado;
+}
 ?>

@@ -17,23 +17,28 @@ $marcas=listar_marcas($MiConexion);
 $proveedores=listar_proveedor($MiConexion);
 $CantidadProvee=count($proveedores);
 
-if(isset($_POST["CambiarDatos"])) {
-  
+if(isset($_POST["DarAlta"])) {
+  $imgContent="";
+  print_r($_POST);
   if(!empty($_FILES["cambiar_imagen"]["name"])) { 
-    $fileName = basename($_FILES["cambiar_imagen"]["name"]); 
-    $fileType = pathinfo($fileName, PATHINFO_EXTENSION); 
+      $fileName = basename($_FILES["cambiar_imagen"]["name"]); 
+      $fileType = pathinfo($fileName, PATHINFO_EXTENSION); 
     
-    $allowTypes = array('jpg','png','jpeg','gif'); 
-    if(in_array($fileType, $allowTypes)){ 
-      $image = $_FILES['cambiar_imagen']['tmp_name']; 
-      $imgContent = addslashes(file_get_contents($image)); 
-      $modificar_imagen=imagen($_POST,$imgContent,$MiConexion);   
-      $statusMsg=$modificar_imagen;     
-      }else{ 
-        $statusMsg = "File upload failed, please try again."; 
-      }  
-    }else{ 
-      $statusMsg = 'Sorry, only JPG, JPEG, PNG, & GIF files are allowed to upload.'; 
+      $allowTypes = array('jpg','png','jpeg','gif'); 
+      if(in_array($fileType, $allowTypes)){ 
+          $image = $_FILES['cambiar_imagen']['tmp_name']; 
+          $imgContent = addslashes(file_get_contents($image)); 
+          $daralta=alta_articulo($_POST,$imgContent,$MiConexion);   
+          $statusMsg=$daralta;     
+          }
+        else{ 
+          $statusMsg = "Imagen fallo al subirse."; 
+          }  
+      }
+      else{ 
+        $daralta=alta_articulo($_POST,$imgContent,$MiConexion); 
+        $statusMsg=$daralta;  
+
     } 
     echo "<script> 
          alert('$statusMsg') 
@@ -184,7 +189,7 @@ if(isset($_POST["CambiarDatos"])) {
               <div class="col-md-12">
                   
             </div> 
-              <form method='post' action="articulo.php" enctype="multipart/form-data">
+              <form method='post' action="" enctype="multipart/form-data">
               <div class="card">
                 
                       
@@ -196,7 +201,7 @@ if(isset($_POST["CambiarDatos"])) {
                         <div class="row">
                           <div class="mb-3 col-md-6">
                             <label for="Nombre" class="form-label">Informacion</label>
-                            <input class="form-control" type="text" id="Nombre" name="Nombre"  autofocus  />
+                            <input class="form-control" type="text" id="Nombre" name="Nombre"  autofocus required />
                           </div>
                           <div class="mb-3 col-md-3">
                             <label for="Apellido" class="form-label">Stock Inicial</label>
@@ -234,14 +239,14 @@ if(isset($_POST["CambiarDatos"])) {
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="Usuario">Ubicacion</label>
                             
-                              <input type="text" id="Ubicacion" name="Ubicacion" class="form-control"  />
+                              <input type="text" id="Ubicacion" name="Ubicacion" class="form-control"  required />
                             
                           </div>
 
                           <div class="mb-3 col-md-3">
                             
                               <label for="Email" class="form-label">Precio</label>
-                              <input class="form-control" type="text" id="Precio_compra" name="Precio_compra"    />
+                              <input class="form-control" type="text" id="Precio_compra" name="Precio_compra"   required />
                             
                           </div>
                           
@@ -249,20 +254,20 @@ if(isset($_POST["CambiarDatos"])) {
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="Usuario">CodQR</label>
                             
-                              <input type="text" id="QR" name="QR" class="form-control"  />
+                              <input type="text" id="QR" name="QR" class="form-control" required />
                             
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="Usuario">Codigo</label>
-                              <input type="text" id="Cod_art" name="Cod_art" class="form-control"  />
+                              <input type="text" id="Cod_art" name="Cod_art" class="form-control" required />
                           </div>
                          
                          
 
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="Usuario">Codigo Provee</label>
-                              <input type="text" id="Cod_prov" name="Cod_prov" class="form-control" />
+                              <input type="text" id="Cod_prov" name="Cod_prov" class="form-control" required />
                           </div>
                          
                           
