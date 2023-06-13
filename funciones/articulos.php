@@ -32,6 +32,33 @@ function listar_articulos($ConexionBD) {
     }
     return $articulos;
 }
+function listar_art_corto($ConexionBD) {
+    $SQL = "SELECT articulo.ART_INFOADICIONAL, articulo.ART_PRECIOCOMPRA,articulo.ART_CODQR,
+   articulo.ART_UBICACION, marca.MARCA_NOMBRE, modelo.MODELO_NOMBRE,articulo.ART_FOTO,
+   articulo.ART_CODIGO
+    FROM articulo
+    LEFT JOIN modelo ON  modelo.MODELO_ID = articulo.MODELO_ID
+    LEFT JOIN marca ON modelo.MARCA_ID = marca.MARCA_ID
+    ORDER BY marca.MARCA_NOMBRE, modelo.MODELO_NOMBRE ;";
+    
+     $rs = mysqli_query($ConexionBD, $SQL);
+        
+    $i=0;
+    while ($data = mysqli_fetch_array($rs)) {
+            $articulos[$i]['ART_INFOADICIONAL'] = $data['ART_INFOADICIONAL'];
+            $articulos[$i]['ART_PRECIOCOMPRA'] = $data['ART_PRECIOCOMPRA'];
+            $articulos[$i]['ART_CODQR'] = $data['ART_CODQR'];
+            $articulos[$i]['ART_UBICACION'] = $data['ART_UBICACION'];
+            $articulos[$i]['MARCA_NOMBRE'] = $data['MARCA_NOMBRE'];
+            $articulos[$i]['MODELO_NOMBRE'] = $data['MODELO_NOMBRE'];
+            $articulos[$i]['ART_FOTO'] = $data['ART_FOTO'];
+            $articulos[$i]['ART_CODIGO'] = $data['ART_CODIGO'];
+            $i++;
+    }
+    return $articulos;
+}
+
+
 
 function Datos_articulo($id_articulo,$ConexionBD) {
     $SQL = "SELECT articulo.ART_ID, articulo.ART_INFOADICIONAL, stock.CANT_STOCK,

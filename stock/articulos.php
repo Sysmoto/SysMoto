@@ -128,6 +128,10 @@ $CantidadArticulos=count($articulos);
                   <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
                       <a class="nav-link active" href="/sysmoto/stock/alta_articulo.php"><i class="bx bx-package bx-flashing"></i> Nuevo</a>
+                    </li> 
+                    <li class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;</lib>
+                    <li class="nav-item">
+                    <a class="nav-link active" href="/sysmoto/stock/listadopdf.php"><i class="bx bx-table bx-flashing"></i> Listado a imprimir</a>
                     </li>
                   </ul>
             </div> 
