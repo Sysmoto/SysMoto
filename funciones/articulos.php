@@ -34,11 +34,11 @@ function listar_articulos($ConexionBD) {
 }
 
 function Datos_articulo($id_articulo,$ConexionBD) {
-    $SQL = "SELECT articulo.ART_ID,articulo.ART_INFOADICIONAL, stock.CANT_STOCK,
+    $SQL = "SELECT articulo.ART_ID, articulo.ART_INFOADICIONAL, stock.CANT_STOCK,
     proveedores.PROVE_NOMBRE,estadoalerta.ESTADOALERTA_NOMBRE,estadoarticulo.ESTADOART_NOMBRE,
     articulo.ART_PRECIOCOMPRA,articulo.ART_CODQR,articulo.ART_CODARTPROV,articulo.ART_UBICACION,
     estadoalerta.ESTADOALERTA_ID, estadoarticulo.EST_ART, articulo.ART_FOTO,articulo.ART_CODIGO,
-    marca.MARCA_NOMBRE, modelo.MODELO_NOMBRE
+    marca.MARCA_NOMBRE, modelo.MODELO_NOMBRE, articulo.ART_CODARTPROV, marca.MARCA_ID, modelo.MODELO_ID
     FROM articulo
     LEFT JOIN stock on stock.ART_ID = articulo.ART_ID
     LEFT JOIN  proveedores ON proveedores.PROVE_ID = articulo.PROVE_ID
@@ -68,6 +68,9 @@ function Datos_articulo($id_articulo,$ConexionBD) {
             $articulo['ART_CODIGO'] = $data['ART_CODIGO'];
             $articulo['MARCA_NOMBRE'] = $data['MARCA_NOMBRE'];
             $articulo['MODELO_NOMBRE'] = $data['MODELO_NOMBRE'];
+            $articulo['ART_CODARTPROV'] = $data['ART_CODARTPROV'];
+            $articulo['MODELO_ID'] = $data['MODELO_ID'];
+            $articulo['MARCA_ID'] = $data['MARCA_ID'];
 
 
             
@@ -155,4 +158,34 @@ function alta_articulo($datos_articulos,$imagen,$ConexionBD) {
     }
     return $resultado;
 }
+
+function modificar_articulo($datos_articulos,$ConexionBD) {
+    //print_r($datos_articulos);
+    $nombre = $datos_articulos["Nombre"];
+    $stock = $datos_articulos["Stock"];
+    $proveedor = $datos_articulos["Proveedor"];
+    $marca = $datos_articulos["Marca"];
+    $modelo = $datos_articulos["Modelo"];
+    $ubicacion = $datos_articulos["Ubicacion"];
+    $precio=$datos_articulos["Precio_compra"];
+    $qr = $datos_articulos["QR"];
+    $codart = $datos_articulos["Cod_art"];
+    $codprov = $datos_articulos["Cod_prov"];
+    if($stock > 0 ){ $estart=1;} else{ $estart=2;}
+    $sql = "UPDATE articulo SET  ART_INFOADICIONAL='$nombre' , ART_CODIGO=$codart, ART_PRECIOCOMPRA='$precio',
+    ART_UBICACION = '$ubicacion', ART_CODQR='$qr',ART_CODARTPROV='$codprov' WHERE ART_ID =".$datos_articulos['id_articulo'].";";
+    //print $sql;
+    if($ConexionBD->query($sql) === TRUE) {
+        $lastId = $ConexionBD->insert_id;
+        $sql2= "update  stock SET CANT_STOCK = '$stock' WHERE ART_ID =".$datos_articulos['id_articulo'].";";
+        if($ConexionBD->query($sql2) === TRUE) {
+           $resultado="Datos subidos correctamente";
+        } else {
+            $resultado="Incorrectamente porque ".$ConexionBD->error;
+        }
+    }
+    return $resultado;
+}
+
+
 ?>

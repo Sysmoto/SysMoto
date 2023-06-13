@@ -16,6 +16,7 @@ $datos_articulo=Datos_articulo($id_articulo,$MiConexion);
 //$CantidadDatos=count($datos_articulo);
 //$roles=Listar_Roles($MiConexion);
 //$CantidadRoles=count($roles);
+//print_r($datos_articulo);
 
 if(isset($_POST["CambiarDatos"])) {
   
@@ -33,7 +34,8 @@ if(isset($_POST["CambiarDatos"])) {
         $statusMsg = "File upload failed, please try again."; 
       }  
     }else{ 
-      $statusMsg = 'Sorry, only JPG, JPEG, PNG, & GIF files are allowed to upload.'; 
+      $modicar_articulo=modificar_articulo($_POST, $MiConexion);
+      $statusMsg = $modicar_articulo; 
     } 
     echo "<script> 
          alert('$statusMsg') 
@@ -242,7 +244,8 @@ if(isset($_POST["CambiarDatos"])) {
                           <div class="mb-3 col-md-6">
                             
                               <label for="Email" class="form-label">Precio</label>
-                              <input class="form-control" type="text" id="Precio_compra" name="Precio_compra" readonly  value="<?php echo $datos_articulo["ART_PRECIOCOMPRA"];?>" />
+                              <input class="form-control" type="text" id="Precio_compra" name="Precio_compra" 
+                               value="<?php echo $datos_articulo["ART_PRECIOCOMPRA"];?>" />
                             
                           </div>
                           
@@ -256,22 +259,30 @@ if(isset($_POST["CambiarDatos"])) {
 
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="Usuario">Codigo</label>
-                              <input type="text" id="Cod_art" name="Cod_art" class="form-control" value="<?php echo $datos_articulo["ART_CODIGO"];?>" />
+                              <input type="text" id="Cod_art" name="Cod_art" class="form-control"
+                              value="<?php echo $datos_articulo["ART_CODIGO"];?>" />
                           </div>
                          
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="Usuario">Marca</label>
                             
-                              <input type="text" id="Marca" name="Marca" class="form-control" value="<?php echo $datos_articulo["MARCA_NOMBRE"];?>" />
+                              <input type="text" id="Marca" name="Marca" class="form-control" readonly 
+                              value="<?php echo $datos_articulo["MARCA_NOMBRE"];?>" />
                             
                           </div>
 
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="Usuario">Modelo</label>
-                              <input type="text" id="Modelo" name="Modelo" class="form-control" value="<?php echo $datos_articulo["MODELO_NOMBRE"];?>" />
+                              <input type="text" id="Modelo" name="Modelo" class="form-control" readonly 
+                              value="<?php echo $datos_articulo["MODELO_NOMBRE"];?>" />
                           </div>
                          
-                          
+                          <div class="mb-3 col-md-6">
+                            <label class="form-label" for="Usuario">Codigo Proveedor</label>
+                              <input type="text" id="Cod_Prov" name="Cod_prov" class="form-control" 
+                               value="<?php echo $datos_articulo["ART_CODARTPROV"];?>" />
+                          </div>
+                         
                           
                         </div>
                        
