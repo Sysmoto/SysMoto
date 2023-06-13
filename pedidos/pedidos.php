@@ -8,27 +8,6 @@ if (empty($_SESSION["Usuario"])) {
 }
 
 require_once '../funciones/conexion.php';
-require_once('../funciones/venta_detalle.php');
-$MiConexion=ConexionBD();
-
-$search_criteria = "";
-//$_POST['search_criteria'];
-
-$resultado = [];
-$errors = ['data'=> false];
-
-$sql = "SELECT a.ART_ID AS Id, a.ART_CODIGO AS Codigo, a.ART_PRECIOCOMPRA AS Precio, a.ART_INFOADICIONAL AS Descripcion,
-s.CANT_STOCK AS Stock, mo.MODELO_NOMBRE AS Modelo, ma.MARCA_NOMBRE AS Marca, ea.ESTADOALERTA_NOMBRE AS Estado
-FROM ARTICULO AS a, MODELO AS mo, MARCA AS ma, STOCK AS s, ESTADOALERTA AS ea
-WHERE
-a.MODELO_ID  = mo.MODELO_ID AND
-a.ART_ID = s.ART_ID AND
-a.ESTADOALERTA_ID = ea.ESTADOALERTA_ID AND
-mo.MARCA_ID = ma.MARCA_ID 
-AND a.ART_INFOADICIONAL LIKE '%".$search_criteria."%'";
-
-$getResultado = $MiConexion->query($sql);
-
 
 ////
 
@@ -97,7 +76,7 @@ $getResultado = $MiConexion->query($sql);
 
 
 
-  </head> 
+  </head>
 
   <body>
     
@@ -216,34 +195,8 @@ $getResultado = $MiConexion->query($sql);
                 <!-- ssssssssssssssssssssssssss -->
 
                 <div class="container py-4 text-center">
-                  <h4>Venta</h4>
-                  <form method="post">
-                            <button name="venta">Crear Venta</button>
-                  </form>
-                  <div class="col-auto">
-                          <label for="num_registros" class="col-form-label">
-                            <?php
-                            /*if(!isset($_POST['venta'])){
-                            */  
-                            
-                            if(!isset($_POST['refrescar'])){
-                              echo 'Factura: 00000000';  
-                            }else  {
-                            
-                              $idInsert="select max(venta_id) as venta_id from venta";
-$resInsert = mysqli_query($MiConexion,$idInsert);
-
-if(mysqli_num_rows($resInsert)>0){
-  
-    $row=mysqli_fetch_assoc($resInsert);
-    $idactual=$row['venta_id'];
-}
-
-echo 'Factura: '.$idactual;
-                            
-                          }
-                          
-                            ?> </label>
+                  <h2>Pedidos</h2>
+                 
                   </div>
 
                   <div class="row g-4">
@@ -252,6 +205,8 @@ echo 'Factura: '.$idactual;
                           <label for="num_registros" class="col-form-label">Mostrar: </label>
 
                       </div>
+
+                      
 
                       <div class="col-auto">
                           <select name="num_registros" id="num_registros" class="form-select">
@@ -262,6 +217,8 @@ echo 'Factura: '.$idactual;
                           </select>
                       </div>
 
+
+
                       <div class="col-auto">
                           <label for="num_registros" class="col-form-label">registros </label>
                       </div>
@@ -269,7 +226,7 @@ echo 'Factura: '.$idactual;
                       <div class="col-2"></div>
 
                       <div class="col-auto">
-                          <label for="campo" class="col-form-label">Articulo a buscar [Codigo/Descripcion]: </label>
+                          <label for="campo" class="col-form-label">Factura a buscar [Numero]: </label>
                       </div>
                       <div class="col-auto">
                           <form method="post">
@@ -288,20 +245,21 @@ echo 'Factura: '.$idactual;
                   </div>
 
                   
-                  
+            
                   <div class="row py-4">
                       <div >
                           <table class="table table-striped">
                               <thead>
-                                  <th>Id</th>
-                                  <th>Codigo</th>
-                                  <th>Precio</th>
+                                  <th>Factura</th>
+                                  <th>Vendedor</th>
+                                  <th>Articulo</th>
                                   <th>Descripcion</th>
-                                  <th>Stock</th>
-                                  <th>Modelo</th>
-                                  <th>Marca</th>
-                                  <th>Estado</th>
-                                  <th>Accion</th>
+                                  <th>Precio_unitario</th>
+                                  <th>Precio_final</th>
+                                  <th>Fecha_Venta</th>
+                                  <th>Estado_venta</th>
+                                  <th>Cliente</th>
+                                  
                               </thead>
 
                               <!-- El id del cuerpo de la tabla. -->
@@ -309,30 +267,65 @@ echo 'Factura: '.$idactual;
 
                               <?php
 
-if(!isset($_POST['venta'])){
+if(isset($_POST['submit']) or isset($_GET['page'])){
+// or isset($_GET['page'])
+require_once '../funciones/conexion.php';
+$MiConexion=ConexionBD();
 
+if(isset($_POST['submit'])){
+  $itemABuscar=$_POST['search'];
+} else {
+  $itemABuscar='';
+}
 
-if(isset($_POST['submit']) && isset($_POST['venta'])){
+/*
+Paginacion
+*/
 
-  
-$id_vnta = $_POST['idvnta'];
-
-$itemABuscar=$_POST['search'];
-
-$sqlSearch = "SELECT a.ART_ID AS Id, a.ART_CODIGO AS Codigo, a.ART_PRECIOCOMPRA AS Precio, a.ART_INFOADICIONAL AS Descripcion,
-s.CANT_STOCK AS Stock, mo.MODELO_NOMBRE AS Modelo, ma.MARCA_NOMBRE AS Marca, ea.ESTADOALERTA_NOMBRE AS Estado
-FROM ARTICULO AS a, MODELO AS mo, MARCA AS ma, STOCK AS s, ESTADOALERTA AS ea
-WHERE
-a.MODELO_ID  = mo.MODELO_ID AND
-a.ART_ID = s.ART_ID AND
-a.ESTADOALERTA_ID = ea.ESTADOALERTA_ID AND
-mo.MARCA_ID = ma.MARCA_ID 
-AND (a.ART_INFOADICIONAL LIKE '%$itemABuscar%' 
-OR a.ART_CODIGO LIKE '%$itemABuscar%')";
+$sqlSearch = "SELECT v.VENTA_ID as Factura, u.NOMBRE as Vendedor, dv.DETVENTA_ITEM as Articulo, a.ART_INFOADICIONAL as Descripcion,
+a.ART_PRECIOCOMPRA as Precio_unitario, a.ART_PRECIOCOMPRA*0.5+a.ART_PRECIOCOMPRA as Precio_final,
+v.VENTA_FECHAVENTA as Fecha_Venta, ev.ESTADOVENTA_NOMBRE as Estado_venta, c.CLIENTE_NOMBE as Cliente	
+from detalleventa as dv, venta as v, usuarios as u, articulo as a, cliente as c, estadoventa as ev
+where dv.VENTA_ID = v.VENTA_ID and
+dv.ID = u.ID and
+dv.ART_ID = a.ART_ID and
+v.CLIENTE_ID = c.CLIENTE_ID and
+v.ESTADOVENTA_ID = ev.ESTADOVENTA_ID and
+v.VENTA_ID like '%$itemABuscar%' ";
 
 $resBusqueda = mysqli_query($MiConexion,$sqlSearch);
+$cantRegistros = mysqli_num_rows($resBusqueda);
+$numPorPaginas = 5;
+$totalPaginas= ceil($cantRegistros/$numPorPaginas);
 
-if($resBusqueda){
+for($btn=1; $btn<=$totalPaginas; $btn++){
+  echo '<button class="btn btn-gray" ><a class="col-auto" href="pedidos.php?page='.$btn.'" class="text-light mx-1 my-5">'.$btn.'</a></button>';
+}
+
+if(isset($_GET['page'])){
+  $page=$_GET['page'];
+} else {
+  $page=1;
+}
+
+$startLimit=($page-1)*$numPorPaginas;
+
+$sqlSearch2 = "SELECT v.VENTA_ID as Factura, u.NOMBRE as Vendedor, dv.DETVENTA_ITEM as Articulo, a.ART_INFOADICIONAL as Descripcion,
+a.ART_PRECIOCOMPRA as Precio_unitario, a.ART_PRECIOCOMPRA*0.5+a.ART_PRECIOCOMPRA as Precio_final,
+v.VENTA_FECHAVENTA as Fecha_Venta, ev.ESTADOVENTA_NOMBRE as Estado_venta, c.CLIENTE_NOMBE as Cliente	
+from detalleventa as dv, venta as v, usuarios as u, articulo as a, cliente as c, estadoventa as ev
+where dv.VENTA_ID = v.VENTA_ID and
+dv.ID = u.ID and
+dv.ART_ID = a.ART_ID and
+v.CLIENTE_ID = c.CLIENTE_ID and
+v.ESTADOVENTA_ID = ev.ESTADOVENTA_ID and
+v.VENTA_ID like '%$itemABuscar%' limit $startLimit , $numPorPaginas";
+
+$resBusqueda = mysqli_query($MiConexion,$sqlSearch2);
+
+///
+
+if($resBusqueda or isset($_GET['page'])){
   
   if(mysqli_num_rows($resBusqueda)>0){
 
@@ -340,18 +333,15 @@ if($resBusqueda){
       
       echo '<tr>';
       //version GET
-      //echo '<td><a href="../funciones/insertar_detalleventa.php?data='.$row['Id'].'">'.$row['Id'].'</a></td>';
-      echo '<td><a href="insertar_detalleventa.php?
-      id='.$row['Id'].'&idactual='.$id_vnta.'&codigo='.$row['Codigo'].'&desc='.$row['Descripcion'].
-      '&precio='.$row['Precio'].'">'.$row['Id'].'</a></td>';
-      echo '<td>'.$row['Codigo'].'</td>';
-      echo '<td>'.$row['Precio'].'</td>';
+      echo '<td>'.$row['Factura'].'</a></td>';
+      echo '<td>'.$row['Vendedor'].'</td>';
+      echo '<td>'.$row['Articulo'].'</td>';
       echo '<td>'.$row['Descripcion'].'</td>';
-      echo '<td>'.$row['Stock'].'</td>';
-      echo '<td>'.$row['Modelo'].'</td>';
-      echo '<td>'.$row['Marca'].'</td>';
-      echo '<td>'.$row['Estado'].'</td>';
-      echo '<td></td>';
+      echo '<td>'.$row['Precio_unitario'].'</td>';
+      echo '<td>'.$row['Precio_final'].'</td>';
+      echo '<td>'.$row['Fecha_Venta'].'</td>';
+      echo '<td>'.$row['Estado_venta'].'</td>';
+      echo '<td>'.$row['Cliente'].'</a></td>';
       echo '</tr>';
 
     }
@@ -364,113 +354,7 @@ if($resBusqueda){
 
 
 
-} else {
-
-  // nueva venta
-  // creo la venta
-
-$sqlInsert="INSERT INTO `venta` (`VENTA_ID`, `CLIENTE_ID`, `ESTADOVENTA_ID`, `VENTA_FECHAVENTA`, `VENTA_FECHAENTREGA`, `VENTA_FECHAANULACION`) 
-VALUES (NULL, '1', '2', '2023-06-12', '2023-06-12', NULL)";
-
-$resInsert = mysqli_query($MiConexion,$sqlInsert);
-
-$idInsert="select max(venta_id) as venta_id from venta";
-$resInsert = mysqli_query($MiConexion,$idInsert);
-
-if(mysqli_num_rows($resInsert)>0){
-  
-    $row=mysqli_fetch_assoc($resInsert);
-    $idactual=$row['venta_id'];
-}
-
-$_POST['idvnta'] =$idactual;
-
-
-
-}
-
-}else if(isset($_POST['submit'])) {
-
-
-  $idUltInsert="select max(venta_id) as venta_id from venta";
-  $resUltInsert = mysqli_query($MiConexion,$idUltInsert);
-  
-  
-  if(mysqli_num_rows($resUltInsert)>0){
-    
-      $row=mysqli_fetch_assoc($resUltInsert);
-      $idactual=$row['venta_id'];
-  }
-
-  $id_vnta = $idactual;
-
-  $itemABuscar=$_POST['search'];
-
-$sqlSearch = "SELECT a.ART_ID AS Id, a.ART_CODIGO AS Codigo, a.ART_PRECIOCOMPRA AS Precio, a.ART_INFOADICIONAL AS Descripcion,
-s.CANT_STOCK AS Stock, mo.MODELO_NOMBRE AS Modelo, ma.MARCA_NOMBRE AS Marca, ea.ESTADOALERTA_NOMBRE AS Estado
-FROM ARTICULO AS a, MODELO AS mo, MARCA AS ma, STOCK AS s, ESTADOALERTA AS ea
-WHERE
-a.MODELO_ID  = mo.MODELO_ID AND
-a.ART_ID = s.ART_ID AND
-a.ESTADOALERTA_ID = ea.ESTADOALERTA_ID AND
-mo.MARCA_ID = ma.MARCA_ID 
-AND (a.ART_INFOADICIONAL LIKE '%$itemABuscar%' 
-OR a.ART_CODIGO LIKE '%$itemABuscar%')";
-
-$resBusqueda = mysqli_query($MiConexion,$sqlSearch);
-
-
-if($resBusqueda){
-  
-  if(mysqli_num_rows($resBusqueda)>0){
-
-    while($row=mysqli_fetch_assoc($resBusqueda)){
-      
-      echo '<tr>';
-      //echo '<td><a href="insertar_detalleventa.php?
-      //id='.$row['Id'].'&idactual='.$id_vnta.'&codigo='.$row['Codigo'].'&desc='.$row['Descripcion'].
-      //'&precio='.$row['Precio'].'">'.$row['Id'].'</a></td>';
-      echo '<td>'.$row['Id'].'</td>';
-      echo '<td>'.$row['Codigo'].'</td>';
-      echo '<td>'.$row['Precio'].'</td>';
-      echo '<td>'.$row['Descripcion'].'</td>';
-      echo '<td>'.$row['Stock'].'</td>';
-      echo '<td>'.$row['Modelo'].'</td>';
-      echo '<td>'.$row['Marca'].'</td>';
-      echo '<td>'.$row['Estado'].'</td>';
-      echo '<td><a href="insertar_detalleventa.php?
-      id='.$row['Id'].'&idactual='.$id_vnta.'&codigo='.$row['Codigo'].'&desc='.$row['Descripcion'].
-      '&precio='.$row['Precio'].'">Agregar</a></td>';
-      echo '</tr>';
-
-    }
-  }
-
-}
-}
-
-} else {
-
-  // nueva venta
-  // creo la venta
-
-$sqlInsert="INSERT INTO `venta` (`VENTA_ID`, `CLIENTE_ID`, `ESTADOVENTA_ID`, `VENTA_FECHAVENTA`, `VENTA_FECHAENTREGA`, `VENTA_FECHAANULACION`) 
-VALUES (NULL, '1', '2', '2023-06-12', '2023-06-12', NULL)";
-
-$resInsert = mysqli_query($MiConexion,$sqlInsert);
-
-$idInsert="select max(venta_id) as venta_id from venta";
-$resInsert = mysqli_query($MiConexion,$idInsert);
-
-if(mysqli_num_rows($resInsert)>0){
-  
-    $row=mysqli_fetch_assoc($resInsert);
-    $idactual=$row['venta_id'];
-}
-
-$_POST['idvnta'] =$idactual;
-
-
+} 
 }
 
                               ?>
@@ -485,108 +369,6 @@ $_POST['idvnta'] =$idactual;
                       </div>
                   </div>
 
-                  <div class="card">
-                  <h4>Detalle Venta</h4>
-                  <div class="col-auto">
-                  
-                  <form method="post">
-                            <button name="refrescar">refrescar</button>
-                  </form>
-
-                  </div>
-                    <div class="table-responsive text-nowrap">
-                    <table class="table table-striped">
-                              <thead>
-                                  <th>Id</th>
-                                  <th>Factura</th>
-                                  <th>Vendedor</th>
-                                  <th>Articulo</th>
-                                  <th>Descripcion</th>
-                                  <th>Precio Unitario</th>
-                                  <th>Precio Final</th>
-                                  <th>Accion</th>
-                              </thead>
-
-                              <!-- El id del cuerpo de la tabla. -->
-                              <tbody >
-                                <?php
-
-/// Selecciono los items del detalle
-
-
-if(isset($_POST['refrescar'])){
-
-  $idUltInsert="select max(venta_id) as venta_id from venta";
-  $resUltInsert = mysqli_query($MiConexion,$idUltInsert);
-  
-  
-  if(mysqli_num_rows($resUltInsert)>0){
-    
-      $row=mysqli_fetch_assoc($resUltInsert);
-      $idactual=$row['venta_id'];
-  }
-
-  $id_vnta = $idactual;
-
-  //$id_vnta = 0;
-  
-
-$incremento = 0.5;
-
-$sql3="SELECT dv.DETVENTA_ID as Id, dv.VENTA_ID as Factura, u.NOMBRE as Vendedor, dv.DETVENTA_ITEM as Articulo, a.ART_INFOADICIONAL as Descripcion, 
-a.ART_PRECIOCOMPRA as Precio_unitario, a.ART_PRECIOCOMPRA*0.5+a.ART_PRECIOCOMPRA as Precio_final
-from detalleventa as dv, venta as v, usuarios as u, articulo as a
-where dv.VENTA_ID = v.VENTA_ID and
-dv.ID = u.ID and
-dv.ART_ID = a.ART_ID and
-dv.VENTA_ID = $id_vnta";
-
-$getResultadoSelectDetalleVenta = $MiConexion->query($sql3);
-
-$cantidadIV = $getResultadoSelectDetalleVenta->num_rows;
-//echo 'cantidad es: '. $cantidadIV;
-
-if($cantidadIV >0){
-while($data2 = $getResultadoSelectDetalleVenta->fetch_assoc()){
- $ResultadoSelectDetalleVenta[] = $data2; 
-}
-
-
-for ($i = 0; $i < $cantidadIV; $i++) {
-  echo '<tr>';
-  echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Id'].'</th>';
-  echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Factura'].'</th>';
-  echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Vendedor'].'</th>';
-  echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Articulo'].'</th>';
-  echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Descripcion'].'</th>';
-  echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Precio_unitario'].'</th>';
-  echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Precio_final'].'</th>';
-  echo '<td><a href="../funciones/eliminar_item_detalleventa.php?id='.$ResultadoSelectDetalleVenta[$i]['Id'].'">Eliminar</a></td>';
-  }
-
-}
-
-echo '<div class="col-auto">';
-echo '<form target="_blank" action="factura.php?" method="get">';
-echo '<input type="hidden" name="id" value='.$id_vnta.'>';
-echo '<input type="submit" value="Generar Factura">';
-echo '</form>';
-echo '</div>';
-}
-
-
- ?>
-
-
-                              </tbody>
-
-
-                              </table>
-
-                    </div>
-
-                  </div>
-
 
 
 
@@ -594,7 +376,6 @@ echo '</div>';
 
                   <div class="row">
                       <div class="col-6">
-
                           <label id="lbl-total"></label>
                       </div>
 
