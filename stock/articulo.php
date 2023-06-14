@@ -245,7 +245,7 @@ if(isset($_POST["CambiarDatos"])) {
                             
                               <label for="Email" class="form-label">Precio</label>
                               <input class="form-control" type="text" id="Precio_compra" name="Precio_compra" 
-                               value="<?php echo $datos_articulo["ART_PRECIOCOMPRA"];?>" />
+                              readonly  value="<?php echo $datos_articulo["ART_PRECIOCOMPRA"];?>" />
                             
                           </div>
                           
