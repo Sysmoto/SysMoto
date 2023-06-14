@@ -32,7 +32,7 @@ $MiConexion=ConexionBD();
       content_1="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>SysMoto V0.1</title>
+    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
 
     <meta name="description" content_1="" />
 
@@ -193,7 +193,7 @@ $MiConexion=ConexionBD();
                 <!-- ssssssssssssssssssssssssss -->
 
                 <div class="container py-4 text-center">
-                 
+                  
                  
                   </div>
 
@@ -220,31 +220,13 @@ La otra pagina tiene que actualizar la lista
 */
 
 $id=$_GET['id'];
-$id_venta=$_GET['idactual'];
-$codigo=$_GET['codigo'];
-$desc=$_GET['desc'];
-$precio=$_GET['precio'];
 
-$idUltInsert="select max(venta_id) as venta_id from venta";
-$resUltInsert = mysqli_query($MiConexion,$idUltInsert);
+$sqlBorrarItemDetalleVenta="DELETE FROM detalleventa WHERE `detalleventa`.`DETVENTA_ID` = $id";
+$resUltInsert = mysqli_query($MiConexion,$sqlBorrarItemDetalleVenta);
 
-
-if(mysqli_num_rows($resUltInsert)>0){
-  
-    $row=mysqli_fetch_assoc($resUltInsert);
-    $idactual=$row['venta_id'];
-}
-
-if($id_venta==$idactual){
-
-    $sqlInsertDV="INSERT INTO `detalleventa` (`DETVENTA_ID`, `VENTA_ID`, `ID`, `ART_ID`, `DETVENTA_ITEM`, `DETVENTA_CANT`, `DETVENTA_PRECVTA`)
-     VALUES (NULL, $id_venta, '7', $id, $codigo, '1', $precio)
-    ";
-
-    $resUltInsert = mysqli_query($MiConexion,$sqlInsertDV);
-    ?>
-   <div class="container py-4 text-center">
-    <h5>Articulo correctamente cargado.</h5>
+?>
+<div class="container py-4 text-center">
+    <h5>Articulo correctamente eliminado</h5>
     <hr class="my-4">
     <p class="lead">
       
@@ -254,19 +236,9 @@ if($id_venta==$idactual){
 
     </p>
   </div>
-  </body>
+  </body>>
 
-<?php
-
-
-}else{
-
- echo 'Algo paso - '.$id_venta.'-'.$idactual.'-';   
-
-
-}
-
-?>                  
+                  
 
 
 

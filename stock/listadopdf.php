@@ -14,6 +14,9 @@ class PDF extends FPDF
 // Cabecera de página
 function Header()
 {
+    $time = time();
+
+    $dia = date("d/m/Y", $time);
     // Logo
     $this->Image('../assets/img/logo/logo2.png',10,8,33);
     // Arial bold 15
@@ -21,7 +24,7 @@ function Header()
     // Movernos a la derecha
     $this->Cell(80);
     // Título
-    $this->Cell(70,10,'Listado de Precios',1,0,'C');
+    $this->Cell(90,10,'Listado de Precios - '.$dia,1,0,'C');
     // Salto de línea
     $this->Ln(20);
 }
@@ -63,7 +66,7 @@ function FancyTable($header, $articulos) {
         $this->Cell($w[3],6,'$'.$articulos[$i]['ART_PRECIOCOMPRA'],'LR',0,'L',$fill);
         $this->Cell($w[4],6,$articulos[$i]['ART_UBICACION'],'LR',0,'L',$fill);
         $this->Cell($w[5],6,$articulos[$i]['ART_CODIGO'],'LR',0,'L',$fill);
-        $this->Cell($this->Image('../assets/img/logo/logo2.png',10,8,33));
+        $this->Cell($w[6],6,"-",'LR',0,'L',$fill);
 
         $this->Ln();
         $fill = !$fill;
@@ -84,7 +87,7 @@ $pdf->AddPage();
 
 $pdf->FancyTable($header,$articulos);
 
-$pdf->Output();
+$pdf->Output("I","Listado.pdf",true);
 
 
 ?>

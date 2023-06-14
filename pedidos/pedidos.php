@@ -136,14 +136,14 @@ $CantidadVentas=count($ventas);
             <!-- Content -->
           
             <div class="card">
-                <h5 class="card-header">Pedidos</h5>
+            <h5 class="card-header">Venta - Pedidos</h5>
                 <div class="table-responsive text-nowrap">
 
 
                 <!-- ssssssssssssssssssssssssss -->
 
                 <div class="container py-4 text-center">
-                  <h2>Pedidos</h2>
+                
                  
                   </div>
 
@@ -174,12 +174,14 @@ $CantidadVentas=count($ventas);
                       <div class="col-2"></div>
 
                       <div class="col-auto">
-                          <label for="campo" class="col-form-label">Factura a buscar [Numero]: </label>
+                          <label for="campo" class="col-form-label">Factura a buscar [N°]: </label>
                       </div>
                       <div class="col-auto">
                           <form method="post">
-                            <input type="search" name="search" placeholder="Busqueda de articulos"/>
-                            <button name="submit">Buscar</button>
+                      
+                            <input type="search" name="search" placeholder=""/>
+                            <button name="submit" class="btn btn-secondary" ><span class="tf-icons bx bx-search-alt bx-flashing"></span>&nbsp; Buscar</button>
+                            
                           </form>
                       </div>
                       <div class="col-auto">

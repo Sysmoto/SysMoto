@@ -18,13 +18,13 @@ $sqlSearch = "SELECT v.VENTA_ID as Factura, u.NOMBRE as Vendedor, dv.DETVENTA_IT
 a.ART_PRECIOCOMPRA*0.5+a.ART_PRECIOCOMPRA as Precio_unitario, (a.ART_PRECIOCOMPRA*0.5+a.ART_PRECIOCOMPRA)*COUNT(dv.DETVENTA_ITEM) as Precio_final,
 v.VENTA_FECHAVENTA as Fecha_Venta, ev.ESTADOVENTA_NOMBRE as Estado_venta, c.CLIENTE_NOMBE as Cliente,
 COUNT(dv.DETVENTA_ITEM) AS cantidad	
-from detalleventa as dv, venta as v, usuarios as u, articulo as a, cliente as c, estadoventa as ev
-where dv.VENTA_ID = v.VENTA_ID and
-dv.ID = u.ID and
-dv.ART_ID = a.ART_ID and
-v.CLIENTE_ID = c.CLIENTE_ID and
-v.ESTADOVENTA_ID = ev.ESTADOVENTA_ID and
-v.VENTA_ID = $id
+from detalleventa as dv
+LEFT JOIN venta as v        ON dv.VENTA_ID = v.VENTA_ID 
+LEFT JOIN usuarios as u     ON dv.ID = u.ID 
+LEFT JOIN articulo as a     ON dv.ART_ID = a.ART_ID 
+LEFT JOIN cliente as c      ON v.CLIENTE_ID = c.CLIENTE_ID 
+LEFT JOIN estadoventa as ev ON v.ESTADOVENTA_ID = ev.ESTADOVENTA_ID 
+where v.VENTA_ID = $id
 GROUP BY dv.DETVENTA_ITEM";
 
 

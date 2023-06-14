@@ -55,7 +55,7 @@ $getResultado = $MiConexion->query($sql);
       content_1="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>Dashboard - Analytics | Sneat - Bootstrap 5 HTML Admin Template - Pro</title>
+    <title>SysMoto V.0.1</title>
 
     <meta name="description" content_1="" />
 
@@ -140,63 +140,7 @@ $getResultado = $MiConexion->query($sql);
                
 
                 <!-- User -->
-                <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                      <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                    </div>
-                  </a>
-                  <ul class="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <div class="d-flex">
-                          <div class="flex-shrink-0 me-3">
-                            <div class="avatar avatar-online">
-                              <img src="../assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
-                            </div>
-                          </div>
-                          <div class="flex-grow-1">
-                            <span class="fw-semibold d-block">John Doe</span>
-                            <small class="text-muted">Admin</small>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-user me-2"></i>
-                        <span class="align-middle">My Profile</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="bx bx-cog me-2"></i>
-                        <span class="align-middle">Settings</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <span class="d-flex align-items-center align-middle">
-                          <i class="flex-shrink-0 bx bx-credit-card me-2"></i>
-                          <span class="flex-grow-1 align-middle">Billing</span>
-                          <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="auth-login-basic.html">
-                        <i class="bx bx-power-off me-2"></i>
-                        <span class="align-middle">Log Out</span>
-                      </a>
-                    </li>
-                  </ul>
-                </li>
+                <?php include("../menus/head.php"); ?>
                 <!--/ User -->
               </ul>
             </div>
@@ -209,16 +153,23 @@ $getResultado = $MiConexion->query($sql);
             <!-- Content -->
           
             <div class="card">
-                <h5 class="card-header">Pedidos</h5>
+                <h5 class="card-header">Venta - Presupuesto</h5>
                 <div class="table-responsive text-nowrap">
 
 
                 <!-- ssssssssssssssssssssssssss -->
 
                 <div class="container py-4 text-center">
-                  <h4>Venta</h4>
+                  
                   <form method="post">
-                            <button name="venta">Crear Venta</button>
+                  
+                   
+                    <button  class="btn btn-secondary" name="venta" value="venta">
+                      <span class="tf-icons bx bxs-badge-dollar bx-flashing"></span>&nbsp; Crear Venta
+                    </button>
+                            <br>
+                            
+                      <br>
                   </form>
                   <div class="col-auto">
                           <label for="num_registros" class="col-form-label">
@@ -274,7 +225,8 @@ echo 'Factura: '.$idactual;
                       <div class="col-auto">
                           <form method="post">
                             <input type="search" name="search" placeholder="Busqueda de articulos"/>
-                            <button name="submit">Buscar</button>
+                            <button name="submit" class="btn btn-secondary" ><span class="tf-icons bx bx-search-alt bx-flashing"></span>&nbsp; Buscar</button>
+                            
                           </form>
                       </div>
                       <div class="col-auto">
@@ -312,25 +264,26 @@ echo 'Factura: '.$idactual;
 if(!isset($_POST['venta'])){
 
 
-if(isset($_POST['submit']) && isset($_POST['venta'])){
+  if(isset($_POST['']) && isset($_POST['venta'])){
 
   
-$id_vnta = $_POST['idvnta'];
+    $id_vnta = $_POST['idvnta'];
 
-$itemABuscar=$_POST['search'];
+    $itemABuscar=$_POST['search'];
 
-$sqlSearch = "SELECT a.ART_ID AS Id, a.ART_CODIGO AS Codigo, a.ART_PRECIOCOMPRA AS Precio, a.ART_INFOADICIONAL AS Descripcion,
-s.CANT_STOCK AS Stock, mo.MODELO_NOMBRE AS Modelo, ma.MARCA_NOMBRE AS Marca, ea.ESTADOALERTA_NOMBRE AS Estado
-FROM ARTICULO AS a, MODELO AS mo, MARCA AS ma, STOCK AS s, ESTADOALERTA AS ea
-WHERE
-a.MODELO_ID  = mo.MODELO_ID AND
-a.ART_ID = s.ART_ID AND
-a.ESTADOALERTA_ID = ea.ESTADOALERTA_ID AND
-mo.MARCA_ID = ma.MARCA_ID 
-AND (a.ART_INFOADICIONAL LIKE '%$itemABuscar%' 
-OR a.ART_CODIGO LIKE '%$itemABuscar%')";
+    $sqlSearch = "SELECT a.ART_ID AS Id, a.ART_CODIGO AS Codigo, a.ART_PRECIOCOMPRA AS Precio, a.ART_INFOADICIONAL AS Descripcion,
+        s.CANT_STOCK AS Stock, mo.MODELO_NOMBRE AS Modelo, ma.MARCA_NOMBRE AS Marca, ea.ESTADOALERTA_NOMBRE AS Estado
+        FROM ARTICULO AS a, MODELO AS mo, MARCA AS ma, STOCK AS s, ESTADOALERTA AS ea
+        WHERE
+        a.MODELO_ID  = mo.MODELO_ID AND
+        a.ART_ID = s.ART_ID AND
+        a.ESTADOALERTA_ID = ea.ESTADOALERTA_ID AND
+        mo.MARCA_ID = ma.MARCA_ID 
+        AND (a.ART_INFOADICIONAL LIKE '%$itemABuscar%' 
+        OR a.ART_CODIGO LIKE '%$itemABuscar%')";
+      //echo $sqlSearch;
 
-$resBusqueda = mysqli_query($MiConexion,$sqlSearch);
+      $resBusqueda = mysqli_query($MiConexion,$sqlSearch);
 
 if($resBusqueda){
   
@@ -416,6 +369,7 @@ a.ESTADOALERTA_ID = ea.ESTADOALERTA_ID AND
 mo.MARCA_ID = ma.MARCA_ID 
 AND (a.ART_INFOADICIONAL LIKE '%$itemABuscar%' 
 OR a.ART_CODIGO LIKE '%$itemABuscar%')";
+//echo $sqlSearch;
 
 $resBusqueda = mysqli_query($MiConexion,$sqlSearch);
 
@@ -490,7 +444,10 @@ $_POST['idvnta'] =$idactual;
                   <div class="col-auto">
                   
                   <form method="post">
-                            <button name="refrescar">refrescar</button>
+                            
+                            <button  class="btn btn-secondary" name="refrescar" value="refrescar">
+                              <span class="tf-icons bx bx-refresh bx-flashing"></span>&nbsp; Refrescar
+                            </button>
                   </form>
 
                   </div>
@@ -535,11 +492,12 @@ $incremento = 0.5;
 
 $sql3="SELECT dv.DETVENTA_ID as Id, dv.VENTA_ID as Factura, u.NOMBRE as Vendedor, dv.DETVENTA_ITEM as Articulo, a.ART_INFOADICIONAL as Descripcion, 
 a.ART_PRECIOCOMPRA as Precio_unitario, a.ART_PRECIOCOMPRA*0.5+a.ART_PRECIOCOMPRA as Precio_final
-from detalleventa as dv, venta as v, usuarios as u, articulo as a
-where dv.VENTA_ID = v.VENTA_ID and
-dv.ID = u.ID and
-dv.ART_ID = a.ART_ID and
-dv.VENTA_ID = $id_vnta";
+from detalleventa as dv 
+LEFT JOIN venta as v ON dv.VENTA_ID = v.VENTA_ID 
+LEFT JOIN usuarios as u ON dv.ID = u.ID 
+LEFT JOIN articulo as a ON dv.ART_ID = a.ART_ID 
+where dv.VENTA_ID = $id_vnta";
+//echo $sql3;
 
 $getResultadoSelectDetalleVenta = $MiConexion->query($sql3);
 
@@ -561,17 +519,23 @@ for ($i = 0; $i < $cantidadIV; $i++) {
   echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Descripcion'].'</th>';
   echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Precio_unitario'].'</th>';
   echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Precio_final'].'</th>';
-  echo '<td><a href="../funciones/eliminar_item_detalleventa.php?id='.$ResultadoSelectDetalleVenta[$i]['Id'].'">Eliminar</a></td>';
+  echo '<td><a href="/sysmoto/pedidos/eliminar_item_detalleventa.php?id='.$ResultadoSelectDetalleVenta[$i]['Id'].'">Eliminar</a></td>';
   }
 
 }
+?>
+<div class="col-auto">
+  <form target="_blank" action="factura.php?" method="get">
+    <input type="hidden" name="id" value='<?php echo $id_vnta;?>'>
+    <BR><BR>
+    <button type="submit" class="btn btn-secondary" name="Factura" value="Generar Factura">
+      <span class="tf-icons bx bx-note bx-flashing"></span>&nbsp; Generar Factura                            
+    </button>
+    <BR><BR>
+  </form>
+</div>
 
-echo '<div class="col-auto">';
-echo '<form target="_blank" action="factura.php?" method="get">';
-echo '<input type="hidden" name="id" value='.$id_vnta.'>';
-echo '<input type="submit" value="Generar Factura">';
-echo '</form>';
-echo '</div>';
+<?php
 }
 
 

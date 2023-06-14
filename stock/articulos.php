@@ -131,7 +131,7 @@ $CantidadArticulos=count($articulos);
                     </li> 
                     <li class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;</lib>
                     <li class="nav-item">
-                    <a class="nav-link active" href="/sysmoto/stock/listadopdf.php"><i class="bx bx-table bx-flashing"></i> Listado a imprimir</a>
+                    <a class="nav-link active" href="/sysmoto/stock/listadopdf.php" target="_blank" ><i class="bx bx-table bx-flashing"></i> Listado a imprimir</a>
                     </li>
                   </ul>
             </div> 
