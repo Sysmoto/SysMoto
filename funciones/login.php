@@ -3,7 +3,7 @@ function DatosLogin($vUsuario, $vClave, $MiConexion){
     $Usuario=array();
     
     $SQL="SELECT usuarios.Id, usuarios.Nombre, usuarios.Apellido, usuarios.IdRol, 
-     usuarios.Imagen, usuarios.Sexo, usuarios.Activo, roles.Rol, usuarios.email
+     usuarios.Foto, usuarios.Sexo, usuarios.Activo, roles.Rol, usuarios.email
      FROM usuarios
      LEFT JOIN roles  on Usuarios.IdRol = roles.Id
      WHERE Usuario='$vUsuario' AND Clave= MD5('$vClave')  ";
@@ -33,10 +33,10 @@ function DatosLogin($vUsuario, $vClave, $MiConexion){
         }
         
 
-        if (empty( $data['Imagen'])) {
-            $data['IMAGEN'] = 'user.png'; 
+        if (empty( $data['Foto'])) {
+            $data['Foto'] = 'user.png'; 
         }
-        $Usuario['IMAGEN'] = $data['Imagen'];
+        $Usuario['Foto'] = $data['Foto'];
         $Usuario['ACTIVO'] = $data['Activo'];
         $Usuario['EMAIL'] = $data['email'];
         $SQL2="UPDATE Usuarios SET Ult_Login = NOW() WHERE Id = '".$data['Id']."'";

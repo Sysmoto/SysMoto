@@ -111,7 +111,7 @@ function Datos_articulo($id_articulo,$ConexionBD) {
 }
 
 function imagen($datos_articulos,$imagen,$ConexionBD) {
-    
+    echo "llamada funcion";
     $sql = "  UPDATE articulo SET ART_FOTO = '$imagen' WHERE ART_ID =".$datos_articulos['id_articulo'].";";
     if($ConexionBD->query($sql) === TRUE) {
         $resultado="Imagen subida Correctamente";

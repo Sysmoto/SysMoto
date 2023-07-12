@@ -155,7 +155,14 @@ $CantidadUsuarios=count($usuarios);
                         
                         <td>
                           <div class="avatar">
-                            <img src="/sysmoto/assets/img/avatars/<?php echo $usuarios[$i]['Imagen']?>" alt="Avatar" class="rounded-circle" /> </img>
+                          <?php
+                          if(isset($usuarios[$i]['Foto'])) {
+                                      echo '<img src = "data:image/png;base64,' . base64_encode($usuarios[$i]["Foto"]) . '" width = "80px" height = "80px"/>' ; 
+                                      }
+                                    else {
+                                      echo '<img src = "/assets/img_user/user_default.png" width = "80px" height = "80px"/>' ; 
+                                    }  
+                                      ?>
                           </div>   
                         </td>
                         <?php if($usuarios[$i]['Activo'] == 1) { ?>

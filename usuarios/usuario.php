@@ -13,17 +13,37 @@ $MiConexion=ConexionBD();
 require_once '../funciones/usuarios.php';
 $id_usuario=$_POST["id_user"];
 $datos_usuario=Datos_usuario($id_usuario,$MiConexion);
+
 $CantidadDatos=count($datos_usuario);
 $roles=Listar_Roles($MiConexion);
 $CantidadRoles=count($roles);
 
 if(isset($_POST["CambiarDatos"])) {
+
   $modificar_usuario=Modificar_Usuario($_POST,$MiConexion);
   $usuario=$_POST["Nombre"]." ".$_POST["Apellido"];
-   
+  
+  print_r($_POST);
+  print_r($_FILES);
+  if(!empty($_FILES["cambiar_imagen"]["name"])) { 
+    $fileName = basename($_FILES["cambiar_imagen"]["name"]); 
+    $fileType = pathinfo($fileName, PATHINFO_EXTENSION); 
+    
+    $allowTypes = array('jpg','png','jpeg','gif'); 
+    if(in_array($fileType, $allowTypes)){ 
+      $image = $_FILES['cambiar_imagen']['tmp_name']; 
+      $imgContent = addslashes(file_get_contents($image)); 
+      $modificar_imagen=imagen_usuario($_POST,$imgContent,$MiConexion);   
+      $statusMsg=$modificar_imagen;     
+      }else{ 
+        $statusMsg = "Ha fallado subir imagen."; 
+      }
+      echo $statusMsg;
+  }   
+
    echo "<script> 
           alert('Se a cambiado datos de $usuario $modificar_usuario') 
-          window.open('/sysmoto/usuarios/usuarios.php','_top')
+          window.open('/usuarios/usuarios.php','_top')
          </script>";
 }
 
@@ -36,7 +56,7 @@ if(isset($_POST["BorrarUsuario"])) {
     $usuario=$_POST["Nombre"]." ".$_POST["Apellido"];
 
     echo "<script> alert('Se borro $usuario $borrar_usuario ') 
-          window.open('/sysmoto/usuarios/usuarios.php','_top')
+          window.open('/usuarios/usuarios.php','_top')
           </script>";
       
   }
@@ -158,7 +178,7 @@ if(isset($_POST["BorrarUsuario"])) {
               <div class="col-md-12">
                   
             </div> 
-              <form method='post' action="usuario.php">
+              <form method='post' action="usuario.php" enctype="multipart/form-data">
               <div class="card">
                 
                 
@@ -166,39 +186,10 @@ if(isset($_POST["BorrarUsuario"])) {
                     <h5 class="card-header">Detalles cuenta</h5>
                     <!-- Account -->
                     <div class="card-body">
-                      <div class="d-flex align-items-start align-items-sm-center gap-4">
-                        <img
-                          src="/sysmoto/assets/img/avatars/<?php echo $datos_usuario["Imagen"];?>"
-                          alt="user-avatar"
-                          class="d-block rounded"
-                          height="100"
-                          width="100"
-                          id="uploadedAvatar"
-                        />
-                        <div class="button-wrapper">
-                          <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-                            <span class="d-none d-sm-block">Cambiar foto</span>
-                            <i class="bx bx-upload d-block d-sm-none"></i>
-                            <input
-                              type="file"
-                              id="upload"
-                              class="account-file-input"
-                              hidden
-                              accept="image/png, image/jpeg"
-                            />
-                          </label>
-                          <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
-                            <i class="bx bx-reset d-block d-sm-none"></i>
-                            <span class="d-none d-sm-block">Borrar</span>
-                          </button>
-
-                          <p class="text-muted mb-0">Debe ser JPG, GIF o PNG. Maximo tamaño de 800K</p>
-                        </div>
-                      </div>
-                    </div>
+                   
                     <hr class="my-0" />
                     <div class="card-body">
-                      <form id="formAccountSettings" method="POST" onsubmit="return false">
+                     
                         <div class="row">
                           <div class="mb-3 col-md-6">
                             <label for="Nombre" class="form-label">Nombre</label>
@@ -247,6 +238,33 @@ if(isset($_POST["BorrarUsuario"])) {
                           </div>
                           
                         </div>
+                        <hr>
+                        <div class="card-body">
+                          <div class="d-flex align-items-start align-items-sm-center gap-4">
+                              <?php 
+                             
+                                  if(isset($datos_usuario['Foto'])) {
+                                      echo '<img src = "data:image/png;base64,' . base64_encode($datos_usuario["Foto"]) . '" width = "80px" height = "80px"/>' ; 
+                                      }
+                                    else {
+                                      echo '<img src = "/assets/img_user/user_default.png" width = "80px" height = "80px"/>' ; 
+                                    }  
+                                      ?>
+                              <div class="button-wrapper">
+                                <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                                  <span class="d-none d-sm-block">Cambiar foto</span>
+                                  <i class="bx bx-upload d-block d-sm-none"></i>
+                                  <input type="file" id="upload" class="account-file-input" name="cambiar_imagen" hidden accept="image/png, image/jpeg" />
+                                </label>
+                                <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                                  <i class="bx bx-reset d-block d-sm-none"></i>
+                                  <span class="d-none d-sm-block">Borrar</span>
+                                </button>
+                                <p class="text-muted mb-0">Debe ser JPG, GIF o PNG. Maximo tamaño de 800K</p>
+                              </div>
+                           </div>
+                          </div>
+                   
                         <input type="hidden" name="id_user" value="<?php echo $id_usuario;?>" > 
                         <div class="mt-2">
                           <button type="submit" name="CambiarDatos" class="btn btn-primary me-2">Salvar cambios</button>
@@ -265,7 +283,7 @@ if(isset($_POST["BorrarUsuario"])) {
                           <p class="mb-0">Confirme antes de solicitarlo.</p>
                         </div>
                       </div>
-                      <form id="formAccountDeactivation" onsubmit="return false">
+                
                         <div class="form-check mb-3">
                           <input
                             class="form-check-input"
@@ -286,7 +304,7 @@ if(isset($_POST["BorrarUsuario"])) {
               </div>
              
             </div>
-            
+            </form>
             
             </div>
             <!-- / Content -->
@@ -336,6 +354,6 @@ if(isset($_POST["BorrarUsuario"])) {
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-      </form>
+     
   </body>
 </html>

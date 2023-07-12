@@ -1,6 +1,6 @@
 <?php
 function Listar_usuarios($ConexionBD) {
-    $SQL = "SELECT u.Id,u.Nombre,u.Apellido,u.Usuario,u.email,u.IdRol,u.Imagen,
+    $SQL = "SELECT u.Id,u.Nombre,u.Apellido,u.Usuario,u.email,u.IdRol,u.Foto,
     u.Activo,u.Sexo,r.Rol FROM usuarios u
     LEFT JOIN roles r ON (r.Id = u.IdRol) order by 4;";
     $rs = mysqli_query($ConexionBD, $SQL);
@@ -11,7 +11,7 @@ function Listar_usuarios($ConexionBD) {
             $Usuarios[$i]['Apellido'] = $data['Apellido'];
             $Usuarios[$i]['Usuario'] = $data['Usuario'];
             $Usuarios[$i]['Email'] = $data['email'];
-            $Usuarios[$i]['Imagen'] = $data['Imagen'];
+            $Usuarios[$i]['Foto'] = $data['Foto'];
             $Usuarios[$i]['Activo'] = $data['Activo'];
             $Usuarios[$i]['Sexo'] = $data['Sexo'];
             $Usuarios[$i]['Rol'] = $data['Rol'];
@@ -22,7 +22,7 @@ function Listar_usuarios($ConexionBD) {
 
 
 function Datos_usuario($id_usuario,$ConexionBD) {
-    $SQL = "SELECT u.Id,u.Nombre,u.Apellido,u.Usuario,u.email,u.IdRol,u.Imagen,
+    $SQL = "SELECT u.Id,u.Nombre,u.Apellido,u.Usuario,u.email,u.IdRol,u.Foto,
     u.Activo,u.Sexo,r.Rol FROM usuarios u
     LEFT JOIN roles r ON (r.Id = u.IdRol) 
     WHERE u.Id = '$id_usuario';";
@@ -34,7 +34,7 @@ function Datos_usuario($id_usuario,$ConexionBD) {
             $Dato_Usuario['Apellido'] = $data['Apellido'];
             $Dato_Usuario['Usuario'] = $data['Usuario'];
             $Dato_Usuario['Email'] = $data['email'];
-            $Dato_Usuario['Imagen'] = $data['Imagen'];
+            $Dato_Usuario['Foto'] = $data['Foto'];
             $Dato_Usuario['Activado'] = $data['Activo'];
             $Dato_Usuario['Sexo'] = $data['Sexo'];
             $Dato_Usuario['Rol'] = $data['Rol'];
@@ -106,6 +106,17 @@ function Borrar_Usuario($id_usuario,$ConexionBD) {
         $resultado="Correctamente";
         } else {
            $resultado="Incorrectamente porque ".$ConexionBD->error;
+        }
+    return $resultado;
+}
+
+function imagen_usuario($datos_usuario,$imagen,$ConexionBD) {
+    $id=$datos_usuario["id_user"];
+    $sql = "  UPDATE usuarios SET FOTO = '$imagen' WHERE Id=$id;";
+    if($ConexionBD->query($sql) === TRUE) {
+        $resultado="Imagen subida Correctamente";
+        } else {
+            $resultado="Incorrectamente porque ".$ConexionBD->error;
         }
     return $resultado;
 }
