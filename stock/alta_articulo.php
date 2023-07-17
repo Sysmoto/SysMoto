@@ -3,7 +3,7 @@ session_start();
 //print_r($_SESSION);
 if (empty($_SESSION["Usuario"])) {
 
-    header("Location: /sysmoto/logout.php");
+    header("Location: ../logout.php");
 
     exit();
 }
@@ -42,7 +42,7 @@ if(isset($_POST["DarAlta"])) {
     } 
     echo "<script> 
          alert('$statusMsg') 
-         window.open('/sysmoto/stock/articulos.php','_top')
+         window.open('/stock/articulos.php','_top')
           </script>";
          
   }
@@ -51,13 +51,13 @@ if(isset($_POST["DarAlta"])) {
     $borrar_imagen=borrarimagen($_POST,$MiConexion);  
     echo "<script> 
          alert('$borrar_imagen') 
-         window.open('/sysmoto/stock/articulos.php','_top')
+         window.open('/stock/articulos.php','_top')
           </script>"; 
   }
    
  //  echo "<script> 
    //       alert('Se a cambiado datos de $usuario $modificar_usuario') 
-    //      window.open('/sysmoto/usuarios/usuarios.php','_top')
+    //      window.open('//usuarios/usuarios.php','_top')
       //   </script>";
 //}
 
@@ -70,7 +70,7 @@ if(isset($_POST["DarAlta"])) {
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="/sysmoto/assets/"
+  data-assets-path="/assets/"
   data-template="vertical-menu-template-free"
 >
   <head>
@@ -85,7 +85,7 @@ if(isset($_POST["DarAlta"])) {
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/sysmoto/assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -96,26 +96,26 @@ if(isset($_POST["DarAlta"])) {
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="/sysmoto/assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="/sysmoto/assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="/sysmoto/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="/sysmoto/assets/css/demo.css" />
+    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="/sysmoto/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <link rel="stylesheet" href="/sysmoto/assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="/sysmoto/assets/vendor/js/helpers.js"></script>
+    <script src="/assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="/sysmoto/assets/js/config.js"></script>
+    <script src="/assets/js/config.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script language="javascript">
@@ -345,22 +345,22 @@ if(isset($_POST["DarAlta"])) {
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="/sysmoto/assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="/sysmoto/assets/vendor/libs/popper/popper.js"></script>
-    <script src="/sysmoto/assets/vendor/js/bootstrap.js"></script>
-    <script src="/sysmoto/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/assets/vendor/js/bootstrap.js"></script>
+    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="/sysmoto/assets/vendor/js/menu.js"></script>
+    <script src="/assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="/sysmoto/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
     <!-- Main JS -->
-    <script src="/sysmoto/assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="/sysmoto/assets/js/dashboards-analytics.js"></script>
+    <script src="/assets/js/dashboards-analytics.js"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

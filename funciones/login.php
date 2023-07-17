@@ -13,12 +13,14 @@ function DatosLogin($vUsuario, $vClave, $MiConexion){
         
     $data = mysqli_fetch_array($rs) ;
     if (!empty($data)) {
+        
         $Usuario['IdUsuario'] = $data['Id'];
         $idUsuario = $data['Id'];
         $Usuario['NOMBRE'] = $data['Nombre'];
         $Usuario['APELLIDO'] = $data['Apellido'];
         $Usuario['NIVEL'] = $data['Rol'];
         $Usuario['IDNIVEL'] = $data['IdRol'];
+        $Usuario['FOTO'] = $data['Foto'];
         $Usuario['USUARIO'] = $vUsuario;
         switch ($data['Sexo']) {
             case 'F':

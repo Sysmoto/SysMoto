@@ -20,9 +20,9 @@ if(isset($_POST["AltaUsuario"])) {
   $alta_usuario=Alta_Usuario($_POST,$MiConexion);
   $usuario=$_POST["Nombre"]." ".$_POST["Apellido"];
    //echo $alta_usuario;
-   echo "<script> 
-          alert('Se a cambiado datos de $usuario $alta_usuario') 
-        window.open('/sysmoto/usuarios/usuarios.php','_top')      
+  echo "<script> 
+    alert('Se a cambiado datos de $usuario $alta_usuario') 
+    window.open('/usuarios/usuarios.php','_top')      
          </script>";
 }
 
@@ -139,7 +139,7 @@ if(isset($_POST["AltaUsuario"])) {
               <div class="col-md-12">
                   
             </div> 
-              <form method='post' >
+              <form method='post'  action="nuevo_usuario.php" enctype="multipart/form-data">
               <div class="card">
                 
                 
@@ -165,6 +165,7 @@ if(isset($_POST["AltaUsuario"])) {
                               id="upload"
                               class="account-file-input"
                               hidden
+                              name="Foto" 
                               accept="image/png, image/jpeg"
                             />
                           </label>

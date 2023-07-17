@@ -2,7 +2,7 @@
 session_start();
 if (empty($_SESSION["Usuario"])) {
 
-    header("Location: /sysmoto/logout.php");
+    header("Location: /logout.php");
 
     exit();
 }
@@ -519,7 +519,7 @@ for ($i = 0; $i < $cantidadIV; $i++) {
   echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Descripcion'].'</th>';
   echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Precio_unitario'].'</th>';
   echo '<th>'.$ResultadoSelectDetalleVenta[$i]['Precio_final'].'</th>';
-  echo '<td><a href="/sysmoto/pedidos/eliminar_item_detalleventa.php?id='.$ResultadoSelectDetalleVenta[$i]['Id'].'">Eliminar</a></td>';
+  echo '<td><a href="/pedidos/eliminar_item_detalleventa.php?id='.$ResultadoSelectDetalleVenta[$i]['Id'].'">Eliminar</a></td>';
   }
 
 }

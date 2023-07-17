@@ -3,7 +3,7 @@
 session_start();
 if (empty($_SESSION["Usuario"])) {
 
-    header("Location: /sysmoto/logout.php");
+    header("Location: /logout.php");
 
     exit();
 }
@@ -248,7 +248,7 @@ if($id_venta==$idactual){
     <hr class="my-4">
     <p class="lead">
       
-      <a class="btn btn-primary" href="/sysmoto/pedidos/presupuesto.php" >
+      <a class="btn btn-primary" href="/pedidos/presupuesto.php" >
         <span class="bx bx-run bx-flashing">Volver </span>
       </a>
 

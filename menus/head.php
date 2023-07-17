@@ -6,8 +6,16 @@
 <li class="nav-item navbar-dropdown dropdown-user dropdown">
                   <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="<?php echo "/assets/img/avatars/".$_SESSION['Usuario_Img']; ?>" alt class="w-px-40 h-auto rounded-circle" />
-                    
+                      <?php
+                     
+                      if(!empty($_SESSION['Usuario_Img'])) {
+                        echo '<img src = "data:image/png;base64,' . base64_encode($_SESSION["Usuario_Img"]) . '" alt class="w-px-40 h-auto rounded-circle""/>' ; 
+                                      }
+                                    else {
+                                      echo '<img src = "/assets/img_user/user_default.png" alt class="w-px-40 h-auto rounded-circle"/>' ; 
+                                    }  
+                                      ?>
+
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -16,7 +24,6 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src=".<?php echo $_SESSION['Usuario_Img']; ?>" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">

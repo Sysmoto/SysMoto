@@ -67,12 +67,12 @@
               
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="pages-account-settings-account.html" class="menu-link">
+                    <a href="/proveedores/proveedor.php" class="menu-link">
                       <div data-i18n="Account">Proveedor</div>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="pages-account-settings-notifications.html" class="menu-link">
+                    <a href="/proveedores/estadisticas.php" class="menu-link">
                       <div data-i18n="Notifications">Estadisticas Proveedor</div>
                     </a>
                   </li>
@@ -88,17 +88,17 @@
                 </a>
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="pages-account-settings-account.html" class="menu-link">
+                    <a href="/pedidos_proveedores/productos.php" class="menu-link">
                       <div data-i18n="Account">Productos</div>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="pages-account-settings-account.html" class="menu-link">
+                    <a href="/pedidos_proveedores/pedidos.php" class="menu-link">
                       <div data-i18n="Account">Pedidos</div>
                     </a>
                   </li>
                   <li class="menu-item">
-                    <a href="pages-account-settings-notifications.html" class="menu-link">
+                    <a href="/pedidos_proveedores/estadisticas.php" class="menu-link">
                       <div data-i18n="Notifications">Estadisticas Pedidos</div>
                     </a>
                   </li>
@@ -119,17 +119,17 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="pages-account-settings-account.html" class="menu-link">
+                  <a href="/stock/alertas.php" class="menu-link">
                     <div data-i18n="Account">Alertas</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="pages-account-settings-account.html" class="menu-link">
+                  <a href="/stock/almacenes.php" class="menu-link">
                     <div data-i18n="Account">Almacenes</div>
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="pages-account-settings-notifications.html" class="menu-link">
+                  <a href="/stock/estadisticas.php" class="menu-link">
                     <div data-i18n="Notifications">Estadisticas de Stock</div>
                   </a>
                 </li>
@@ -146,7 +146,7 @@
               </a>
               <ul class="menu-sub">
                 <li class="menu-item">
-                  <a href="pages-account-settings-account.html" class="menu-link">
+                  <a href="/reportes/reportes.php" class="menu-link">
                     <div data-i18n="Account">Reportes</div>
                   </a>
                 </li>

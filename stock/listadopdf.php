@@ -60,13 +60,17 @@ function FancyTable($header, $articulos) {
     $fill = true;
     for ($i=0; $i<$CantidadArticulos; $i++) 
     {
+        $foto=base64_encode($articulos[$i]['ART_FOTO']);
+     //  $this->Image($foto);
+
         $this->Cell($w[0],6,$articulos[$i]['MARCA_NOMBRE'],'LR',0,'L',$fill);
         $this->Cell($w[1],6,$articulos[$i]['MODELO_NOMBRE'],'LR',0,'L',$fill);
         $this->Cell($w[2],6,$articulos[$i]['ART_INFOADICIONAL'],'LR',0,'L',$fill);
         $this->Cell($w[3],6,'$'.$articulos[$i]['ART_PRECIOCOMPRA'],'LR',0,'L',$fill);
         $this->Cell($w[4],6,$articulos[$i]['ART_UBICACION'],'LR',0,'L',$fill);
         $this->Cell($w[5],6,$articulos[$i]['ART_CODIGO'],'LR',0,'L',$fill);
-        $this->Cell($w[6],6,"-",'LR',0,'L',$fill);
+        $this->Cell($w[6],6,$foto ,'LR',0,'L',$fill);
+        $this->Cell($w[6],6,"/",'LR',0,'L',$fill);
 
         $this->Ln();
         $fill = !$fill;

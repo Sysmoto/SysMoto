@@ -11,8 +11,15 @@ if (empty($_SESSION["Usuario"])) {
 require_once '../funciones/conexion.php';
 $MiConexion=ConexionBD();
 require_once '../funciones/usuarios.php';
-
-$usuarios=Listar_usuarios($MiConexion);
+if(isset($_POST["Filter"])){
+  $id_rol=$_POST["Filter"];
+  $filtro= "WHERE IDROL = " . $_POST["Filter"];
+  //$rol=ver_rol($id_rol,$MiConexion);
+  }
+  else {
+    $filtro = "";
+  }
+$usuarios=Listar_usuarios($MiConexion,$filtro);
 $CantidadUsuarios=count($usuarios);
 ?>
 <!DOCTYPE html>
@@ -125,11 +132,18 @@ $CantidadUsuarios=count($usuarios);
             <div class="container-xxl flex-grow-1 container-p-y">
               <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Configuracion de Cuentas</h4> 
               <div class="col-md-12">
+                <?php
+                if(isset($_POST["Filter"])){
+                  echo "<h5>" . "</h5>";
+                
+                }
+                else { ?>
                   <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                      <a class="nav-link active" href="/sysmoto/usuarios/nuevo_usuario.php"><i class="bx bx-user me-1"></i> Nuevo</a>
+                      <a class="nav-link active" href="/usuarios/nuevo_usuario.php"><i class="bx bx-user me-1"></i> Nuevo</a>
                     </li>
                   </ul>
+                  <?php } ?>
             </div> 
               <form method='post' action="usuario.php">
               <div class="card">
@@ -156,7 +170,7 @@ $CantidadUsuarios=count($usuarios);
                         <td>
                           <div class="avatar">
                           <?php
-                          if(isset($usuarios[$i]['Foto'])) {
+                          if(!empty($usuarios[$i]['Foto'])) {
                                       echo '<img src = "data:image/png;base64,' . base64_encode($usuarios[$i]["Foto"]) . '" width = "80px" height = "80px"/>' ; 
                                       }
                                     else {

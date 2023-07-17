@@ -21,7 +21,7 @@ if (!empty($_POST['BotonLogin'])) {
         $_SESSION['Usuario_Apellido']   =   $UsuarioLogueado['APELLIDO'];
         $_SESSION['Usuario_Nivel']      =   $UsuarioLogueado['NIVEL'];
          $_SESSION['Usuario_Nivel_Id']      =   $UsuarioLogueado['IDNIVEL'];
-        $_SESSION['Usuario_Img']        =   $UsuarioLogueado['IMAGEN'];
+        $_SESSION['Usuario_Img']        =   $UsuarioLogueado['FOTO'];
         $_SESSION['Usuario_Saludo']        =   $UsuarioLogueado['SALUDO'];
         $_SESSION['Usuario_Email']        =   $UsuarioLogueado['EMAIL'];
         if ($UsuarioLogueado['ACTIVO']==0) {

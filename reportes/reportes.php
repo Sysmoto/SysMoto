@@ -3,20 +3,10 @@ session_start();
 //print_r($_SESSION);
 if (empty($_SESSION["Usuario"])) {
 
-    header("Location: ../logout.php");
+    header("Location: logout.php");
 
     exit();
 }
-
-require_once '../funciones/conexion.php';
-$MiConexion=ConexionBD();
-require_once '../funciones/usuarios.php';
-
-$roles=Listar_Roles_count($MiConexion);
-$CantidadRoles=count($roles);
-$filtro="";
-$usuarios=Listar_usuarios($MiConexion,$filtro);
-$CantidadUsuarios=count($usuarios);
 ?>
 <!DOCTYPE html>
 
@@ -121,47 +111,34 @@ $CantidadUsuarios=count($usuarios);
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
+             <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="row">
+                <div class="col-lg-8 mb-4 order-0">
+                  <div class="card">
+                    <div class="d-flex align-items-end row">
+                      <div class="col-sm-10">
+                        <div class="card-body">
+                          <h4 class="card-title text-primary">¡Proximamente! </h4>
+                          <p class="mb-15">
+                            Sysmoto esta en desarrollo 
+                            <BR>¡Ya pronto veremos esta pagina en los proximos sprints!
+                          </p>
 
-            
-                
-            
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Roles</h4> 
-              
-              <form method='post' action="usuarios.php">
-              <div class="card">
-                
-                <div class="table-responsive text-nowrap">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Rol</th>
-                        <th>Cant. Usuarios</th>
-                    
-                        <th>Accion</th>  
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                    <?php for ($i=0; $i<$CantidadRoles; $i++) { ?>               
-                    <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>
-                        
-                        <?php echo $roles[$i]['Rol'] ;?></td>
-                        <td><strong><?php echo $roles[$i]['Total'] ;?></td>
-                           
-                        <td>
-                          <button type="submit" class="btn btn-secondary" name="Filter" value="<?php echo $roles[$i]['Id'];?>" >
-                            <span class="tf-icons bx bx-user me-1"></span>&nbsp; Ver 
-                          </button> 
-                        </td>
-                      </tr>
-                      <?php } ?>
-                      </tbody>
-                  </table>
-                 
-                </div>
-              </div>
-             
+                          
+                        </div>
+                      </div>
+                      <div class="col-sm-5 text-center text-sm-left">
+                        <div class="card-body pb-0 px-0 px-md-4">
+                          <img
+                            src="../assets/img/illustrations/man-with-laptop-light.png"
+                            height="140"
+                            alt="View Badge User"
+                            data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                            data-app-light-img="illustrations/man-with-laptop-light.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
             </div>
             
             
@@ -213,6 +190,5 @@ $CantidadUsuarios=count($usuarios);
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-      </form>
   </body>
 </html>

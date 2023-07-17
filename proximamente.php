@@ -3,20 +3,10 @@ session_start();
 //print_r($_SESSION);
 if (empty($_SESSION["Usuario"])) {
 
-    header("Location: ../logout.php");
+    header("Location: logout.php");
 
     exit();
 }
-
-require_once '../funciones/conexion.php';
-$MiConexion=ConexionBD();
-require_once '../funciones/usuarios.php';
-
-$roles=Listar_Roles_count($MiConexion);
-$CantidadRoles=count($roles);
-$filtro="";
-$usuarios=Listar_usuarios($MiConexion,$filtro);
-$CantidadUsuarios=count($usuarios);
 ?>
 <!DOCTYPE html>
 
@@ -25,7 +15,7 @@ $CantidadUsuarios=count($usuarios);
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="../assets/"
+  data-assets-path="./assets/"
   data-template="vertical-menu-template-free"
 >
   <head>
@@ -40,7 +30,7 @@ $CantidadUsuarios=count($usuarios);
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="./assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -51,26 +41,26 @@ $CantidadUsuarios=count($usuarios);
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="./assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="./assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="./assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="./assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="./assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="../assets/vendor/js/helpers.js"></script>
+    <script src="./assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../assets/js/config.js"></script>
+    <script src="./assets/js/config.js"></script>
   </head>
 
   <body>
@@ -78,7 +68,7 @@ $CantidadUsuarios=count($usuarios);
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
         <!-- Menu -->
-        <?php include("../menus/menu.php");?>
+        <?php include("./menus/menu.php");?>
         <!-- / Menu -->
 
         <!-- Layout container -->
@@ -110,7 +100,7 @@ $CantidadUsuarios=count($usuarios);
                
 
                 <!-- User -->
-                <?php include("../menus/head.php"); ?>
+                <?php include("./menus/head.php"); ?>
                 <!--/ User -->
               </ul>
             </div>
@@ -121,47 +111,34 @@ $CantidadUsuarios=count($usuarios);
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
+             <div class="container-xxl flex-grow-1 container-p-y">
+              <div class="row">
+                <div class="col-lg-8 mb-4 order-0">
+                  <div class="card">
+                    <div class="d-flex align-items-end row">
+                      <div class="col-sm-10">
+                        <div class="card-body">
+                          <h4 class="card-title text-primary">¡Proximamente! </h4>
+                          <p class="mb-15">
+                            Sysmoto esta en desarrollo 
+                            <BR>¡Ya pronto veremos esta pagina en los proximos sprints!
+                          </p>
 
-            
-                
-            
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Roles</h4> 
-              
-              <form method='post' action="usuarios.php">
-              <div class="card">
-                
-                <div class="table-responsive text-nowrap">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Rol</th>
-                        <th>Cant. Usuarios</th>
-                    
-                        <th>Accion</th>  
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                    <?php for ($i=0; $i<$CantidadRoles; $i++) { ?>               
-                    <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>
-                        
-                        <?php echo $roles[$i]['Rol'] ;?></td>
-                        <td><strong><?php echo $roles[$i]['Total'] ;?></td>
-                           
-                        <td>
-                          <button type="submit" class="btn btn-secondary" name="Filter" value="<?php echo $roles[$i]['Id'];?>" >
-                            <span class="tf-icons bx bx-user me-1"></span>&nbsp; Ver 
-                          </button> 
-                        </td>
-                      </tr>
-                      <?php } ?>
-                      </tbody>
-                  </table>
-                 
-                </div>
-              </div>
-             
+                          
+                        </div>
+                      </div>
+                      <div class="col-sm-5 text-center text-sm-left">
+                        <div class="card-body pb-0 px-0 px-md-4">
+                          <img
+                            src="../assets/img/illustrations/man-with-laptop-light.png"
+                            height="140"
+                            alt="View Badge User"
+                            data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                            data-app-light-img="illustrations/man-with-laptop-light.png"
+                          />
+                        </div>
+                      </div>
+                    </div>
             </div>
             
             
@@ -194,25 +171,24 @@ $CantidadUsuarios=count($usuarios);
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../assets/vendor/libs/popper/popper.js"></script>
-    <script src="../assets/vendor/js/bootstrap.js"></script>
-    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="./assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="./assets/vendor/libs/popper/popper.js"></script>
+    <script src="./assets/vendor/js/bootstrap.js"></script>
+    <script src="./assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="../assets/vendor/js/menu.js"></script>
+    <script src="./assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="./assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
     <!-- Main JS -->
-    <script src="../assets/js/main.js"></script>
+    <script src="./assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="../assets/js/dashboards-analytics.js"></script>
+    <script src="./assets/js/dashboards-analytics.js"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-      </form>
   </body>
 </html>

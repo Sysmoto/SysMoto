@@ -13,7 +13,9 @@ $MiConexion=ConexionBD();
 require_once '../funciones/usuarios.php';
 $id_usuario=$_POST["id_user"];
 $datos_usuario=Datos_usuario($id_usuario,$MiConexion);
-
+//$domicilio_usuario=Dom_usuario($datos_usuario['Dom'],$MiConexion);
+//$contacto_usuario=Cont_usuario($datos_usuario['Cont'],$MiConexion);
+//print_r($domicilio_usuario);
 $CantidadDatos=count($datos_usuario);
 $roles=Listar_Roles($MiConexion);
 $CantidadRoles=count($roles);
@@ -185,9 +187,9 @@ if(isset($_POST["BorrarUsuario"])) {
                 <div class="card mb-4">
                     <h5 class="card-header">Detalles cuenta</h5>
                     <!-- Account -->
-                    <div class="card-body">
+                  
                    
-                    <hr class="my-0" />
+                    
                     <div class="card-body">
                      
                         <div class="row">
@@ -238,7 +240,8 @@ if(isset($_POST["BorrarUsuario"])) {
                           </div>
                           
                         </div>
-                        <hr>
+                        <hr class="my-0" />
+                        <h5 class="card-header">Foto</h5>
                         <div class="card-body">
                           <div class="d-flex align-items-start align-items-sm-center gap-4">
                               <?php 
@@ -264,7 +267,32 @@ if(isset($_POST["BorrarUsuario"])) {
                               </div>
                            </div>
                           </div>
-                   
+                          <hr class="my-0" />
+                          <!--
+                          <h5 class="card-header">Domicilio</h5>
+                          <div class="card-body">
+                            <div class="row">
+                              <div class="mb-3 col-md-6">
+                                <label for="Nombre" class="form-label">Calle</label>
+                                <input class="form-control" type="text" id="Calle" name="Calle" value="<?php echo $domicilio_usuario["Calle"];?>" autofocus  />
+                            </div>
+                          <div class="mb-3 col-md-3">
+                            <label for="Apellido" class="form-label">Altura</label>
+                            <input class="form-control" type="text" name="Altura" id="Altura" value="<?php echo $domicilio_usuario["Altura"];?>" />
+                          </div>
+                          <div class="mb-3 col-md-3">
+                            <label for="Email" class="form-label">CP</label>
+                            <input class="form-control" type="text" id="CP" name="CP" value="<?php echo $domicilio_usuario["CP"];?>" placeholder="john.doe@example.com" />
+                          </div>
+                            </div>
+                          </div>
+                          <hr class="my-0" />
+                          <h5 class="card-header">Contacto</h5>
+                          <div class="card-body">
+                            <div class="d-flex align-items-start align-items-sm-center gap-4">
+
+                            </div>
+                          </div> -->
                         <input type="hidden" name="id_user" value="<?php echo $id_usuario;?>" > 
                         <div class="mt-2">
                           <button type="submit" name="CambiarDatos" class="btn btn-primary me-2">Salvar cambios</button>
