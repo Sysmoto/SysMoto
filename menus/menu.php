@@ -36,12 +36,11 @@
                 </a>
 
                 <ul class="menu-sub">
-                  <li class="menu-item">
-                    <a href="/pedidos/presupuesto.php" class="menu-link">
-                      <div data-i18n="Account">Presupuesto</div>
+                   <li class="menu-item">
+                    <a href="/clientes/clientes.php" class="menu-link">
+                      <div data-i18n="Notifications">Clientes</div>
                     </a>
                   </li>
-                  
                   <li class="menu-item">
                     <a href="/pedidos/pedidos.php" class="menu-link">
                       <div data-i18n="Notifications">Pedidos</div>
@@ -49,10 +48,13 @@
                   </li>
                 
                   <li class="menu-item">
-                    <a href="/pedidos/clientes.php" class="menu-link">
-                      <div data-i18n="Notifications">Clientes</div>
+                    <a href="/pedidos/presupuesto.php" class="menu-link">
+                      <div data-i18n="Account">Presupuesto</div>
                     </a>
                   </li>
+                  
+                 
+                 
                 </ul>
               </li>
             <?php } ?>
@@ -150,6 +152,25 @@
                     <div data-i18n="Account">Reportes</div>
                   </a>
                 </li>
+
+               </ul>
+            </li>
+          <?php } ?>
+
+
+          <?php if(($_SESSION['Usuario_Nivel_Id']==1) or ($_SESSION['Usuario_Nivel_Id']==5)){ ?>
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-file   "></i>
+                
+                <div data-i18n="Account Settings">ABM</div>
+              </a>
+              <ul class="menu-sub">
+              <li class="menu-item">
+                    <a href="/clientes/clientes.php" class="menu-link">
+                      <div data-i18n="Clientes">Clientes</div>
+                    </a>
+                  </li>
                </ul>
             </li>
           <?php } ?>
