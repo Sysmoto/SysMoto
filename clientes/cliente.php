@@ -18,6 +18,11 @@ require_once '../funciones/abm.php';
 $provincias =listar_provincias($MiConexion);
 $CantidadProv=count($provincias);
 
+
+$id_cliente = $_POST["id_cliente"];
+$cliente = listar_clientes_corto($id_cliente,$MiConexion) ;
+
+//print_r($cliente);
 if(isset($_POST["DarAlta"])) {
   //$imgContent="";
 //  print_r($_POST);
@@ -164,7 +169,7 @@ if(isset($_POST["DarAlta"])) {
                 
             
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Alta de Cliente</h4> 
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Vista de Cliente</h4> 
               <div class="col-md-12">
                   
             </div> 
@@ -180,11 +185,11 @@ if(isset($_POST["DarAlta"])) {
                         <div class="row">
                           <div class="mb-3 col-md-4">
                             <label for="Nombre" class="form-label">Nombre</label>
-                            <input class="form-control" type="text" id="Nombre" name="Nombre"  autofocus required />
+                            <input class="form-control" type="text" id="Nombre" name="Nombre"  value="<?php echo $cliente["CLIENTE_NOMBRE"];?>" autofocus required />
                           </div>
                           <div class="mb-3 col-md-4">
                             <label for="Apellido" class="form-label">Apellido</label>
-                            <input class="form-control" type="text" name="Apellido" id="Apellido"  required />
+                            <input class="form-control" type="text" name="Apellido" id="Apellido" value="<?php echo $cliente["CLIENTE_APELLIDO"];?>" required />
                           </div>
                           
                         </div>
@@ -192,15 +197,15 @@ if(isset($_POST["DarAlta"])) {
                         <div class="row">
                         <div class="mb-3 col-md-3">
                             <label for="Telefono1" class="form-label">Telefono 1</label>
-                            <input class="form-control" type="text" id="Tele1" name="Tele1"  autofocus  />
+                            <input class="form-control" type="text" id="Tele1" name="Tele1" value="<?php echo $cliente["CONTACTO_TEL1"];?>"   />
                           </div>
                           <div class="mb-3 col-md-3">
                             <label for="Telefono2" class="form-label">Telefono 2</label>
-                            <input class="form-control" type="text" name="Tele2" id="Tele2"   />
+                            <input class="form-control" type="text" name="Tele2" id="Tele2"  value="<?php echo $cliente["CONTACTO_TEL2"];?>" />
                           </div>
                           <div class="mb-3 col-md-3">
                             <label for="Email" class="form-label">Email</label>
-                            <input class="form-control" type="email" name="email" id="email"   />
+                            <input class="form-control" type="email" name="email" id="email"  value="<?php echo $cliente["CONTACTO_EMAIL"];?>" />
                           </div>
                           
                         </div>
@@ -210,19 +215,19 @@ if(isset($_POST["DarAlta"])) {
                         <div class="mb-3 col-md-3">
                             
                             <label for="Calle" class="form-label">Calle</label>
-                            <input class="form-control" type="text" id="Calle" name="Calle"   />
+                            <input class="form-control" type="text" id="Calle" name="Calle"  value="<?php echo $cliente["DOM_CALLE"];?>" />
                           
                         </div>
                         <div class="mb-3 col-md-1">
                             
                             <label for="Altura" class="form-label">Altura</label>
-                            <input class="form-control" type="text" id="Altura" name="Altura"   />
+                            <input class="form-control" type="text" id="Altura" name="Altura"   value="<?php echo $cliente["DOM_ALTURA"];?>" />
                           
                         </div>
                         <div class="mb-3 col-md-1">
                             
                             <label for="CP" class="form-label">CP</label>
-                            <input class="form-control" type="text" id="CP" name="CP"   />
+                            <input class="form-control" type="text" id="CP" name="CP"   value="<?php echo $cliente["DOM_CP"];?>" />
                           
                         </div>
                         <div class="mb-3 col-md-3">
@@ -231,14 +236,19 @@ if(isset($_POST["DarAlta"])) {
                               <option value=""></option>
                               <?php 
                                 foreach ($provincias as $id_prov =>$val) {
-                                echo "<option value =". $id_prov . " > ". $val . "</option>";
+                                  if($cliente["PROVINCIA_ID"] == $id_prov){ 
+                                      echo "<option value =". $id_prov . " SELECTED> ". $val . "</option>";
+                                  }
+                                  else {
+                                    echo "<option value =". $id_prov . " > ". $val . "</option>";
+                                  }
                               }    ?>
                             </select>
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="Ciudad">Ciudad</label>
                             <select id="Ciudad"  name="Ciudad" class="select2 form-select" >
-                              
+                              <?php       echo "<option value =". $id_prov . " > ". $cliente["CIUDAD_NOMBRE"] . "</option>"; ?>
                             </select>
                           </div>
 
@@ -258,7 +268,7 @@ if(isset($_POST["DarAlta"])) {
                     
                         
                         <div class="mt-2">
-                          <button type="submit" name="DarAlta" class="btn btn-primary me-2">Dar Alta</button>
+                          <button type="submit" name="Modificar" class="btn btn-primary me-2">Modificar</button>
                           
                        
                       

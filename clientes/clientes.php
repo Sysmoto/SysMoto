@@ -13,6 +13,7 @@ $MiConexion=ConexionBD();
 require_once '../funciones/clientes.php';
 
 $clientes= listar_clientes_largo($MiConexion);
+
 $CantidadClientes=count($clientes);
 ?>
 <!DOCTYPE html>
@@ -131,7 +132,7 @@ $CantidadClientes=count($clientes);
                     </li> 
                     <li class="nav-item">&nbsp;&nbsp;&nbsp;&nbsp;</lib>
                     <li class="nav-item">
-                    <a class="nav-link active" href="/clientes/listadopdf.php" target="_blank" ><i class="bx bx-table bx-flashing"></i> Listado a imprimir</a>
+                    <!-- <a class="nav-link active" href="/clientes/listadopdf.php" target="_blank" ><i class="bx bx-table bx-flashing"></i> Listado a imprimir</a> -->
                     </li>
                   </ul>
             </div> 
