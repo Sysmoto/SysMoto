@@ -132,16 +132,8 @@ $CantidadClientes=count($clientes);
                 
             <form method='post' action="" enctype="multipart/form-data">
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Clientes</h4> 
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Presupuesto</h4> 
               <div class="row">
-                <div class="mb-3 col-md-3">
-                <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                    <li class="nav-item">
-                          <a class="nav-link active" href="/clientes/alta_cliente.php"><i class="bx bx-user-plus bx-flashing"></i> Nuevo</a>
-                    </li></ul>      
-                </div>
-                <div class="mb-3 col-md-3">
-                </div>
                 
                 <div class="mb-3 col-md-3">
                       <input class="form-control" type="text" id="Busqueda" name="Busqueda"  value="<?php ;?>"  />
@@ -149,6 +141,8 @@ $CantidadClientes=count($clientes);
                 <div class="mb-3 col-md-3">
                 <button type="submit" name="Buscar" class="btn btn-primary me-2">Buscar Cliente</button>
                 </div>
+                <div class="mb-3 col-md-3"></div>
+                <div class="mb-3 col-md-3"></div>
                 
             </div> 
             </form>

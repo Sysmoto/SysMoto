@@ -10,19 +10,18 @@ if (empty($_SESSION["Usuario"])) {
 
 require_once '../funciones/conexion.php';
 $MiConexion=ConexionBD();
-require_once '../funciones/clientes.php';
+require_once '../funciones/proveedores.php';
 
 $filtro = '';
 
 if(isset($_POST["Buscar"])) {
   $busqueda = $_POST['Busqueda'];
-    $filtro = " WHERE CLIENTE_NOMBRE LIKE '%" . $busqueda . "%' OR CLIENTE_APELLIDO  LIKE '%" . $busqueda . "%' OR  CLIENTE_ID  LIKE '%" . $busqueda . "%' ";
+    $filtro = " WHERE p.PROVE_NOMBRE LIKE '%" . $busqueda . "%' OR p.PROVE_INFO  LIKE '%" . $busqueda . "%' ";
   
 }
 
-$clientes= listar_clientes_largo($filtro,$MiConexion);
-
-$CantidadClientes=count($clientes);
+$proveedores= listar_proveedores($filtro,$MiConexion);
+$CantidadProveedores=count($proveedores);
 ?>
 <!DOCTYPE html>
 
@@ -132,12 +131,12 @@ $CantidadClientes=count($clientes);
                 
             <form method='post' action="" enctype="multipart/form-data">
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Clientes</h4> 
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Proveedores</h4> 
               <div class="row">
                 <div class="mb-3 col-md-3">
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                          <a class="nav-link active" href="/clientes/alta_cliente.php"><i class="bx bx-user-plus bx-flashing"></i> Nuevo</a>
+                          <a class="nav-link active" href="/proveedores/alta_proveedor.php"><i class="bx bx-user-plus bx-flashing"></i> Nuevo</a>
                     </li></ul>      
                 </div>
                 <div class="mb-3 col-md-3">
@@ -147,12 +146,12 @@ $CantidadClientes=count($clientes);
                       <input class="form-control" type="text" id="Busqueda" name="Busqueda"  value="<?php ;?>"  />
                 </div>
                 <div class="mb-3 col-md-3">
-                <button type="submit" name="Buscar" class="btn btn-primary me-2">Buscar Cliente</button>
+                <button type="submit" name="Buscar" class="btn btn-primary me-2">Buscar Proveedor</button>
                 </div>
                 
             </div> 
             </form>
-              <form method='post' action="cliente.php" enctype="multipart/form-data" >
+              <form method='post' action="proveedor.php" enctype="multipart/form-data" >
               <div class="card">
                 
                 <div class="table-responsive text-nowrap">
@@ -160,22 +159,34 @@ $CantidadClientes=count($clientes);
                     <thead>
                       <tr>
                         <th>Nombre</th>
-                        <th>Apellido</th>                        
-                        <th>Domicilio</th>
-                        
+                        <th>Telefono 1</th>                        
+                        <th>Telefono 2</th>
+                        <th>Web</th>
+                        <th>Mail</th>
                         <th>Accion</th>  
                       </tr>
                     </thead>
                     <tbody class="table-border-bottom-0">
-                    <?php for ($i=0; $i<$CantidadClientes; $i++) { ?>               
-                    
+                    <?php for ($i=0; $i<$CantidadProveedores; $i++) { ?>               
+                      
                       <tr>
                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i> 
-                        <strong><?php echo $clientes[$i]['CLIENTE_NOMBRE']; ?></strong></td>
-                        <td><?php echo $clientes[$i]['CLIENTE_APELLIDO'];?></td>
-                        <td><?php echo $clientes[$i]['DOM_CALLE'] . " " . $clientes[$i]['DOM_ALTURA'] . " - " . $clientes[$i]['CIUDAD_NOMBRE'] . " / " . $clientes[$i]['PROVINCIA_NOMBRE']; ?> </td>   
+                        <strong><?php echo $proveedores[$i]['PROVE_NOMBRE'] ; ?></strong></td>
+                        <td><?php echo $proveedores[$i]['CONTACTO_TEL1'];?></td>
+                        <td><?php echo $proveedores[$i]['CONTACTO_TEL2']; ?> </td>   
+                        <td>  
+                          <button type="button" class="btn btn-secondary" onclick="window.open('<?php echo 'http:\/\/' . $proveedores[$i]['CONTACTO_WEB']; ?>', '_blank')" title="<?php echo $proveedores[$i]['CONTACTO_WEB']; ?>">
+                             <span class="tf-icons bx bx-cart-alt"></span> &nbsp; Web
+                          </button>
+                        </td>  
+                        <td><button type="button" class="btn btn-secondary" onclick="location.href='<?php echo 'mailto:' . $proveedores[$i]['CONTACTO_EMAIL']; ?>'" title="<?php echo $proveedores[$i]['CONTACTO_EMAIL']; ?>" >
+                              <span class="tf-icons bx bx-envelope"></span> &nbsp; Mail
+                            </button>
+                        </td>
+                      
+                        
                         <td>
-                          <button type="submit" class="btn btn-secondary" name="id_cliente" value="<?php echo $clientes[$i]['CLIENTE_ID']; ?>" >
+                          <button type="submit" class="btn btn-secondary" name="id_provee" value="<?php echo $proveedores[$i]['PROVE_ID']; ?>" >
                             <span class="bx bx-user fade-right"></span>&nbsp; Ver 
                           </button> 
                         </td>

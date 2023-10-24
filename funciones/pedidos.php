@@ -4,7 +4,7 @@ function listar_ventas($filtro,$ConexionBD) {
     $SQL= "SELECT v.VENTA_ID as Factura, u.NOMBRE as Vendedor, dv.DETVENTA_ITEM as Articulo, 
     a.ART_INFOADICIONAL as Descripcion,  a.ART_PRECIOCOMPRA as Precio_unitario,
      a.ART_PRECIOCOMPRA*0.5+a.ART_PRECIOCOMPRA as Precio_final,v.VENTA_FECHAVENTA as Fecha_Venta, 
-     ev.ESTADOVENTA_NOMBRE as Estado_venta, c.CLIENTE_NOMBE as Cliente	
+     ev.ESTADOVENTA_NOMBRE as Estado_venta, c.CLIENTE_NOMBRE as Cliente	
     from detalleventa as dv
     left join  venta AS v ON dv.VENTA_ID = v.VENTA_ID 
     left join  usuarios AS u ON dv.ID = u.ID

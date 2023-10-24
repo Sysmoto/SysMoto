@@ -3,10 +3,54 @@ session_start();
 //print_r($_SESSION);
 if (empty($_SESSION["Usuario"])) {
 
-    header("Location: logout.php");
+    header("Location: ../logout.php");
 
     exit();
 }
+
+require_once '../funciones/conexion.php';
+$MiConexion=ConexionBD();
+require_once '../funciones/proveedores.php';
+require_once '../funciones/abm.php';
+//$CantidadDatos=count($datos_articulo);
+//$marcas=listar_marcas($MiConexion);
+
+$provincias =listar_provincias($MiConexion);
+$CantidadProv=count($provincias);
+
+
+$id_provee = $_POST["id_provee"];
+
+$filtro = " WHERE p.PROVE_ID = $id_provee ";
+echo $filtro;
+
+$proveedores= listar_proveedores($filtro,$MiConexion);
+
+
+//print_r($cliente);
+if(isset($_POST["DarAlta"])) {
+  //$imgContent="";
+//  print_r($_POST);
+ // $id_direccion = alta_direccion($_POST,$MiConexion);
+ // $_POST['ID_DIRECCION'] = $id_direccion;
+
+//  $id_contacto = alta_contacto($_POST,$MiConexion);
+ // $_POST['ID_CONTACTO'] = $id_contacto;
+  
+//  $alta_cliente = alta_cliente($_POST,$MiConexion);
+   
+//  $statusMsg =  $alta_cliente;
+   
+  // echo "<script> 
+   //   alert('$statusMsg') 
+   //window.open('/clientes/clientes.php','_top')
+   // </script>";
+         
+  }
+
+  
+
+
 ?>
 <!DOCTYPE html>
 
@@ -15,7 +59,7 @@ if (empty($_SESSION["Usuario"])) {
   class="light-style layout-menu-fixed"
   dir="ltr"
   data-theme="theme-default"
-  data-assets-path="../assets/"
+  data-assets-path="/assets/"
   data-template="vertical-menu-template-free"
 >
   <head>
@@ -30,7 +74,7 @@ if (empty($_SESSION["Usuario"])) {
     <meta name="description" content="" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="/assets/img/favicon/favicon.ico" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,26 +85,40 @@ if (empty($_SESSION["Usuario"])) {
     />
 
     <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css" />
+    <link rel="stylesheet" href="/assets/vendor/fonts/boxicons.css" />
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/assets/css/demo.css" />
 
     <!-- Vendors CSS -->
-    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
 
-    <link rel="stylesheet" href="../assets/vendor/libs/apex-charts/apex-charts.css" />
+    <link rel="stylesheet" href="/assets/vendor/libs/apex-charts/apex-charts.css" />
 
     <!-- Page CSS -->
 
     <!-- Helpers -->
-    <script src="../assets/vendor/js/helpers.js"></script>
+    <script src="/assets/vendor/js/helpers.js"></script>
 
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-    <script src="../assets/js/config.js"></script>
+    <script src="/assets/js/config.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+    <script language="javascript">
+    $(document).ready(function(){
+      $("#Provincia").on('change', function () {
+        $("#Provincia option:selected").each(function () {
+            var id_prov = $(this).val();
+            $.post("ciudades.php", { id_prov: id_prov }, function(data) {
+                $("#Ciudad").html(data);
+            });			
+        });
+   });
+});
+</script>
   </head>
 
   <body>
@@ -111,34 +169,128 @@ if (empty($_SESSION["Usuario"])) {
           <!-- Content wrapper -->
           <div class="content-wrapper">
             <!-- Content -->
-             <div class="container-xxl flex-grow-1 container-p-y">
-              <div class="row">
-                <div class="col-lg-8 mb-4 order-0">
-                  <div class="card">
-                    <div class="d-flex align-items-end row">
-                      <div class="col-sm-10">
-                        <div class="card-body">
-                          <h4 class="card-title text-primary">¡Proximamente! </h4>
-                          <p class="mb-15">
-                            Sysmoto esta en desarrollo 
-                            <BR>¡Ya pronto veremos esta pagina en los proximos sprints!
-                          </p>
 
+            
+                
+            
+            <div class="container-xxl flex-grow-1 container-p-y">
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Vista de Cliente</h4> 
+              <div class="col-md-12">
+                  
+            </div> 
+              <form method='post' action="" enctype="multipart/form-data">
+              <div class="card">
+              
+              <input type="hidden" id="id_cliente" name="id_provee"  value="<?php echo $id_provee; ?>" >
+              <input type="hidden" id="id_domicilio" name="id_domicilio"  value="<?php echo $proveedores[0]['DOM_ID']; ?>" >
+              <input type="hidden" id="id_contacto" name="id_contacto"  value="<?php echo $proveedores[0]['CONTACTO_ID']; ?>" >        
+                    <hr class="my-0" />
+                    <div class="card-body">
+                    <h5 class="card-header">Detalles Cliente</h5>
+                    <!-- Account -->
+                     
+                        <div class="row">
+                          <div class="mb-3 col-md-4">
+                            <label for="Nombre" class="form-label">Nombre</label>
+                            <input class="form-control" type="text" id="Nombre" name="Nombre"  value="<?php echo $proveedores[0]["PROVE_NOMBRE"];?>" autofocus required />
+                          </div>
+                          <div class="mb-3 col-md-4">
+                            <label for="Apellido" class="form-label">Info</label>
+                            <input class="form-control" type="text" name="Info" id="Info" value="<?php echo $proveedores[0]["PROVE_INFO"];?>" required />
+                          </div>
                           
                         </div>
-                      </div>
-                      <div class="col-sm-5 text-center text-sm-left">
-                        <div class="card-body pb-0 px-0 px-md-4">
-                          <img
-                            src="../assets/img/illustrations/man-with-laptop-light.png"
-                            height="140"
-                            alt="View Badge User"
-                            data-app-dark-img="illustrations/man-with-laptop-dark.png"
-                            data-app-light-img="illustrations/man-with-laptop-light.png"
-                          />
+
+                        <div class="row">
+                        <div class="mb-3 col-md-3">
+                            <label for="Telefono1" class="form-label">Telefono 1</label>
+                            <input class="form-control" type="text" id="Tele1" name="Tele1" value="<?php echo $proveedores[0]["CONTACTO_TEL1"];?>"   />
+                          </div>
+                          <div class="mb-3 col-md-3">
+                            <label for="Telefono2" class="form-label">Telefono 2</label>
+                            <input class="form-control" type="text" name="Tele2" id="Tele2"  value="<?php echo $proveedores[0]["CONTACTO_TEL2"];?>" />
+                          </div>
+                          <div class="mb-3 col-md-3">
+                            <label for="Email" class="form-label">Email</label>
+                            <input class="form-control" type="email" name="email" id="email"  value="<?php echo $proveedores[0]["CONTACTO_EMAIL"];?>" />
+                          </div>
+                          
                         </div>
-                      </div>
+                        
+                        <div class="row">
+   
+                        <div class="mb-3 col-md-3">
+                            
+                            <label for="Calle" class="form-label">Calle</label>
+                            <input class="form-control" type="text" id="Calle" name="Calle"  value="<?php echo $proveedores[0]["DOM_CALLE"];?>" />
+                          
+                        </div>
+                        <div class="mb-3 col-md-1">
+                            
+                            <label for="Altura" class="form-label">Altura</label>
+                            <input class="form-control" type="text" id="Altura" name="Altura"   value="<?php echo $proveedores[0]["DOM_ALTURA"];?>" />
+                          
+                        </div>
+                        <div class="mb-3 col-md-1">
+                            
+                            <label for="CP" class="form-label">CP</label>
+                            <input class="form-control" type="text" id="CP" name="CP"   value="<?php echo $proveedores[0]["DOM_CP"];?>" />
+                          
+                        </div>
+                        <div class="mb-3 col-md-3">
+                            <label class="form-label" for="Provincia">Provincia</label>
+                            <select id="Provincia"  name="Provincia" class="select2 form-select" >
+                              <option value=""></option>
+                              <?php 
+                                foreach ($provincias as $id_prov =>$val) {
+                                  if($proveedores[0]["PROVINCIA_ID"] == $id_prov){ 
+                                      echo "<option value =". $id_prov . " SELECTED> ". $val . "</option>";
+                                  }
+                                  else {
+                                    echo "<option value =". $id_prov . " > ". $val . "</option>";
+                                  }
+                              }    ?>
+                            </select>
+                          </div>
+                          <div class="mb-3 col-md-3">
+                            <label class="form-label" for="Ciudad">Ciudad</label>
+                            <select id="Ciudad"  name="Ciudad" class="select2 form-select" >
+                              <?php       echo "<option value =". $id_prov . " > ". $proveedores[0]["CIUDAD_NOMBRE"] . "</option>"; ?>
+                            </select>
+                          </div>
+
+                        
+
+                          
+                          
+                          
+                          </div>
+                         
+                          
+                          
+                        </div>
+                       
+          
+                   
+                    
+                        
+                        <div class="mt-2">
+                          <button type="submit" name="Modificar" class="btn btn-primary me-2">Modificar</button>
+                          
+                       
+                      
                     </div>
+
+                     
+                    </div>
+                    <!-- /Account -->
+                  </div>
+                  
+                </div>
+              </div>
+                
+              </div>
+             
             </div>
             
             
@@ -171,24 +323,25 @@ if (empty($_SESSION["Usuario"])) {
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="../assets/vendor/libs/jquery/jquery.js"></script>
-    <script src="../assets/vendor/libs/popper/popper.js"></script>
-    <script src="../assets/vendor/js/bootstrap.js"></script>
-    <script src="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/assets/vendor/js/bootstrap.js"></script>
+    <script src="/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
 
-    <script src="../assets/vendor/js/menu.js"></script>
+    <script src="/assets/vendor/js/menu.js"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
-    <script src="../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="/assets/vendor/libs/apex-charts/apexcharts.js"></script>
 
     <!-- Main JS -->
-    <script src="../assets/js/main.js"></script>
+    <script src="/assets/js/main.js"></script>
 
     <!-- Page JS -->
-    <script src="../assets/js/dashboards-analytics.js"></script>
+    <script src="/assets/js/dashboards-analytics.js"></script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+      </form>
   </body>
 </html>

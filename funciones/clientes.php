@@ -1,5 +1,5 @@
 <?php
-function listar_clientes_largo($ConexionBD) {
+function listar_clientes_largo($filtro,$ConexionBD) {
     $SQL = "SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
     co.CONTACTO_TEL1, co.CONTACTO_TEL2, co.CONTACTO_EMAIL, co.CONTACTO_EMAIL, co.CONTACTO_WEB, co.CONTACTO_INFO, 
     dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE
@@ -7,7 +7,7 @@ function listar_clientes_largo($ConexionBD) {
     LEFT JOIN contacto co ON cl.CONTACTO_ID = co.CONTACTO_ID
     LEFT JOIN domicilio dom ON cl.DOM_ID = dom.DOM_ID
     LEFT JOIN ciudad ci ON dom.CIUDAD_ID = ci.CIUDAD_ID
-    LEFT JOIN provincia pr ON ci.PROVINCIA_ID = pr.PROVINCIA_ID ";
+    LEFT JOIN provincia pr ON ci.PROVINCIA_ID = pr.PROVINCIA_ID $filtro ";
     
     
 
@@ -105,32 +105,45 @@ function alta_cliente($datos,$ConexionBD) {
     return $resultado;
 }
 
-function modificar_articulo($datos_clientes,$ConexionBD) {
+function modificar_cliente($datos,$ConexionBD) {
     //print_r($datos_clientes);
-    $nombre = $datos_clientes["Nombre"];
-    $stock = $datos_clientes["Stock"];
-    $proveedor = $datos_clientes["Proveedor"];
-    $marca = $datos_clientes["Marca"];
-    $modelo = $datos_clientes["Modelo"];
-    $ubicacion = $datos_clientes["Ubicacion"];
-    $precio=$datos_clientes["Precio_compra"];
-    $qr = $datos_clientes["QR"];
-    $codart = $datos_clientes["Cod_art"];
-    $codprov = $datos_clientes["Cod_prov"];
-    if($stock > 0 ){ $estart=1;} else{ $estart=2;}
-    $sql = "UPDATE articulo SET  ART_INFOADICIONAL='$nombre' , ART_CODIGO=$codart, ART_PRECIOCOMPRA='$precio',
-    ART_UBICACION = '$ubicacion', ART_CODQR='$qr',ART_CODARTPROV='$codprov' WHERE ART_ID =".$datos_clientes['id_articulo'].";";
+    $id_cliente = $datos['id_cliente'];
+    $id_domicilio = $datos['id_domicilio'];
+    $id_contacto = $datos['id_contacto'];
+    $Nombre = $datos['Nombre'];
+    $Apellido = $datos['Apellido'];
+    $Tele1 = $datos['Tele1'];
+    $Tele2 = $datos['Tele2'];
+    $email = $datos['email'];
+    $Calle = $datos['Calle'];
+    $Altura = $datos['Altura'];
+    $CP = $datos['CP'];
+    $Provincia = $datos['Provincia'];
+    $Ciudad = $datos['Ciudad'];
+   
+    $sql1 = "UPDATE cliente SET CLIENTE_NOMBRE = '$Nombre', CLIENTE_APELLIDO = '$Apellido' 
+            WHERE CLIENTE_ID = $id_cliente";
+    $sql2 = "UPDATE contacto SET CONTACTO_TEL1 = '$Tele1', CONTACTO_TEL2 = '$Tele2', CONTACTO_EMAIL = '$email' 
+            WHERE CONTACTO_ID = $id_contacto";
+    $sql3 = "UPDATE domicilio SET DOM_CALLE = '$Calle', DOM_ALTURA = '$Altura', DOM_CP = '$CP', CIUDAD_ID= $Ciudad
+             WHERE DOM_ID = $id_domicilio";
     //print $sql;
-    if($ConexionBD->query($sql) === TRUE) {
-        $lastId = $ConexionBD->insert_id;
-        $sql2= "update  stock SET CANT_STOCK = '$stock' WHERE ART_ID =".$datos_clientes['id_articulo'].";";
-        if($ConexionBD->query($sql2) === TRUE) {
-           $resultado="Datos subidos correctamente";
+    if($ConexionBD->query($sql1) === TRUE) {
+        $resultado1="Datos clientes ok";
         } else {
-            $resultado="Incorrectamente porque ".$ConexionBD->error;
+            $resultado1="Incorrectamente porque ".$ConexionBD->error;
         }
-    }
-    return $resultado;
+    if($ConexionBD->query($sql2) === TRUE) {
+        $resultado2="Datos contacto ok";
+        } else {
+         $resultado2="Incorrectamente porque ".$ConexionBD->error;
+         }
+    if($ConexionBD->query($sql3) === TRUE) {
+                $resultado3="Datos domicilio ok";
+                } else {
+                    $resultado3="Incorrectamente porque ".$ConexionBD->error;
+                }
+    return $resultado1 . " - " . $resultado2 . " - " . $resultado3;
 }
 
 function listar_provincias($ConexionBD) {

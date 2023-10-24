@@ -21,25 +21,34 @@ $CantidadProv=count($provincias);
 
 $id_cliente = $_POST["id_cliente"];
 $cliente = listar_clientes_corto($id_cliente,$MiConexion) ;
-
+//print_r($cliente);
+if(isset($_POST["Modificar"])) {
+  $modificacion_cliente = modificar_cliente($_POST,$MiConexion);
+  
+   echo "<script> 
+   alert('$modificacion_cliente') 
+   window.open('/clientes/clientes.php','_top')
+   </script>";
+         
+}
 //print_r($cliente);
 if(isset($_POST["DarAlta"])) {
   //$imgContent="";
 //  print_r($_POST);
-  $id_direccion = alta_direccion($_POST,$MiConexion);
-  $_POST['ID_DIRECCION'] = $id_direccion;
+ // $id_direccion = alta_direccion($_POST,$MiConexion);
+ // $_POST['ID_DIRECCION'] = $id_direccion;
 
-  $id_contacto = alta_contacto($_POST,$MiConexion);
-  $_POST['ID_CONTACTO'] = $id_contacto;
+//  $id_contacto = alta_contacto($_POST,$MiConexion);
+ // $_POST['ID_CONTACTO'] = $id_contacto;
   
-  $alta_cliente = alta_cliente($_POST,$MiConexion);
+//  $alta_cliente = alta_cliente($_POST,$MiConexion);
    
-  $statusMsg =  $alta_cliente;
+//  $statusMsg =  $alta_cliente;
    
-   echo "<script> 
-     alert('$statusMsg') 
-     window.open('/clientes/clientes.php','_top')
-    </script>";
+  // echo "<script> 
+   //   alert('$statusMsg') 
+   //window.open('/clientes/clientes.php','_top')
+   // </script>";
          
   }
 
@@ -175,8 +184,10 @@ if(isset($_POST["DarAlta"])) {
             </div> 
               <form method='post' action="" enctype="multipart/form-data">
               <div class="card">
-                
-                      
+              
+              <input type="hidden" id="id_cliente" name="id_cliente"  value="<?php echo $id_cliente; ?>" >
+              <input type="hidden" id="id_domicilio" name="id_domicilio"  value="<?php echo $cliente['DOM_ID']; ?>" >
+              <input type="hidden" id="id_contacto" name="id_contacto"  value="<?php echo $cliente['CONTACTO_ID']; ?>" >        
                     <hr class="my-0" />
                     <div class="card-body">
                     <h5 class="card-header">Detalles Cliente</h5>

@@ -48,8 +48,8 @@
                   </li>
                 
                   <li class="menu-item">
-                    <a href="/pedidos/presupuesto.php" class="menu-link">
-                      <div data-i18n="Account">Presupuesto</div>
+                    <a href="/clientes/presupuesto.php" class="menu-link">
+                      <div data-i18n="Presupuesto">Presupuesto</div>
                     </a>
                   </li>
                   
@@ -71,6 +71,11 @@
                   <li class="menu-item">
                     <a href="/proveedores/proveedor.php" class="menu-link">
                       <div data-i18n="Account">Proveedor</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="/proveedores/proveedores.php" class="menu-link">
+                      <div data-i18n="Account">Proveedores</div>
                     </a>
                   </li>
                   <li class="menu-item">
