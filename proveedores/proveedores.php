@@ -17,11 +17,17 @@ $filtro = '';
 if(isset($_POST["Buscar"])) {
   $busqueda = $_POST['Busqueda'];
     $filtro = " WHERE p.PROVE_NOMBRE LIKE '%" . $busqueda . "%' OR p.PROVE_INFO  LIKE '%" . $busqueda . "%' ";
-  
 }
 
 $proveedores= listar_proveedores($filtro,$MiConexion);
-$CantidadProveedores=count($proveedores);
+if (is_array($proveedores) && count($proveedores) > 0) {
+    $CantidadProveedores = count($proveedores);
+} else {
+    $CantidadProveedores = 0;
+}
+
+
+
 ?>
 <!DOCTYPE html>
 
@@ -175,7 +181,7 @@ $CantidadProveedores=count($proveedores);
                         <td><?php echo $proveedores[$i]['CONTACTO_TEL1'];?></td>
                         <td><?php echo $proveedores[$i]['CONTACTO_TEL2']; ?> </td>   
                         <td>  
-                          <button type="button" class="btn btn-secondary" onclick="window.open('<?php echo 'http:\/\/' . $proveedores[$i]['CONTACTO_WEB']; ?>', '_blank')" title="<?php echo $proveedores[$i]['CONTACTO_WEB']; ?>">
+                          <button type="button" class="btn btn-secondary" onclick="window.open('<?php echo $proveedores[$i]['CONTACTO_WEB']; ?>', '_blank')" title="<?php echo $proveedores[$i]['CONTACTO_WEB']; ?>">
                              <span class="tf-icons bx bx-cart-alt"></span> &nbsp; Web
                           </button>
                         </td>  

@@ -19,31 +19,37 @@ $provincias =listar_provincias($MiConexion);
 $CantidadProv=count($provincias);
 
 
-$id_provee = $_POST["id_provee"];
-
-$filtro = " WHERE p.PROVE_ID = $id_provee ";
-echo $filtro;
-
-$proveedores= listar_proveedores($filtro,$MiConexion);
-
-
-//print_r($proveedores);
 
 if(isset($_POST["Modificar"])) {
   print_r($_POST);
   $modificacion_cliente = modificar_proveedor($_POST,$MiConexion);
   
-   echo "<script> 
-   alert('$modificacion_cliente') 
-   window.open('/proveedores/proveedor.php','_top')
-  </script>";
+   //echo "<script> 
+   //alert('$modificacion_cliente') 
+   //window.open('/proveedores/proveedor.php','_top')
+  // </script>";
          
 }
 
 if(isset($_POST["DarAlta"])) {
+  //$imgContent="";
+//  print_r($_POST);
+  $id_direccion = alta_direccion($_POST,$MiConexion);
+  $_POST['ID_DIRECCION'] = $id_direccion;
+
+  $id_contacto = alta_contacto($_POST,$MiConexion);
+  $_POST['ID_CONTACTO'] = $id_contacto;
+  
+  $alta_cliente = alta_proveedor($_POST,$MiConexion);
+  
+  $statusMsg =  $alta_cliente;
+   
+   echo "<script> 
+     alert('$statusMsg') 
+     window.open('/proveedores/proveedores.php','_top')
+    </script>";
          
   }
-
   
 
 
@@ -170,29 +176,27 @@ if(isset($_POST["DarAlta"])) {
                 
             
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Vista de Proveedor</h4> 
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Alta de Proveedor</h4> 
               <div class="col-md-12">
                   
             </div> 
               <form method='post' action="" enctype="multipart/form-data">
               <div class="card">
               
-              <input type="hidden" id="id_provee" name="id_provee"  value="<?php echo $id_provee; ?>" >
-              <input type="hidden" id="id_domicilio" name="id_domicilio"  value="<?php echo $proveedores[0]['DOM_ID']; ?>" >
-              <input type="hidden" id="id_contacto" name="id_contacto"  value="<?php echo $proveedores[0]['CONTACTO_ID']; ?>" >        
+              
                     <hr class="my-0" />
                     <div class="card-body">
-                    <h5 class="card-header">Detalles Proveedor</h5>
+                    <h5 class="card-header">Datos Proveedor</h5>
                     <!-- Account -->
                      
                         <div class="row">
                           <div class="mb-3 col-md-4">
                             <label for="Nombre" class="form-label">Nombre</label>
-                            <input class="form-control" type="text" id="Nombre" name="Nombre"  value="<?php echo $proveedores[0]["PROVE_NOMBRE"];?>" autofocus required />
+                            <input class="form-control" type="text" id="Nombre" name="Nombre"  required />
                           </div>
                           <div class="mb-3 col-md-4">
                             <label for="Apellido" class="form-label">Info</label>
-                            <input class="form-control" type="text" name="Info" id="Info" value="<?php echo $proveedores[0]["PROVE_INFO"];?>" />
+                            <input class="form-control" type="text" name="Info" id="Info" />
                           </div>
                           
                         </div>
@@ -200,15 +204,15 @@ if(isset($_POST["DarAlta"])) {
                         <div class="row">
                         <div class="mb-3 col-md-3">
                             <label for="Telefono1" class="form-label">Telefono 1</label>
-                            <input class="form-control" type="text" id="Tele1" name="Tele1" value="<?php echo $proveedores[0]["CONTACTO_TEL1"];?>"   />
+                            <input class="form-control" type="text" id="Tele1" name="Tele1"  />
                           </div>
                           <div class="mb-3 col-md-3">
                             <label for="Telefono2" class="form-label">Telefono 2</label>
-                            <input class="form-control" type="text" name="Tele2" id="Tele2"  value="<?php echo $proveedores[0]["CONTACTO_TEL2"];?>" />
+                            <input class="form-control" type="text" name="Tele2" id="Tele2" />
                           </div>
                           <div class="mb-3 col-md-3">
                             <label for="Email" class="form-label">Email</label>
-                            <input class="form-control" type="email" name="email" id="email"  value="<?php echo $proveedores[0]["CONTACTO_EMAIL"];?>" />
+                            <input class="form-control" type="email" name="email" id="email"  />
                           </div>
                           
                         </div>
@@ -216,7 +220,7 @@ if(isset($_POST["DarAlta"])) {
                         <div class="row">
                         <div class="mb-5 col-md-5">
                             <label for="Web" class="form-label">Web</label>
-                            <input class="form-control" type="url" id="Web" name="Web" value="<?php echo $proveedores[0]["CONTACTO_WEB"];?>" placeholder="https://ejemplo.com"   />
+                            <input class="form-control" type="url" id="Web" name="Web"  placeholder="https://ejemplo.com"   />
                           </div>
                         </div>  
 
@@ -225,19 +229,19 @@ if(isset($_POST["DarAlta"])) {
                         <div class="mb-3 col-md-3">
                             
                             <label for="Calle" class="form-label">Calle</label>
-                            <input class="form-control" type="text" id="Calle" name="Calle"  value="<?php echo $proveedores[0]["DOM_CALLE"];?>" />
+                            <input class="form-control" type="text" id="Calle" name="Calle"   />
                           
                         </div>
                         <div class="mb-3 col-md-1">
                             
                             <label for="Altura" class="form-label">Altura</label>
-                            <input class="form-control" type="text" id="Altura" name="Altura"   value="<?php echo $proveedores[0]["DOM_ALTURA"];?>" />
+                            <input class="form-control" type="text" id="Altura" name="Altura"  />
                           
                         </div>
                         <div class="mb-3 col-md-1">
                             
                             <label for="CP" class="form-label">CP</label>
-                            <input class="form-control" type="text" id="CP" name="CP"   value="<?php echo $proveedores[0]["DOM_CP"];?>" />
+                            <input class="form-control" type="text" id="CP" name="CP" />
                           
                         </div>
                         <div class="mb-3 col-md-3">
@@ -246,19 +250,15 @@ if(isset($_POST["DarAlta"])) {
                               <option value=""></option>
                               <?php 
                                 foreach ($provincias as $id_prov =>$val) {
-                                  if($proveedores[0]["PROVINCIA_ID"] == $id_prov){ 
-                                      echo "<option value =". $id_prov . " SELECTED> ". $val . "</option>";
-                                  }
-                                  else {
-                                    echo "<option value =". $id_prov . " > ". $val . "</option>";
-                                  }
-                              }    ?>
+                                  echo "<option value =". $id_prov . " SELECTED> ". $val . "</option>";
+                                    }
+                                  ?>
                             </select>
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="Ciudad">Ciudad</label>
                             <select id="Ciudad"  name="Ciudad" class="select2 form-select" >
-                              <?php       echo "<option value =". $id_prov . " > ". $proveedores[0]["CIUDAD_NOMBRE"] . "</option>"; ?>
+                              
                             </select>
                           </div>
 
@@ -278,7 +278,7 @@ if(isset($_POST["DarAlta"])) {
                     
                         
                         <div class="mt-2">
-                          <button type="submit" name="Modificar" class="btn btn-primary me-2">Modificar</button>
+                          <button type="submit" name="DarAlta" class="btn btn-primary me-2">Dar de Alta</button>
                           
                        
                       

@@ -69,11 +69,6 @@
               
                 <ul class="menu-sub">
                   <li class="menu-item">
-                    <a href="/proveedores/proveedor.php" class="menu-link">
-                      <div data-i18n="Account">Proveedor</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
                     <a href="/proveedores/proveedores.php" class="menu-link">
                       <div data-i18n="Account">Proveedores</div>
                     </a>
