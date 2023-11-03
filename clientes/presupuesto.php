@@ -14,6 +14,24 @@ require_once '../funciones/clientes.php';
 
 $filtro = '';
 
+if(isset($_POST["cliente"])) {
+  print_r($_POST);
+  $id_cliente=$_POST["cliente"];
+  echo "IDDDDDDDDDDDDDDDDDDDDDDDD" . $id_cliente;
+  $_POST['id_cliente'] = $id_cliente;
+  print_r($_POST);
+
+  $cliente = listar_clientes_corto($id_cliente,$MiConexion) ;
+  if($id_cliente == 1) {
+    $_POST['NombreCliente']= $cliente["CLIENTE_NOMBRE"];
+    }
+    else {
+      $_POST['NombreCliente']= $cliente["CLIENTE_NOMBRE"] . " " . $cliente["CLIENTE_APELLIDO"]  ;
+    }
+  print_r($_POST);
+}
+
+
 if(isset($_POST["Buscar"])) {
   $busqueda = $_POST['Busqueda'];
     $filtro = " WHERE CLIENTE_NOMBRE LIKE '%" . $busqueda . "%' OR CLIENTE_APELLIDO  LIKE '%" . $busqueda . "%' OR  CLIENTE_ID  LIKE '%" . $busqueda . "%' ";
@@ -131,62 +149,79 @@ $CantidadClientes=count($clientes);
             
                 
             <form method='post' action="" enctype="multipart/form-data">
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Presupuesto</h4> 
-              <div class="row">
-                
-                <div class="mb-3 col-md-3">
-                      <input class="form-control" type="text" id="Busqueda" name="Busqueda"  value="<?php ;?>"  />
-                </div>
-                <div class="mb-3 col-md-3">
-                <button type="submit" name="Buscar" class="btn btn-primary me-2">Buscar Cliente</button>
-                </div>
-                <div class="mb-3 col-md-3"></div>
-                <div class="mb-3 col-md-3"></div>
-                
-            </div> 
-            </form>
-              <form method='post' action="cliente.php" enctype="multipart/form-data" >
-              <div class="card">
-                
-                <div class="table-responsive text-nowrap">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>                        
-                        <th>Domicilio</th>
-                        
-                        <th>Accion</th>  
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                    <?php for ($i=0; $i<$CantidadClientes; $i++) { ?>               
-                    
-                      <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> 
-                        <strong><?php echo $clientes[$i]['CLIENTE_NOMBRE']; ?></strong></td>
-                        <td><?php echo $clientes[$i]['CLIENTE_APELLIDO'];?></td>
-                        <td><?php echo $clientes[$i]['DOM_CALLE'] . " " . $clientes[$i]['DOM_ALTURA'] . " - " . $clientes[$i]['CIUDAD_NOMBRE'] . " / " . $clientes[$i]['PROVINCIA_NOMBRE']; ?> </td>   
-                        <td>
-                          <button type="submit" class="btn btn-secondary" name="id_cliente" value="<?php echo $clientes[$i]['CLIENTE_ID']; ?>" >
-                            <span class="bx bx-user fade-right"></span>&nbsp; Ver 
-                          </button> 
-                        </td>
-                      </tr>
-                      <?php } ?>
-                      </tbody>
-                  </table>
-                 
-                </div>
-              </div>
-             
-            </div>
-            
-            
-            </div>
-            <!-- / Content -->
 
+              
+              
+             
+            <?php 
+             if(empty($_POST["id_cliente"])) { ?>
+              <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Presupuesto</h4>   
+                    <div class="row">
+                    
+                      <div class="mb-3 col-md-3">
+                          <input class="form-control" type="text" id="Busqueda" name="Busqueda"  value="<?php ;?>"  />
+                      </div>
+
+                      <div class="mb-3 col-md-3">
+                          <button type="submit" name="Buscar" class="btn btn-primary me-2">Buscar Cliente</button>
+                      </div>
+               
+                      <div class="mb-3 col-md-3"></div>
+               
+                      <div class="mb-3 col-md-3">
+                          <button type="submit" name="cliente" class="btn btn-primary me-2"  value="1" > Consumidor Final </button>
+                      </div>
+                    
+                    </div> 
+                
+                    <div class="card">
+                    
+                      <div class="table-responsive text-nowrap">
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>                        
+                                <th>Domicilio</th>
+                                <th>Accion</th>  
+                              </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                            <?php for ($i=0; $i<$CantidadClientes; $i++) { ?>               
+                            
+                              <tr>
+                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i> 
+                                <strong><?php echo $clientes[$i]['CLIENTE_NOMBRE']; ?></strong></td>
+                                <td><?php echo $clientes[$i]['CLIENTE_APELLIDO'];?></td>
+                                <td><?php echo $clientes[$i]['DOM_CALLE'] . " " . $clientes[$i]['DOM_ALTURA'] . " - " . $clientes[$i]['CIUDAD_NOMBRE'] . " / " . $clientes[$i]['PROVINCIA_NOMBRE']; ?> </td>   
+                                <td>
+                                  <button type="submit" class="btn btn-secondary" name="cliente" value="<?php echo $clientes[$i]['CLIENTE_ID']; ?>" >
+                                    <span class="bx bx-user fade-right"></span>&nbsp; Seleccionar
+                                  </button> 
+                                </td>
+                              </tr>
+                              <?php } ?>
+                              </tbody>
+                          </table>
+                        </div>
+                  </div>
+                <?php } ?> 
+              </div>
+            
+            
+            
+            <!-- / Content -->
+               <?php 
+               if(isset($_POST['id_cliente']))  { ?>
+              <input type="hidden" name="id_cliente" value="<?php echo $_POST["id_cliente"]; ?>" >
+              <div class="container-xxl flex-grow-1 container-p-y">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Presupuesto <?php echo $_POST["NombreCliente"] ; ?> </h4> 
+                
+
+
+                <?php } ?> 
+            </div>      
             <!-- Footer -->
             <footer class="content-footer footer bg-footer-theme">
               <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
