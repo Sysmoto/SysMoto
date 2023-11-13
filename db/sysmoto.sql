@@ -2531,7 +2531,8 @@ INSERT INTO `cliente` (`CLIENTE_ID`, `DOM_ID`, `CONTACTO_ID`, `CLIENTE_NOMBRE`, 
 	(5, 19, 11, 'Maria', 'Fernandez', '2023-10-01', NULL),
 	(6, 20, 12, 'Jose Maria ', 'Perez ', '2023-10-02', NULL),
 	(7, 21, 13, 'Maria Jose', 'Ramirez Garcia', '2023-10-08', NULL),
-	(8, 33, 22, 'Juan', 'Garcia Perez', '2023-11-13', NULL);
+	(8, 33, 22, 'Juan', 'Garcia Perez', '2023-11-13', NULL),
+	(9, 35, 24, 'Rodolfo', 'Rodolfin', '2023-11-13', NULL);
 
 -- Volcando estructura para tabla sysmoto.contacto
 CREATE TABLE IF NOT EXISTS `contacto` (
@@ -2544,7 +2545,7 @@ CREATE TABLE IF NOT EXISTS `contacto` (
   PRIMARY KEY (`CONTACTO_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf16 COLLATE=utf16_general_ci;
 
--- Volcando datos para la tabla sysmoto.contacto: ~20 rows (aproximadamente)
+-- Volcando datos para la tabla sysmoto.contacto: ~21 rows (aproximadamente)
 DELETE FROM `contacto`;
 INSERT INTO `contacto` (`CONTACTO_ID`, `CONTACTO_TEL1`, `CONTACTO_TEL2`, `CONTACTO_EMAIL`, `CONTACTO_WEB`, `CONTACTO_INFO`) VALUES
 	(1, '03512233445', NULL, 'j.perez@sysmoto.com.ar', NULL, NULL),
@@ -2554,7 +2555,7 @@ INSERT INTO `contacto` (`CONTACTO_ID`, `CONTACTO_TEL1`, `CONTACTO_TEL2`, `CONTAC
 	(5, '03512222777', NULL, 'r.garcia@sysmoto.com.ar', NULL, NULL),
 	(6, '03517777888', NULL, 'ventas@cordobamotos.com.ar', 'http://www.cordobamotos.com.ar', NULL),
 	(7, '03514141414', '03514141414', 'ventas@tabladamotos.com.ar', 'http://www.tabladamotos.com.ar', NULL),
-	(8, '00000000000', NULL, 'Nodifinida', NULL, NULL),
+	(8, '000-0000-0000', '', 'nada@nada.com', NULL, NULL),
 	(10, '111', '2222', 'jjk@com.ar', NULL, NULL),
 	(11, '4542444', '245545', 'mariaf@gmail.com', NULL, NULL),
 	(12, '333444', '23255', 'jperez@gmail.com', NULL, NULL),
@@ -2567,7 +2568,8 @@ INSERT INTO `contacto` (`CONTACTO_ID`, `CONTACTO_TEL1`, `CONTACTO_TEL2`, `CONTAC
 	(20, '45555', '4545', 'juangarcia@hotmail.com', '', ''),
 	(21, '45555', '4545', 'juangarcia@hotmail.com', '', ''),
 	(22, '45555', '4545', 'juangarcia@hotmail.com', '', ''),
-	(23, '98989', '656565', 'sanchez.mangera@gmail.com', 'http://sanchezmanguera.com.ar', 'mangueras en general');
+	(23, '98989', '656565', 'sanchez.mangera@gmail.com', 'http://sanchezmanguera.com.ar', 'mangueras en general'),
+	(24, '0226-5555-666', '', 'rodolfin@gmail.com', '', '');
 
 -- Volcando estructura para tabla sysmoto.currencytype
 CREATE TABLE IF NOT EXISTS `currencytype` (
@@ -2750,7 +2752,8 @@ INSERT INTO `domicilio` (`DOM_ID`, `CIUDAD_ID`, `DOM_CALLE`, `DOM_ALTURA`, `DOM_
 	(25, 3, 'JA Roca', 1154, '1099'),
 	(32, 1343, 'Las Heras', 445, '24'),
 	(33, 1343, 'Las Heras', 445, '24'),
-	(34, 950, 'Paz', 887, '4545');
+	(34, 950, 'Paz', 887, '4545'),
+	(35, 2267, 'Paz', 5587, '1111');
 
 -- Volcando estructura para tabla sysmoto.estadoalerta
 CREATE TABLE IF NOT EXISTS `estadoalerta` (
@@ -3291,7 +3294,7 @@ CREATE TABLE IF NOT EXISTS `proveedores` (
   CONSTRAINT `PROVEEDORES_ibfk_2` FOREIGN KEY (`CONTACTO_ID`) REFERENCES `contacto` (`CONTACTO_ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf16 COLLATE=utf16_general_ci;
 
--- Volcando datos para la tabla sysmoto.proveedores: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla sysmoto.proveedores: ~2 rows (aproximadamente)
 DELETE FROM `proveedores`;
 INSERT INTO `proveedores` (`PROVE_ID`, `DOM_ID`, `CONTACTO_ID`, `PROVE_NOMBRE`, `PROVE_INFO`) VALUES
 	(1, 25, 17, 'Distribuidora Cba.', 'Solo cubiertas.'),

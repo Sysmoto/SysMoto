@@ -4168,3 +4168,523 @@ Consulta ejecutada con éxito: SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, 
     [142] => Zárate
 )
  
+21:49:10 - Exito - SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
+    co.CONTACTO_TEL1, co.CONTACTO_TEL2, co.CONTACTO_EMAIL, co.CONTACTO_EMAIL, co.CONTACTO_WEB, co.CONTACTO_INFO, 
+    dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE
+    FROM cliente cl
+    LEFT JOIN contacto co ON cl.CONTACTO_ID = co.CONTACTO_ID
+    LEFT JOIN domicilio dom ON cl.DOM_ID = dom.DOM_ID
+    LEFT JOIN ciudad ci ON dom.CIUDAD_ID = ci.CIUDAD_ID
+    LEFT JOIN provincia pr ON ci.PROVINCIA_ID = pr.PROVINCIA_ID   
+21:49:12 - Exito - SELECT * FROM provincia ORDER BY 2; 
+21:56:49 - Exito - SELECT * FROM provincia ORDER BY 2; 
+22:01:02 - Exito - SELECT CIUDAD_ID, CIUDAD_NOMBRE FROM ciudad WHERE PROVINCIA_ID = 23 ORDER BY CIUDAD_NOMBRE 
+22:01:07 - Exito - SELECT * FROM provincia ORDER BY 2; 
+22:01:07 - Exito - INSERT INTO domicilio () VALUES (NULL,2267,'Paz','5587','1111') 
+22:01:07 - Exito - INSERT INTO contacto () VALUES (NULL,'0226-5555-6666','','rodolfin@gmail.com','','') 
+22:01:07 - Exito - INSERT INTO cliente () VALUEs
+    (NULL,35,24,'Rodolfo','Rodolfin',NOW(),NULL); 
+22:01:09 - Exito - SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
+    co.CONTACTO_TEL1, co.CONTACTO_TEL2, co.CONTACTO_EMAIL, co.CONTACTO_EMAIL, co.CONTACTO_WEB, co.CONTACTO_INFO, 
+    dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE
+    FROM cliente cl
+    LEFT JOIN contacto co ON cl.CONTACTO_ID = co.CONTACTO_ID
+    LEFT JOIN domicilio dom ON cl.DOM_ID = dom.DOM_ID
+    LEFT JOIN ciudad ci ON dom.CIUDAD_ID = ci.CIUDAD_ID
+    LEFT JOIN provincia pr ON ci.PROVINCIA_ID = pr.PROVINCIA_ID   
+22:01:20 - Exito - SELECT * FROM provincia ORDER BY 2; 
+22:04:25 - Exito - SELECT * FROM provincia ORDER BY 2; 
+22:04:50 - Exito - SELECT * FROM provincia ORDER BY 2; 
+22:08:48 - Exito - SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
+    co.CONTACTO_TEL1, co.CONTACTO_TEL2, co.CONTACTO_EMAIL, co.CONTACTO_EMAIL, co.CONTACTO_WEB, co.CONTACTO_INFO, 
+    dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE
+    FROM cliente cl
+    LEFT JOIN contacto co ON cl.CONTACTO_ID = co.CONTACTO_ID
+    LEFT JOIN domicilio dom ON cl.DOM_ID = dom.DOM_ID
+    LEFT JOIN ciudad ci ON dom.CIUDAD_ID = ci.CIUDAD_ID
+    LEFT JOIN provincia pr ON ci.PROVINCIA_ID = pr.PROVINCIA_ID   
+22:08:53 - Exito - SELECT * FROM provincia ORDER BY 2; 
+22:08:53 - Exito - SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
+    co.CONTACTO_TEL1, co.CONTACTO_TEL2, co.CONTACTO_EMAIL, co.CONTACTO_EMAIL, co.CONTACTO_WEB, co.CONTACTO_INFO, 
+    dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE, pr.PROVINCIA_ID ,ci.CIUDAD_ID
+    FROM cliente cl
+    LEFT JOIN contacto co ON cl.CONTACTO_ID = co.CONTACTO_ID
+    LEFT JOIN domicilio dom ON cl.DOM_ID = dom.DOM_ID
+    LEFT JOIN ciudad ci ON dom.CIUDAD_ID = ci.CIUDAD_ID
+    LEFT JOIN provincia pr ON ci.PROVINCIA_ID = pr.PROVINCIA_ID 
+    WHERE cl.CLIENTE_ID = 1 
+22:08:53 - Exito - SELECT CIUDAD_ID, CIUDAD_NOMBRE FROM ciudad WHERE PROVINCIA_ID = 1 ORDER BY CIUDAD_NOMBRE 
+22:08:53 - Exito - Array
+(
+    [1] => 25 de Mayo
+    [2] => 3 de febrero
+    [3] => A. Alsina
+    [4] => A. Gonzáles Cháves
+    [5] => Aguas Verdes
+    [6] => Alberti
+    [7] => Arrecifes
+    [8] => Ayacucho
+    [9] => Azul
+    [10] => Bahía Blanca
+    [11] => Balcarce
+    [12] => Baradero
+    [13] => Benito Juárez
+    [14] => Berisso
+    [15] => Bolívar
+    [16] => Bragado
+    [17] => Brandsen
+    [18] => Campana
+    [19] => Cañuelas
+    [20] => Capilla del Señor
+    [21] => Capitán Sarmiento
+    [22] => Carapachay
+    [23] => Carhue
+    [24] => Cariló
+    [25] => Carlos Casares
+    [26] => Carlos Tejedor
+    [27] => Carmen de Areco
+    [28] => Carmen de Patagones
+    [29] => Castelli
+    [30] => Chacabuco
+    [31] => Chascomús
+    [32] => Chivilcoy
+    [33] => Colón
+    [34] => Coronel Dorrego
+    [35] => Coronel Pringles
+    [36] => Coronel Rosales
+    [37] => Coronel Suarez
+    [38] => Costa Azul
+    [39] => Costa Chica
+    [40] => Costa del Este
+    [41] => Costa Esmeralda
+    [42] => Daireaux
+    [43] => Darregueira
+    [44] => Del Viso
+    [45] => Dolores
+    [46] => Don Torcuato
+    [47] => Ensenada
+    [48] => Escobar
+    [49] => Exaltación de la Cruz
+    [50] => Florentino Ameghino
+    [51] => Garín
+    [52] => Gral. Alvarado
+    [53] => Gral. Alvear
+    [54] => Gral. Arenales
+    [55] => Gral. Belgrano
+    [56] => Gral. Guido
+    [57] => Gral. Lamadrid
+    [58] => Gral. Las Heras
+    [59] => Gral. Lavalle
+    [60] => Gral. Madariaga
+    [61] => Gral. Pacheco
+    [62] => Gral. Paz
+    [63] => Gral. Pinto
+    [64] => Gral. Pueyrredón
+    [65] => Gral. Rodríguez
+    [66] => Gral. Viamonte
+    [67] => Gral. Villegas
+    [68] => Guaminí
+    [69] => Guernica
+    [70] => Hipólito Yrigoyen
+    [71] => Ing. Maschwitz
+    [72] => Junín
+    [73] => La Plata
+    [74] => Laprida
+    [75] => Las Flores
+    [76] => Las Toninas
+    [77] => Leandro N. Alem
+    [78] => Lincoln
+    [79] => Loberia
+    [80] => Lobos
+    [81] => Los Cardales
+    [82] => Los Toldos
+    [83] => Lucila del Mar
+    [84] => Luján
+    [85] => Magdalena
+    [86] => Maipú
+    [87] => Mar Chiquita
+    [88] => Mar de Ajó
+    [89] => Mar de las Pampas
+    [90] => Mar del Plata
+    [91] => Mar del Tuyú
+    [92] => Marcos Paz
+    [93] => Mercedes
+    [94] => Miramar
+    [95] => Monte
+    [96] => Monte Hermoso
+    [97] => Munro
+    [98] => Navarro
+    [99] => Necochea
+    [100] => Olavarría
+    [101] => Partido de la Costa
+    [102] => Pehuajó
+    [103] => Pellegrini
+    [104] => Pergamino
+    [105] => Pigüé
+    [106] => Pila
+    [107] => Pilar
+    [108] => Pinamar
+    [109] => Pinar del Sol
+    [110] => Polvorines
+    [111] => Pte. Perón
+    [112] => Puán
+    [113] => Punta Indio
+    [114] => Ramallo
+    [115] => Rauch
+    [116] => Rivadavia
+    [117] => Rojas
+    [118] => Roque Pérez
+    [119] => Saavedra
+    [120] => Saladillo
+    [121] => Salliqueló
+    [122] => Salto
+    [123] => San Andrés de Giles
+    [124] => San Antonio de Areco
+    [125] => San Antonio de Padua
+    [126] => San Bernardo
+    [127] => San Cayetano
+    [128] => San Clemente del Tuyú
+    [129] => San Nicolás
+    [130] => San Pedro
+    [131] => San Vicente
+    [132] => Santa Teresita
+    [133] => Suipacha
+    [134] => Tandil
+    [135] => Tapalqué
+    [136] => Tordillo
+    [137] => Tornquist
+    [138] => Trenque Lauquen
+    [139] => Tres Lomas
+    [140] => Villa Gesell
+    [141] => Villarino
+    [142] => Zárate
+)
+ 
+22:09:22 - Exito - SELECT * FROM provincia ORDER BY 2; 
+22:09:22 - Exito - SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
+    co.CONTACTO_TEL1, co.CONTACTO_TEL2, co.CONTACTO_EMAIL, co.CONTACTO_EMAIL, co.CONTACTO_WEB, co.CONTACTO_INFO, 
+    dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE, pr.PROVINCIA_ID ,ci.CIUDAD_ID
+    FROM cliente cl
+    LEFT JOIN contacto co ON cl.CONTACTO_ID = co.CONTACTO_ID
+    LEFT JOIN domicilio dom ON cl.DOM_ID = dom.DOM_ID
+    LEFT JOIN ciudad ci ON dom.CIUDAD_ID = ci.CIUDAD_ID
+    LEFT JOIN provincia pr ON ci.PROVINCIA_ID = pr.PROVINCIA_ID 
+    WHERE cl.CLIENTE_ID = 1 
+22:09:22 - Exito - SELECT CIUDAD_ID, CIUDAD_NOMBRE FROM ciudad WHERE PROVINCIA_ID = 1 ORDER BY CIUDAD_NOMBRE 
+22:09:22 - Exito - Array
+(
+    [1] => 25 de Mayo
+    [2] => 3 de febrero
+    [3] => A. Alsina
+    [4] => A. Gonzáles Cháves
+    [5] => Aguas Verdes
+    [6] => Alberti
+    [7] => Arrecifes
+    [8] => Ayacucho
+    [9] => Azul
+    [10] => Bahía Blanca
+    [11] => Balcarce
+    [12] => Baradero
+    [13] => Benito Juárez
+    [14] => Berisso
+    [15] => Bolívar
+    [16] => Bragado
+    [17] => Brandsen
+    [18] => Campana
+    [19] => Cañuelas
+    [20] => Capilla del Señor
+    [21] => Capitán Sarmiento
+    [22] => Carapachay
+    [23] => Carhue
+    [24] => Cariló
+    [25] => Carlos Casares
+    [26] => Carlos Tejedor
+    [27] => Carmen de Areco
+    [28] => Carmen de Patagones
+    [29] => Castelli
+    [30] => Chacabuco
+    [31] => Chascomús
+    [32] => Chivilcoy
+    [33] => Colón
+    [34] => Coronel Dorrego
+    [35] => Coronel Pringles
+    [36] => Coronel Rosales
+    [37] => Coronel Suarez
+    [38] => Costa Azul
+    [39] => Costa Chica
+    [40] => Costa del Este
+    [41] => Costa Esmeralda
+    [42] => Daireaux
+    [43] => Darregueira
+    [44] => Del Viso
+    [45] => Dolores
+    [46] => Don Torcuato
+    [47] => Ensenada
+    [48] => Escobar
+    [49] => Exaltación de la Cruz
+    [50] => Florentino Ameghino
+    [51] => Garín
+    [52] => Gral. Alvarado
+    [53] => Gral. Alvear
+    [54] => Gral. Arenales
+    [55] => Gral. Belgrano
+    [56] => Gral. Guido
+    [57] => Gral. Lamadrid
+    [58] => Gral. Las Heras
+    [59] => Gral. Lavalle
+    [60] => Gral. Madariaga
+    [61] => Gral. Pacheco
+    [62] => Gral. Paz
+    [63] => Gral. Pinto
+    [64] => Gral. Pueyrredón
+    [65] => Gral. Rodríguez
+    [66] => Gral. Viamonte
+    [67] => Gral. Villegas
+    [68] => Guaminí
+    [69] => Guernica
+    [70] => Hipólito Yrigoyen
+    [71] => Ing. Maschwitz
+    [72] => Junín
+    [73] => La Plata
+    [74] => Laprida
+    [75] => Las Flores
+    [76] => Las Toninas
+    [77] => Leandro N. Alem
+    [78] => Lincoln
+    [79] => Loberia
+    [80] => Lobos
+    [81] => Los Cardales
+    [82] => Los Toldos
+    [83] => Lucila del Mar
+    [84] => Luján
+    [85] => Magdalena
+    [86] => Maipú
+    [87] => Mar Chiquita
+    [88] => Mar de Ajó
+    [89] => Mar de las Pampas
+    [90] => Mar del Plata
+    [91] => Mar del Tuyú
+    [92] => Marcos Paz
+    [93] => Mercedes
+    [94] => Miramar
+    [95] => Monte
+    [96] => Monte Hermoso
+    [97] => Munro
+    [98] => Navarro
+    [99] => Necochea
+    [100] => Olavarría
+    [101] => Partido de la Costa
+    [102] => Pehuajó
+    [103] => Pellegrini
+    [104] => Pergamino
+    [105] => Pigüé
+    [106] => Pila
+    [107] => Pilar
+    [108] => Pinamar
+    [109] => Pinar del Sol
+    [110] => Polvorines
+    [111] => Pte. Perón
+    [112] => Puán
+    [113] => Punta Indio
+    [114] => Ramallo
+    [115] => Rauch
+    [116] => Rivadavia
+    [117] => Rojas
+    [118] => Roque Pérez
+    [119] => Saavedra
+    [120] => Saladillo
+    [121] => Salliqueló
+    [122] => Salto
+    [123] => San Andrés de Giles
+    [124] => San Antonio de Areco
+    [125] => San Antonio de Padua
+    [126] => San Bernardo
+    [127] => San Cayetano
+    [128] => San Clemente del Tuyú
+    [129] => San Nicolás
+    [130] => San Pedro
+    [131] => San Vicente
+    [132] => Santa Teresita
+    [133] => Suipacha
+    [134] => Tandil
+    [135] => Tapalqué
+    [136] => Tordillo
+    [137] => Tornquist
+    [138] => Trenque Lauquen
+    [139] => Tres Lomas
+    [140] => Villa Gesell
+    [141] => Villarino
+    [142] => Zárate
+)
+ 
+22:09:22 - Exito - UPDATE cliente SET CLIENTE_NOMBRE = 'Consumidor Final', CLIENTE_APELLIDO = 'Consumidor Final' 
+            WHERE CLIENTE_ID = 1 
+22:09:22 - Exito - UPDATE contacto SET CONTACTO_TEL1 = '000-0000-0000', CONTACTO_TEL2 = '', CONTACTO_EMAIL = 'nada@nada.com' 
+            WHERE CONTACTO_ID = 8 
+22:09:22 - Exito - UPDATE domicilio SET DOM_CALLE = 'No definida', DOM_ALTURA = '0', DOM_CP = '0000', CIUDAD_ID= 6
+             WHERE DOM_ID = 5 
+22:09:24 - Exito - SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
+    co.CONTACTO_TEL1, co.CONTACTO_TEL2, co.CONTACTO_EMAIL, co.CONTACTO_EMAIL, co.CONTACTO_WEB, co.CONTACTO_INFO, 
+    dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE
+    FROM cliente cl
+    LEFT JOIN contacto co ON cl.CONTACTO_ID = co.CONTACTO_ID
+    LEFT JOIN domicilio dom ON cl.DOM_ID = dom.DOM_ID
+    LEFT JOIN ciudad ci ON dom.CIUDAD_ID = ci.CIUDAD_ID
+    LEFT JOIN provincia pr ON ci.PROVINCIA_ID = pr.PROVINCIA_ID   
+22:09:35 - Exito - SELECT * FROM provincia ORDER BY 2; 
+22:09:35 - Exito - SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
+    co.CONTACTO_TEL1, co.CONTACTO_TEL2, co.CONTACTO_EMAIL, co.CONTACTO_EMAIL, co.CONTACTO_WEB, co.CONTACTO_INFO, 
+    dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE, pr.PROVINCIA_ID ,ci.CIUDAD_ID
+    FROM cliente cl
+    LEFT JOIN contacto co ON cl.CONTACTO_ID = co.CONTACTO_ID
+    LEFT JOIN domicilio dom ON cl.DOM_ID = dom.DOM_ID
+    LEFT JOIN ciudad ci ON dom.CIUDAD_ID = ci.CIUDAD_ID
+    LEFT JOIN provincia pr ON ci.PROVINCIA_ID = pr.PROVINCIA_ID 
+    WHERE cl.CLIENTE_ID = 1 
+22:09:35 - Exito - SELECT CIUDAD_ID, CIUDAD_NOMBRE FROM ciudad WHERE PROVINCIA_ID = 1 ORDER BY CIUDAD_NOMBRE 
+22:09:35 - Exito - Array
+(
+    [1] => 25 de Mayo
+    [2] => 3 de febrero
+    [3] => A. Alsina
+    [4] => A. Gonzáles Cháves
+    [5] => Aguas Verdes
+    [6] => Alberti
+    [7] => Arrecifes
+    [8] => Ayacucho
+    [9] => Azul
+    [10] => Bahía Blanca
+    [11] => Balcarce
+    [12] => Baradero
+    [13] => Benito Juárez
+    [14] => Berisso
+    [15] => Bolívar
+    [16] => Bragado
+    [17] => Brandsen
+    [18] => Campana
+    [19] => Cañuelas
+    [20] => Capilla del Señor
+    [21] => Capitán Sarmiento
+    [22] => Carapachay
+    [23] => Carhue
+    [24] => Cariló
+    [25] => Carlos Casares
+    [26] => Carlos Tejedor
+    [27] => Carmen de Areco
+    [28] => Carmen de Patagones
+    [29] => Castelli
+    [30] => Chacabuco
+    [31] => Chascomús
+    [32] => Chivilcoy
+    [33] => Colón
+    [34] => Coronel Dorrego
+    [35] => Coronel Pringles
+    [36] => Coronel Rosales
+    [37] => Coronel Suarez
+    [38] => Costa Azul
+    [39] => Costa Chica
+    [40] => Costa del Este
+    [41] => Costa Esmeralda
+    [42] => Daireaux
+    [43] => Darregueira
+    [44] => Del Viso
+    [45] => Dolores
+    [46] => Don Torcuato
+    [47] => Ensenada
+    [48] => Escobar
+    [49] => Exaltación de la Cruz
+    [50] => Florentino Ameghino
+    [51] => Garín
+    [52] => Gral. Alvarado
+    [53] => Gral. Alvear
+    [54] => Gral. Arenales
+    [55] => Gral. Belgrano
+    [56] => Gral. Guido
+    [57] => Gral. Lamadrid
+    [58] => Gral. Las Heras
+    [59] => Gral. Lavalle
+    [60] => Gral. Madariaga
+    [61] => Gral. Pacheco
+    [62] => Gral. Paz
+    [63] => Gral. Pinto
+    [64] => Gral. Pueyrredón
+    [65] => Gral. Rodríguez
+    [66] => Gral. Viamonte
+    [67] => Gral. Villegas
+    [68] => Guaminí
+    [69] => Guernica
+    [70] => Hipólito Yrigoyen
+    [71] => Ing. Maschwitz
+    [72] => Junín
+    [73] => La Plata
+    [74] => Laprida
+    [75] => Las Flores
+    [76] => Las Toninas
+    [77] => Leandro N. Alem
+    [78] => Lincoln
+    [79] => Loberia
+    [80] => Lobos
+    [81] => Los Cardales
+    [82] => Los Toldos
+    [83] => Lucila del Mar
+    [84] => Luján
+    [85] => Magdalena
+    [86] => Maipú
+    [87] => Mar Chiquita
+    [88] => Mar de Ajó
+    [89] => Mar de las Pampas
+    [90] => Mar del Plata
+    [91] => Mar del Tuyú
+    [92] => Marcos Paz
+    [93] => Mercedes
+    [94] => Miramar
+    [95] => Monte
+    [96] => Monte Hermoso
+    [97] => Munro
+    [98] => Navarro
+    [99] => Necochea
+    [100] => Olavarría
+    [101] => Partido de la Costa
+    [102] => Pehuajó
+    [103] => Pellegrini
+    [104] => Pergamino
+    [105] => Pigüé
+    [106] => Pila
+    [107] => Pilar
+    [108] => Pinamar
+    [109] => Pinar del Sol
+    [110] => Polvorines
+    [111] => Pte. Perón
+    [112] => Puán
+    [113] => Punta Indio
+    [114] => Ramallo
+    [115] => Rauch
+    [116] => Rivadavia
+    [117] => Rojas
+    [118] => Roque Pérez
+    [119] => Saavedra
+    [120] => Saladillo
+    [121] => Salliqueló
+    [122] => Salto
+    [123] => San Andrés de Giles
+    [124] => San Antonio de Areco
+    [125] => San Antonio de Padua
+    [126] => San Bernardo
+    [127] => San Cayetano
+    [128] => San Clemente del Tuyú
+    [129] => San Nicolás
+    [130] => San Pedro
+    [131] => San Vicente
+    [132] => Santa Teresita
+    [133] => Suipacha
+    [134] => Tandil
+    [135] => Tapalqué
+    [136] => Tordillo
+    [137] => Tornquist
+    [138] => Trenque Lauquen
+    [139] => Tres Lomas
+    [140] => Villa Gesell
+    [141] => Villarino
+    [142] => Zárate
+)
+ 

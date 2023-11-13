@@ -192,15 +192,15 @@ if(isset($_POST["DarAlta"])) {
                         <div class="row">
                         <div class="mb-3 col-md-3">
                             <label for="Telefono1" class="form-label">Telefono 1</label>
-                            <input class="form-control" type="text" id="Tele1" name="Tele1"  autofocus  />
+                            <input class="form-control" type="text" id="Tele1" name="Tele1"  pattern="[0-9]{3,4}-[0-9]{3,4}-[0-9]{4}" placeholder="Nro telefono 0123-4567-8901"  required />
                           </div>
                           <div class="mb-3 col-md-3">
                             <label for="Telefono2" class="form-label">Telefono 2</label>
-                            <input class="form-control" type="text" name="Tele2" id="Tele2"   />
+                            <input class="form-control" type="text" name="Tele2" id="Tele2" pattern="[0-9]{3,4}-[0-9]{3,4}-[0-9]{4}" placeholder="Nro telefono 0123-4567-8901"  />
                           </div>
                           <div class="mb-3 col-md-3">
                             <label for="Email" class="form-label">Email</label>
-                            <input class="form-control" type="email" name="email" id="email"   />
+                            <input class="form-control" type="email" name="email" id="email" required  />
                           </div>
                           
                         </div>
@@ -210,24 +210,27 @@ if(isset($_POST["DarAlta"])) {
                         <div class="mb-3 col-md-3">
                             
                             <label for="Calle" class="form-label">Calle</label>
-                            <input class="form-control" type="text" id="Calle" name="Calle"   />
+                            <input class="form-control" type="text" id="Calle" name="Calle" required  />
                           
                         </div>
-                        <div class="mb-3 col-md-1">
+                        <div class="mb-3 col-md-2">
                             
                             <label for="Altura" class="form-label">Altura</label>
-                            <input class="form-control" type="text" id="Altura" name="Altura"   />
+                            <input class="form-control" type="number" id="Altura" name="Altura"   required/>
                           
                         </div>
-                        <div class="mb-3 col-md-1">
+                        <div class="mb-3 col-md-2">
                             
                             <label for="CP" class="form-label">CP</label>
-                            <input class="form-control" type="text" id="CP" name="CP"   />
+                            <input class="form-control" type="number" id="CP" name="CP" pattern="[0-9]{4}" title="Ingrese exactamente 4 dígitos del CP" required />
                           
                         </div>
+                        </div>
+                        
+                        <div class="row">
                         <div class="mb-3 col-md-3">
                             <label class="form-label" for="Provincia">Provincia</label>
-                            <select id="Provincia"  name="Provincia" class="select2 form-select" >
+                            <select id="Provincia"  name="Provincia" class="select2 form-select" required>
                               <option value=""></option>
                               <?php 
                                 foreach ($provincias as $id_prov =>$val) {
@@ -237,7 +240,7 @@ if(isset($_POST["DarAlta"])) {
                           </div>
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="Ciudad">Ciudad</label>
-                            <select id="Ciudad"  name="Ciudad" class="select2 form-select" >
+                            <select id="Ciudad"  name="Ciudad" class="select2 form-select"required>
                               
                             </select>
                           </div>
