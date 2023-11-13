@@ -4,7 +4,8 @@ function listar_proveedores($filtro,$ConexionBD) {
     $proveedores = array();
     $SQL = "SELECT p.PROVE_ID, p.PROVE_NOMBRE, p.PROVE_INFO, p.DOM_ID, p.CONTACTO_ID,
         c.CONTACTO_TEL1, c.CONTACTO_TEL2, c.CONTACTO_EMAIL, c.CONTACTO_WEB,c.CONTACTO_INFO,
-        d.DOM_CALLE, d.DOM_ALTURA, d.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE, cI.PROVINCIA_ID 
+        d.DOM_CALLE, d.DOM_ALTURA, d.DOM_CP, ci.CIUDAD_ID, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE, 
+        ci.PROVINCIA_ID 
         FROM proveedores p
         LEFT JOIN contacto c ON (c.CONTACTO_ID = p.CONTACTO_ID)
         LEFT JOIN domicilio d ON (p.DOM_ID = d.DOM_ID)
@@ -26,6 +27,7 @@ function listar_proveedores($filtro,$ConexionBD) {
         $proveedores[$i]['DOM_ALTURA'] = $data['DOM_ALTURA'];
         $proveedores[$i]['DOM_CP'] = $data['DOM_CP'];
         $proveedores[$i]['CIUDAD_NOMBRE'] = $data['CIUDAD_NOMBRE'];
+        $proveedores[$i]['CIUDAD_ID'] = $data['CIUDAD_ID'];
         $proveedores[$i]['PROVINCIA_NOMBRE'] = $data['PROVINCIA_NOMBRE'];
         $proveedores[$i]['PROVINCIA_ID'] = $data['PROVINCIA_ID'];
         $proveedores[$i]['DOM_ID'] = $data['DOM_ID'];
@@ -70,7 +72,7 @@ function modificar_proveedor($datos,$ConexionBD) {
             WHERE CONTACTO_ID = $id_contacto";
     $sql3 = "UPDATE domicilio SET DOM_CALLE = '$Calle', DOM_ALTURA = '$Altura', DOM_CP = '$CP', CIUDAD_ID= $Ciudad
              WHERE DOM_ID = $id_domicilio";
-    print $sql3;
+    
     if($ConexionBD->query($sql1) === TRUE) {
         $resultado1="Datos clientes ok";
         } else {
@@ -90,7 +92,7 @@ function modificar_proveedor($datos,$ConexionBD) {
 }
 
 function alta_proveedor($datos,$ConexionBD) {
-    print_r($datos);
+    //print_r($datos);
     $id_domicilio = $datos["ID_DIRECCION"];
     $id_contacto  = $datos["ID_CONTACTO"];
     $nombre       = $datos["Nombre"];

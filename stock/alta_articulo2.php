@@ -10,47 +10,44 @@ if (empty($_SESSION["Usuario"])) {
 
 require_once '../funciones/conexion.php';
 $MiConexion=ConexionBD();
-require_once '../funciones/proveedores.php';
-require_once '../funciones/abm.php';
+require_once '../funciones/articulos.php';
 //$CantidadDatos=count($datos_articulo);
-//$marcas=listar_marcas($MiConexion);
+$marcas=listar_marcas($MiConexion);
 
-$provincias =listar_provincias($MiConexion);
-$CantidadProv=count($provincias);
-
-
-
-if(isset($_POST["Modificar"])) {
- // print_r($_POST);
-  $modificacion_cliente = modificar_proveedor($_POST,$MiConexion);
-  
-   //echo "<script> 
-   //alert('$modificacion_cliente') 
-   //window.open('/proveedores/proveedor.php','_top')
-  // </script>";
-         
-}
+$proveedores=listar_proveedor($MiConexion);
+$CantidadProvee=count($proveedores);
 
 if(isset($_POST["DarAlta"])) {
-  //$imgContent="";
-//  print_r($_POST);
-  $id_direccion = alta_direccion($_POST,$MiConexion);
-  $_POST['ID_DIRECCION'] = $id_direccion;
-
-  $id_contacto = alta_contacto($_POST,$MiConexion);
-  $_POST['ID_CONTACTO'] = $id_contacto;
+  print_r($_POST);
+  echo "<script> 
+      let isBoss = confirm('¿Estas seguro?');
+      alert(isBoss) 
+      </script>";
+         
   
-  $alta_cliente = alta_proveedor($_POST,$MiConexion);
-  
-  $statusMsg =  $alta_cliente;
-   
-   echo "<script> 
-     alert('$statusMsg') 
-     window.open('/proveedores/proveedores.php','_top')
-    </script>";
+  $daralta=alta_producto($_POST,$MiConexion);   
+  echo $daralta;
+    echo "<script> 
+      
+      alert('$daralta') 
+      window.open('/stock/articulos.php','_top')
+      </script>";
          
   }
-  
+
+  if(isset($_POST["borrar_imagen"])) {
+    $borrar_imagen=borrarimagen($_POST,$MiConexion);  
+    echo "<script> 
+         alert('$borrar_imagen') 
+         window.open('/stock/articulos.php','_top')
+          </script>"; 
+  }
+   
+ //  echo "<script> 
+   //       alert('Se a cambiado datos de $usuario $modificar_usuario') 
+    //      window.open('//usuarios/usuarios.php','_top')
+      //   </script>";
+//}
 
 
 ?>
@@ -111,11 +108,11 @@ if(isset($_POST["DarAlta"])) {
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script language="javascript">
     $(document).ready(function(){
-      $("#Provincia").on('change', function () {
-        $("#Provincia option:selected").each(function () {
-            var id_prov = $(this).val();
-            $.post("ciudades.php", { id_prov: id_prov }, function(data) {
-                $("#Ciudad").html(data);
+      $("#Marca").on('change', function () {
+        $("#Marca option:selected").each(function () {
+            var id_marca = $(this).val();
+            $.post("modelo.php", { id_marca: id_marca }, function(data) {
+                $("#Modelo").html(data);
             });			
         });
    });
@@ -176,115 +173,63 @@ if(isset($_POST["DarAlta"])) {
                 
             
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Alta de Proveedor</h4> 
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Modificación Producto</h4> 
               <div class="col-md-12">
                   
             </div> 
               <form method='post' action="" enctype="multipart/form-data">
               <div class="card">
-              
-              
+                
+                      
                     <hr class="my-0" />
                     <div class="card-body">
-                    <h5 class="card-header">Datos Proveedor</h5>
+                  
                     <!-- Account -->
                      
                         <div class="row">
-                          <div class="mb-3 col-md-4">
-                            <label for="Nombre" class="form-label">Nombre</label>
-                            <input class="form-control" type="text" id="Nombre" name="Nombre"  required />
+                          <div class="mb-3 col-md-6">
+                            <label for="Nombre" class="form-label">Producto</label>
+                            <input class="form-control" type="text" id="Nombre" name="Nombre"  autofocus required />
                           </div>
-                          <div class="mb-3 col-md-4">
-                            <label for="Apellido" class="form-label">Info</label>
-                            <input class="form-control" type="text" name="Info" id="Info" />
+                          <div class="mb-3 col-md-6">
+                            <label class="form-label" for="Marca">Marca</label>
+                            <input class="form-control" type="text" id="marca" name="marca"   required />
                           </div>
                           
-                        </div>
-
-                        <div class="row">
-                        <div class="mb-3 col-md-3">
-                            <label for="Telefono1" class="form-label">Telefono 1</label>
-                            <input class="form-control" type="text" id="Tele1" name="Tele1"  />
-                          </div>
                           <div class="mb-3 col-md-3">
-                            <label for="Telefono2" class="form-label">Telefono 2</label>
-                            <input class="form-control" type="text" name="Tele2" id="Tele2" />
-                          </div>
-                          <div class="mb-3 col-md-3">
-                            <label for="Email" class="form-label">Email</label>
-                            <input class="form-control" type="email" name="email" id="email"  />
-                          </div>
-                          
-                        </div>
-                        
-                        <div class="row">
-                        <div class="mb-5 col-md-5">
-                            <label for="Web" class="form-label">Web</label>
-                            <input class="form-control" type="url" id="Web" name="Web"  placeholder="https://ejemplo.com"   />
-                          </div>
-                        </div>  
-
-                        <div class="row">
-   
-                        <div class="mb-3 col-md-3">
                             
-                            <label for="Calle" class="form-label">Calle</label>
-                            <input class="form-control" type="text" id="Calle" name="Calle"   />
-                          
-                        </div>
-                        <div class="mb-3 col-md-1">
+                              <label for="Email" class="form-label">Precio</label>
+                              <input class="form-control" type="text" id="Precio_compra" name="Precio_compra"  pattern="\d+(\.\d{2})?" title= "Numero, ejemplo 99.99" placeholder="100.00"required />
                             
-                            <label for="Altura" class="form-label">Altura</label>
-                            <input class="form-control" type="text" id="Altura" name="Altura"  />
-                          
-                        </div>
-                        <div class="mb-3 col-md-1">
-                            
-                            <label for="CP" class="form-label">CP</label>
-                            <input class="form-control" type="text" id="CP" name="CP" />
-                          
-                        </div>
-                        <div class="mb-3 col-md-3">
-                            <label class="form-label" for="Provincia">Provincia</label>
-                            <select id="Provincia"  name="Provincia" class="select2 form-select" >
-                              <option value=""></option>
-                              <?php 
-                                foreach ($provincias as $id_prov =>$val) {
-                                  echo "<option value =". $id_prov . " > ". $val . "</option>";
-                                    }
-                                  ?>
-                            </select>
                           </div>
-                          <div class="mb-3 col-md-3">
-                            <label class="form-label" for="Ciudad">Ciudad</label>
-                            <select id="Ciudad"  name="Ciudad" class="select2 form-select" >
-                              
-                            </select>
-                          </div>
-
-                        
-
                           
                           
-                          
+                          <div class="mb-3 col-md-6">
+                            <label class="form-label" for="Usuario">Codigo</label>
+                              <input type="text" id="Cod_art" name="Cod_art" class="form-control"  pattern="\d{6}" title= "Numero de seis digitos!"  required />
                           </div>
                          
+                         
+
+                          
                           
                           
                         </div>
                        
-          
+
+                   
                    
                     
-                        
-                        <div class="mt-2">
-                          <button type="submit" name="DarAlta" class="btn btn-primary me-2">Dar de Alta</button>
-                          
-                       
-                      
-                    </div>
 
-                     
+                        <dic class="row">
+                        <div class="mb-3 col-md-3">
+                          <button type="submit" name="DarAlta" class="btn btn-danger" >Modificar</button>
+                        </div>
+                        <div class="mb-2 col-md-1"></div>
+                        <div class="mb-3 col-md-3">
+                          <button type="submit" name="DarAlta" class="btn btn-danger" >Dar de Baja</button>
+                        </div>
+                        </div>
                     </div>
                     <!-- /Account -->
                   </div>

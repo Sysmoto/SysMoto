@@ -18,10 +18,13 @@ require_once '../funciones/abm.php';
 $provincias =listar_provincias($MiConexion);
 $CantidadProv=count($provincias);
 
-
 $id_cliente = $_POST["id_cliente"];
 $cliente = listar_clientes_corto($id_cliente,$MiConexion) ;
-//print_r($cliente);
+
+$ciudades =listar_ciudades($cliente["PROVINCIA_ID"],$MiConexion);
+$CantidadCiud=count($ciudades);
+
+
 if(isset($_POST["Modificar"])) {
   $modificacion_cliente = modificar_cliente($_POST,$MiConexion);
   
@@ -259,7 +262,17 @@ if(isset($_POST["DarAlta"])) {
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="Ciudad">Ciudad</label>
                             <select id="Ciudad"  name="Ciudad" class="select2 form-select" >
-                              <?php       echo "<option value =". $id_prov . " > ". $cliente["CIUDAD_NOMBRE"] . "</option>"; ?>
+                            <?php     
+                              //  echo "<option value =". $cliente["CIUDAD_ID"] . " > ". $cliente["CIUDAD_NOMBRE"] . "</option>"; 
+                                foreach ($ciudades as $id_ciudad =>$val) {
+                                  if($cliente["CIUDAD_ID"] == $id_ciudad){ 
+                                      echo "<option value =". $id_ciudad . " SELECTED> ". $val . "</option>";
+                                  }
+                                  else {
+                                    echo "<option value =". $id_ciudad . " > ". $val . "</option>";
+                                  }
+                              }  
+                            ?>
                             </select>
                           </div>
 

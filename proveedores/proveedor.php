@@ -22,20 +22,23 @@ $CantidadProv=count($provincias);
 $id_provee = $_POST["id_provee"];
 
 $filtro = " WHERE p.PROVE_ID = $id_provee ";
-echo $filtro;
+
 
 $proveedores= listar_proveedores($filtro,$MiConexion);
 
+$id_provincia = $proveedores[0]["PROVINCIA_ID"];
+$ciudades =listar_ciudades($id_provincia,$MiConexion);
+$CantidadCiud=count($ciudades);
 
 //print_r($proveedores);
 
 if(isset($_POST["Modificar"])) {
-  print_r($_POST);
+  
   $modificacion_cliente = modificar_proveedor($_POST,$MiConexion);
   
    echo "<script> 
    alert('$modificacion_cliente') 
-   window.open('/proveedores/proveedor.php','_top')
+   window.open('/proveedores/proveedores.php','_top')
   </script>";
          
 }
@@ -258,7 +261,17 @@ if(isset($_POST["DarAlta"])) {
                           <div class="mb-3 col-md-3">
                             <label class="form-label" for="Ciudad">Ciudad</label>
                             <select id="Ciudad"  name="Ciudad" class="select2 form-select" >
-                              <?php       echo "<option value =". $id_prov . " > ". $proveedores[0]["CIUDAD_NOMBRE"] . "</option>"; ?>
+                              <?php  
+                              //     echo "<option value =". $id_prov . " > ". $proveedores[0]["CIUDAD_NOMBRE"] . "</option>"; 
+                              foreach ($ciudades as $id_ciudad =>$val) {
+                                if($proveedores[0]["CIUDAD_ID"] == $id_ciudad){ 
+                                    echo "<option value =". $id_ciudad . " SELECTED> ". $val . "</option>";
+                                }
+                                else {
+                                  echo "<option value =". $id_ciudad . " > ". $val . "</option>";
+                                }
+                              }
+                              ?>
                             </select>
                           </div>
 

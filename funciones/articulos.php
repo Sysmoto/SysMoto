@@ -186,6 +186,24 @@ function alta_articulo($datos_articulos,$imagen,$ConexionBD) {
     return $resultado;
 }
 
+function alta_producto($datos_articulos,$ConexionBD) {
+    print_r($datos_articulos);
+    $nombre = $datos_articulos["Nombre"];
+    $marca = $datos_articulos["marca"];
+    $precio=$datos_articulos["Precio_compra"];
+    $codart = $datos_articulos["Cod_art"];
+    
+    $sql = "  INSERT INTO producto () VALUES (NULL,'$nombre','$marca',$precio,'$codart' );";
+   echo $sql; 
+    if($ConexionBD->query($sql) === TRUE) {
+      $resultado="Datos elininado correctamente";
+        } else {
+            $resultado="Incorrectamente porque ".$ConexionBD->error;
+        }
+   
+    return $resultado;
+}
+
 function modificar_articulo($datos_articulos,$ConexionBD) {
     //print_r($datos_articulos);
     $nombre = $datos_articulos["Nombre"];

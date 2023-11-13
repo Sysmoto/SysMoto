@@ -31,7 +31,7 @@ if(isset($_POST["DarAlta"])) {
    
   $statusMsg =  $alta_cliente;
    
-   echo "<script> 
+  echo "<script> 
      alert('$statusMsg') 
      window.open('/clientes/clientes.php','_top')
     </script>";

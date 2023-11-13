@@ -28,19 +28,24 @@ if(isset($_POST["cliente"])) {
     else {
       $_POST['NombreCliente']= $cliente["CLIENTE_NOMBRE"] . " " . $cliente["CLIENTE_APELLIDO"]  ;
     }
-  print_r($_POST);
+  
 }
 
 
-if(isset($_POST["Buscar"])) {
-  $busqueda = $_POST['Busqueda'];
+if(isset($_POST["BuscarCliente"])) {
+  $busqueda = $_POST['Busqueda_cliente'];
     $filtro = " WHERE CLIENTE_NOMBRE LIKE '%" . $busqueda . "%' OR CLIENTE_APELLIDO  LIKE '%" . $busqueda . "%' OR  CLIENTE_ID  LIKE '%" . $busqueda . "%' ";
   
 }
 
+if(isset($_POST["BuscarArticulo"])) {
+  $busqueda = $_POST['Busqueda_articulo'];
+  echo $busqueda;
+}
 $clientes= listar_clientes_largo($filtro,$MiConexion);
 
 $CantidadClientes=count($clientes);
+print_r($_POST);
 ?>
 <!DOCTYPE html>
 
@@ -160,11 +165,11 @@ $CantidadClientes=count($clientes);
                     <div class="row">
                     
                       <div class="mb-3 col-md-3">
-                          <input class="form-control" type="text" id="Busqueda" name="Busqueda"  value="<?php ;?>"  />
+                          <input class="form-control" type="text" id="Busqueda_cliente" name="Busqueda_cliente"  value="<?php ;?>"  />
                       </div>
 
                       <div class="mb-3 col-md-3">
-                          <button type="submit" name="Buscar" class="btn btn-primary me-2">Buscar Cliente</button>
+                          <button type="submit" name="BuscarCliente" class="btn btn-primary me-2">Buscar Cliente</button>
                       </div>
                
                       <div class="mb-3 col-md-3"></div>
@@ -205,19 +210,30 @@ $CantidadClientes=count($clientes);
                               </tbody>
                           </table>
                         </div>
-                  </div>
-                <?php } ?> 
-              </div>
+                </div>
             
+                <?php } ?> 
+             
             
             
             <!-- / Content -->
                <?php 
                if(isset($_POST['id_cliente']))  { ?>
+              
               <input type="hidden" name="id_cliente" value="<?php echo $_POST["id_cliente"]; ?>" >
+              <input type="hidden" name="NombreCliente" value="<?php echo $_POST["NombreCliente"]; ?>" >
+
               <div class="container-xxl flex-grow-1 container-p-y">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Presupuesto <?php echo $_POST["NombreCliente"] ; ?> </h4> 
-                
+                <div class="row">
+                    <div class="mb-3 col-md-3">
+                          <input class="form-control" type="text" id="Busqueda_articulo" name="Busqueda_articulo"  value="<?php ;?>" autofocus />
+                      </div>
+
+                      <div class="mb-3 col-md-3">
+                          <button type="submit" name="BuscarArticulo" class="btn btn-primary me-2">Buscar Articulo</button>
+                      </div>
+                </div>
 
 
                 <?php } ?> 

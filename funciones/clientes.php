@@ -1,6 +1,6 @@
 <?php
 function listar_clientes_largo($filtro,$ConexionBD) {
-    $SQL = "SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
+    $sql = "SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
     co.CONTACTO_TEL1, co.CONTACTO_TEL2, co.CONTACTO_EMAIL, co.CONTACTO_EMAIL, co.CONTACTO_WEB, co.CONTACTO_INFO, 
     dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE
     FROM cliente cl
@@ -11,8 +11,19 @@ function listar_clientes_largo($filtro,$ConexionBD) {
     
     
 
-     $rs = mysqli_query($ConexionBD, $SQL);
-        
+     $rs = mysqli_query($ConexionBD, $sql);
+     
+    $fecha_actual = date("Y-m-d");
+    $hora_actual = date("H:i:s");
+    $archivo_log = "../log/sysmoto_$fecha_actual.log";
+    if ($rs) {
+        error_log("$hora_actual - Exito - $sql \n", 3, $archivo_log);
+      } 
+      else {
+       $error_message = $ConexionBD->error;
+       error_log("$hora_actual - Error -  $sql - $error_message \n", 3, $archivo_log);
+      }
+     
     $i=0;
     while ($data = mysqli_fetch_array($rs)) {
         $clientes[$i]['CLIENTE_ID'] = $data['CLIENTE_ID'];
@@ -40,9 +51,9 @@ function listar_clientes_largo($filtro,$ConexionBD) {
 }
 
 function listar_clientes_corto($id_cliente,$ConexionBD) {
-    $SQL = "SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
+    $sql = "SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
     co.CONTACTO_TEL1, co.CONTACTO_TEL2, co.CONTACTO_EMAIL, co.CONTACTO_EMAIL, co.CONTACTO_WEB, co.CONTACTO_INFO, 
-    dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE, pr.PROVINCIA_ID 
+    dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE, pr.PROVINCIA_ID ,ci.CIUDAD_ID
     FROM cliente cl
     LEFT JOIN contacto co ON cl.CONTACTO_ID = co.CONTACTO_ID
     LEFT JOIN domicilio dom ON cl.DOM_ID = dom.DOM_ID
@@ -52,7 +63,18 @@ function listar_clientes_corto($id_cliente,$ConexionBD) {
     
     
 
-     $rs = mysqli_query($ConexionBD, $SQL);
+     $rs = mysqli_query($ConexionBD, $sql);
+     $fecha_actual = date("Y-m-d");
+    $hora_actual = date("H:i:s");
+    $archivo_log = "../log/sysmoto_$fecha_actual.log";
+    
+    if ($rs) {
+        error_log("$hora_actual - Exito - $sql \n", 3, $archivo_log);
+      } 
+      else {
+       $error_message = $ConexionBD->error;
+       error_log("$hora_actual - Error -  $sql - $error_message \n", 3, $archivo_log);
+      }
         
     $i=0;
     while ($data = mysqli_fetch_array($rs)) {
@@ -73,6 +95,7 @@ function listar_clientes_corto($id_cliente,$ConexionBD) {
         $cliente['DOM_ALTURA'] = $data['DOM_ALTURA'];
         $cliente['DOM_CP'] = $data['DOM_CP'];
         $cliente['CIUDAD_NOMBRE'] = $data['CIUDAD_NOMBRE'];
+        $cliente['CIUDAD_ID'] = $data['CIUDAD_ID'];
         $cliente['PROVINCIA_NOMBRE'] = $data['PROVINCIA_NOMBRE'];
         $cliente['PROVINCIA_ID'] = $data['PROVINCIA_ID'];
             $i++;
@@ -91,15 +114,23 @@ function alta_cliente($datos,$ConexionBD) {
     $id_contacto  = $datos["ID_CONTACTO"];
     $nombre       = $datos["Nombre"];
     $apellido     = $datos["Apellido"];
-    
+     
     $sql = "INSERT INTO cliente () VALUEs
     (NULL,$id_domicilio,$id_contacto,'$nombre','$apellido',NOW(),NULL);";
-  //  echo $sql;
-    if($ConexionBD->query($sql) === TRUE) {
+    $rs = mysqli_query($ConexionBD, $sql);
+    
+    $fecha_actual = date("Y-m-d");
+    $hora_actual = date("H:i:s");
+    $archivo_log = "../log/sysmoto_$fecha_actual.log";
+    
+    if($rs) {
+        error_log("$hora_actual - Exito - $sql \n", 3, $archivo_log);
         $resultado="Datos subidos correctamente";
         } 
         else {
-         $resultado="Incorrectamente porque ".$ConexionBD->error;
+            $error_message = $ConexionBD->error;
+            error_log("$hora_actual - Error -  $sql - $error_message \n", 3, $archivo_log);
+            $resultado="Incorrectamente porque ".$ConexionBD->error;
         
     }
     return $resultado;
@@ -127,36 +158,68 @@ function modificar_cliente($datos,$ConexionBD) {
             WHERE CONTACTO_ID = $id_contacto";
     $sql3 = "UPDATE domicilio SET DOM_CALLE = '$Calle', DOM_ALTURA = '$Altura', DOM_CP = '$CP', CIUDAD_ID= $Ciudad
              WHERE DOM_ID = $id_domicilio";
+    
+    $rs1 = mysqli_query($ConexionBD, $sql1);
+    $rs2 = mysqli_query($ConexionBD, $sql2);
+    $rs3 = mysqli_query($ConexionBD, $sql3);
+    
+    $fecha_actual = date("Y-m-d");
+    $hora_actual = date("H:i:s");
+    $archivo_log = "../log/sysmoto_$fecha_actual.log";
     //print $sql;
-    if($ConexionBD->query($sql1) === TRUE) {
+    if($rs1) {
         $resultado1="Datos clientes ok";
+        error_log("$hora_actual - Exito - $sql1 \n", 3, $archivo_log);
         } else {
+            $error_message = $ConexionBD->error;
+            error_log("$hora_actual - Error -  $sql1 - $error_message \n", 3, $archivo_log);
             $resultado1="Incorrectamente porque ".$ConexionBD->error;
         }
-    if($ConexionBD->query($sql2) === TRUE) {
+    if($rs2) {
         $resultado2="Datos contacto ok";
+        error_log("$hora_actual - Exito - $sql2 \n", 3, $archivo_log);
         } else {
-         $resultado2="Incorrectamente porque ".$ConexionBD->error;
+            $error_message = $ConexionBD->error;
+            error_log("$hora_actual - Error -  $sql2 - $error_message \n", 3, $archivo_log);   
+            $resultado2="Incorrectamente porque ".$ConexionBD->error;
          }
-    if($ConexionBD->query($sql3) === TRUE) {
-                $resultado3="Datos domicilio ok";
-                } else {
-                    $resultado3="Incorrectamente porque ".$ConexionBD->error;
+    if($rs3) {
+        $resultado3="Datos domicilio ok";
+        error_log("$hora_actual - Exito - $sql3 \n", 3, $archivo_log);
+                } 
+        else {
+           $resultado3="Incorrectamente porque ".$ConexionBD->error;
+           $error_message = $ConexionBD->error;
+           error_log("$hora_actual - Error -  $sql - $error_message \n", 3, $archivo_log);
                 }
     return $resultado1 . " - " . $resultado2 . " - " . $resultado3;
 }
 
 function listar_provincias($ConexionBD) {
-    $SQL = "SELECT * FROM provincia ORDER BY 2;";
+    $sql = "SELECT * FROM provincia ORDER BY 2;";
     
-     $rs = mysqli_query($ConexionBD, $SQL);
-    
+     $rs = mysqli_query($ConexionBD, $sql);
+     $fecha_actual = date("Y-m-d");
+     $hora_actual = date("H:i:s");
+     $archivo_log = "../log/sysmoto_$fecha_actual.log";
+     
+     if($rs) {
+         error_log("$hora_actual - Exito - $sql \n", 3, $archivo_log);
+         $resultado="Datos subidos correctamente";
+         } 
+         else {
+             $error_message = $ConexionBD->error;
+             error_log("$hora_actual - Error -  $sql - $error_message \n", 3, $archivo_log);
+             $resultado="Incorrectamente porque ".$ConexionBD->error;  
+         }
+
     while ($data = mysqli_fetch_array($rs)) {
         $provincias[$data['PROVINCIA_ID']] = $data['PROVINCIA_NOMBRE'];    
         
     }
     return $provincias;
 }
+
 
 
 ?>
