@@ -19,7 +19,7 @@ $CantidadProvee=count($proveedores);
 
 if(isset($_POST["DarAlta"])) {
   $imgContent="";
-  print_r($_POST);
+  //print_r($_POST);
   if(!empty($_FILES["cambiar_imagen"]["name"])) { 
       $fileName = basename($_FILES["cambiar_imagen"]["name"]); 
       $fileType = pathinfo($fileName, PATHINFO_EXTENSION); 
@@ -231,7 +231,7 @@ if(isset($_POST["DarAlta"])) {
                           </div>
                           <div class="mb-3 col-md-6">
                             <label class="form-label" for="Modelo">Modelo</label>
-                            <select id="Modelo"  name="Modelo" class="select2 form-select" required>
+                            <select id="Modelo"  name="Modelo" class="select2 form-select" >
                               
                             </select>
                           </div>

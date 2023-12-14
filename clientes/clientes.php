@@ -143,12 +143,7 @@ $CantidadClientes=count($clientes);
                 <div class="mb-3 col-md-3">
                 </div>
                 
-                <div class="mb-3 col-md-3">
-                      <input class="form-control" type="text" id="Busqueda" name="Busqueda"  value="<?php ;?>"  />
-                </div>
-                <div class="mb-3 col-md-3">
-                <button type="submit" name="Buscar" class="btn btn-primary me-2">Buscar Cliente</button>
-                </div>
+              
                 
             </div> 
             </form>
@@ -156,7 +151,7 @@ $CantidadClientes=count($clientes);
               <div class="card">
                 
                 <div class="table-responsive text-nowrap">
-                  <table class="table">
+                  <table class="table" id="example1">
                     <thead>
                       <tr>
                         <th>Nombre</th>
@@ -235,6 +230,37 @@ $CantidadClientes=count($clientes);
 
     <!-- Page JS -->
     <script src="../assets/js/dashboards-analytics.js"></script>
+    <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="/plugins/jszip/jszip.min.js"></script>
+<script src="/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+ <script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": false,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

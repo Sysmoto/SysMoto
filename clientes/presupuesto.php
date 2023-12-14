@@ -11,8 +11,26 @@ if (empty($_SESSION["Usuario"])) {
 require_once '../funciones/conexion.php';
 $MiConexion=ConexionBD();
 require_once '../funciones/clientes.php';
+require_once '../funciones/ventas.php';
+require_once '../funciones/articulos.php';
+
+$articulos=listar_articulo_js($MiConexion);
+$CantidadArticulos=count($articulos);
+
+$articulo = json_encode($articulos);
+
+$impuestos=listar_impuestos($MiConexion);
+$CantidadImpuestos=count($impuestos);
+
+$metodo=listar_met_pago($MiConexion);
+$CantidadMetodo=count($metodo);
 
 $filtro = '';
+$clientes= listar_clientes_largo($filtro,$MiConexion);
+$CantidadClientes=count($clientes);
+
+
+
 
 if(isset($_POST["cliente"])) {
   print_r($_POST);
@@ -28,24 +46,26 @@ if(isset($_POST["cliente"])) {
     else {
       $_POST['NombreCliente']= $cliente["CLIENTE_NOMBRE"] . " " . $cliente["CLIENTE_APELLIDO"]  ;
     }
+}
+
+if(isset($_POST["registrar"])) {
+
+  //print_r($_POST);
   
-}
-
-
-if(isset($_POST["BuscarCliente"])) {
-  $busqueda = $_POST['Busqueda_cliente'];
-    $filtro = " WHERE CLIENTE_NOMBRE LIKE '%" . $busqueda . "%' OR CLIENTE_APELLIDO  LIKE '%" . $busqueda . "%' OR  CLIENTE_ID  LIKE '%" . $busqueda . "%' ";
+  if(isset($_POST["item"]) > 0 and $_POST["totalCompra"] > 0) {
   
+    $cantidadElementos = count($_POST["item"]);
+    $id_venta=alta_venta($_POST,$MiConexion);
+    echo $id_venta;
+    echo $cantidadElementos;
+    $alta_detalle_venta=alta_venta_detalle($_POST["item"],$id_venta,$MiConexion);
+
+    }
+    else {
+      echo " vacio";
+    }
 }
 
-if(isset($_POST["BuscarArticulo"])) {
-  $busqueda = $_POST['Busqueda_articulo'];
-  echo $busqueda;
-}
-$clientes= listar_clientes_largo($filtro,$MiConexion);
-
-$CantidadClientes=count($clientes);
-print_r($_POST);
 ?>
 <!DOCTYPE html>
 
@@ -162,30 +182,15 @@ print_r($_POST);
              if(empty($_POST["id_cliente"])) { ?>
               <div class="container-xxl flex-grow-1 container-p-y">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Presupuesto</h4>   
-                    <div class="row">
                     
-                      <div class="mb-3 col-md-3">
-                          <input class="form-control" type="text" id="Busqueda_cliente" name="Busqueda_cliente"  value="<?php ;?>"  />
-                      </div>
-
-                      <div class="mb-3 col-md-3">
-                          <button type="submit" name="BuscarCliente" class="btn btn-primary me-2">Buscar Cliente</button>
-                      </div>
-               
-                      <div class="mb-3 col-md-3"></div>
-               
-                      <div class="mb-3 col-md-3">
-                          <button type="submit" name="cliente" class="btn btn-primary me-2"  value="1" > Consumidor Final </button>
-                      </div>
-                    
-                    </div> 
                 
                     <div class="card">
                     
                       <div class="table-responsive text-nowrap">
-                          <table class="table">
+                          <table class="table" id="example2" >
                             <thead>
                               <tr>
+                         
                                 <th>Nombre</th>
                                 <th>Apellido</th>                        
                                 <th>Domicilio</th>
@@ -222,17 +227,82 @@ print_r($_POST);
               
               <input type="hidden" name="id_cliente" value="<?php echo $_POST["id_cliente"]; ?>" >
               <input type="hidden" name="NombreCliente" value="<?php echo $_POST["NombreCliente"]; ?>" >
-
+           
               <div class="container-xxl flex-grow-1 container-p-y">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Presupuesto <?php echo $_POST["NombreCliente"] ; ?> </h4> 
+                
                 <div class="row">
-                    <div class="mb-3 col-md-3">
-                          <input class="form-control" type="text" id="Busqueda_articulo" name="Busqueda_articulo"  value="<?php ;?>" autofocus />
-                      </div>
-
-                      <div class="mb-3 col-md-3">
-                          <button type="submit" name="BuscarArticulo" class="btn btn-primary me-2">Buscar Articulo</button>
-                      </div>
+                  <div class="col-sm-1 form-group-sm">
+                    <label for="mg" class="form-label">MG(%)</label>
+                    <input type="number" min="0" id="margen_gan" name="margen_gan" class="form-control" value="10">
+                  </div>
+                  
+                  <div class="col-sm-2 form-group-sm">
+                    <label for="impuesto" class="form-label">Impuestos</label>
+                    <select id="impuesto" name="impuesto" class="select2 form-select">
+                    <?php
+                      for ($i = 0; $i < $CantidadImpuestos; $i++) {
+                          echo '<option value="' . $impuestos[$i]['PORCENTAJE'] . '">' . $impuestos[$i]['NOMBRE'] . '</option>';
+                          }
+                        ?>
+                    </select>
+                    </div>
+                    
+                  <div class="col-sm-2 form-group-sm">
+                    <label for="metodo" class="form-label">Metodo Pago</label>
+                    <select id="impuestoSelect" name="metodo" class="select2 form-select">
+                    <?php
+                      for ($i = 0; $i < $CantidadMetodo; $i++) {
+                          echo '<option value="' . $metodo[$i]['ID_METODO'] . '">' . $metodo[$i]['NOMBRE_METODO'] . '</option>';
+                          }
+                        ?>
+                    </select>
+                  </div>
+                 
+                  <div class="col-sm-1 form-group-sm">
+                    <label for="descuento" class="form-label">Descuento(%)</label>
+                    <input type="number" name="descuento" min="0" id="descuento" class="form-control" value="0">
+                  </div>
+                  <div class="col-sm-1 form-group-sm"> </div>
+                  <div class="col-sm-2 form-group-sm">
+                    <label for="metodo" class="form-label">Total Parcial</label>
+                    <input type="text" min="0" name="totalParcial" id="inputSumaParcial" class="form-control" value="0" >
+                  </div>
+                  <div class="col-sm-2 form-group-sm">
+                    <label for="metodo" class="form-label">Total Final</label>
+                    <input type="text" min="0" name="totalCompra" id="inputSumaTotal" class="form-control" value="0" >
+                  </div>
+                </div>
+                &nbsp;
+                <div class="row"> </div>
+                <div class="row">
+                  
+                 <hr> 
+                <div class="col-sm-2 form-group-sm">
+                    <button type="button"  class="btn btn-primary me-2" onclick="agregarFila()">Agregar Item</button>
+                </div>
+                <div class="col-sm-1 form-group-sm">
+                  &nbsp;
+                </div>  
+                <div class="col-sm-1 form-group-sm">
+                  <button type="submit"  class="btn btn-primary me-2" name="registrar" >Enviar</button>
+                </div>
+                <div class="row"> &nbsp;</div> <hr>
+                <table id="tabla" class="table"  >
+                    <thead>
+                      <tr>
+                        <th>&nbsp;</th>
+                        <th>Artículo</th>
+                        <th>Cantidad Disponible</th>
+                        <th>Cantidad Seleccionada</th>
+                        <th>Precio Compra</th>
+                        <th>Total</th> 
+                      </tr>
+                    </thead>
+                    <tbody>
+                    
+                    </tbody>
+                  </table>
                 </div>
 
 
@@ -283,6 +353,184 @@ print_r($_POST);
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- DataTables  & Plugins -->
+<script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="/plugins/jszip/jszip.min.js"></script>
+<script src="/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<script src="/plugins/ventas/ventas.js"></script>
+
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+
+<script language="javascript">
+        var articulos = <?php echo json_encode($articulos); ?>;
+        function agregarFila() {
+            var tabla = document.getElementById('tabla');
+            var tbody = tabla.getElementsByTagName('tbody')[0];
+            var rowCount = tabla.rows.length;
+    
+            var newRow = tbody.insertRow(tbody.rows.length);
+            var cellCodigo = newRow.insertCell(0);
+            var cellArticulo = newRow.insertCell(1);
+           
+            var cellCantidadDisponible = newRow.insertCell(2);
+            var cellCantidadSeleccionada = newRow.insertCell(3);
+            var cellPrecioCompra = newRow.insertCell(4);
+            var cellTotal = newRow.insertCell(5); 
+            
+            var inputTotal = document.createElement('input');
+            var inpName = "item[" + rowCount + "][total]";
+            inputTotal.type = 'text';
+            inputTotal.name = inpName;
+            inputTotal.classList.add("form-control");
+            inputTotal.readOnly = true;
+            cellTotal.appendChild(inputTotal);
+    
+            var inputPrecioCompra = document.createElement('input');
+            var inpName = "item[" + rowCount + "][precio_unit]";
+            inputPrecioCompra.type = 'text';
+            inputPrecioCompra.name = inpName;
+            inputPrecioCompra.classList.add("form-control");
+            cellPrecioCompra.appendChild(inputPrecioCompra);
+    
+            var selectArticulo = document.createElement('select');
+            var inpName = "item[" + rowCount + "][articulo]";
+            selectArticulo.name = inpName;
+            selectArticulo.classList.add("form-select");
+            articulos.forEach(function (articulo) {
+            var option = document.createElement('option');
+            option.value = articulo['ART_ID'];
+            option.text = articulo['ART_INFOADICIONAL'];
+            selectArticulo.appendChild(option);
+        });
+    
+        selectArticulo.addEventListener('change', function () {
+            var selectedArticulo = articulos.find(function (articulo) {
+                return articulo['ART_ID'] == selectArticulo.value;
+            });
+    
+            var cantidadStock = selectedArticulo ? selectedArticulo['CANT_STOCK'] : 0;
+            var precioCompra = selectedArticulo ? selectedArticulo['ART_PRECIOCOMPRA'] : 0;
+    
+            // Mostrar la cantidad disponible
+            cellCantidadDisponible.innerHTML = cantidadStock;
+    
+            // Crear input para la cantidad seleccionada
+            var inputCantidad = document.createElement('input');
+            var inpName = "item[" + rowCount + "][cantidad]";
+            inputCantidad.name = inpName;
+            inputCantidad.classList.add("form-control");
+            inputCantidad.type = 'number';
+            inputCantidad.value = 0;
+            inputCantidad.min = 1;
+            inputCantidad.max = cantidadStock;
+    
+            inputPrecioCompra.addEventListener('input', function () {
+            // Actualizar el total cuando cambie el precio de compra
+            actualizarTotal(inputCantidad, inputPrecioCompra.value, inputTotal);
+             });
+            inputCantidad.addEventListener('change', function () {
+                // Actualizar el total cuando cambie la cantidad seleccionada
+                actualizarTotal(inputCantidad, precioCompra, inputTotal);
+            });
+            
+            margen_gan.addEventListener('input', function () {
+            // Actualizar el total cuando cambie el precio de compra
+            actualizarTotal(inputCantidad, inputPrecioCompra.value, inputTotal);
+             });
+
+             impuesto.addEventListener('input', function () {
+            // Actualizar el total cuando cambie el precio de compra
+            actualizarTotal(inputCantidad, inputPrecioCompra.value, inputTotal);
+             });
+
+             descuento.addEventListener('input', function () {
+            // Actualizar el total cuando cambie el precio de compra
+            actualizarTotal(inputCantidad, inputPrecioCompra.value, inputTotal);
+             });
+             
+             
+            // Limpiar el contenido existente y agregar el nuevo input
+            cellCantidadSeleccionada.innerHTML = '';
+            cellCantidadSeleccionada.appendChild(inputCantidad);
+    
+            // Actualizar el precio de compra
+            inputPrecioCompra.value = precioCompra;
+    
+            // Calcular el total inicial
+            actualizarTotal(inputCantidad, precioCompra, inputTotal);
+        });
+    
+        cellArticulo.appendChild(selectArticulo);
+
+    }
+
+    function actualizarTotal(inputCantidad, precioCompra, inputTotal) {
+        var total = inputCantidad.value * precioCompra;
+        total = total.toFixed(2);
+        inputTotal.value = total;
+      
+        calcularSumaParcial();
+    }
+
+ 
+    document.getElementById('sumaTotalContainer').appendChild(inputSumaTotal);
+    document.getElementById('multiplicadorContainer').appendChild(inputSumaTotal);
+
+function calcularSumaParcial() {
+    var sumaTotal = 0;
+    var tabla = document.getElementById('tabla');
+    var rowCount = tabla.rows.length;
+    var ganancia = parseFloat(margen_gan.value) || 0;
+    var impuestos = parseFloat(impuesto.value) || 0;
+    var descuentos = parseFloat(descuento.value) || 0;
+    var multiplicador = 1 + (ganancia / 100 ) + (impuestos / 100) - (descuentos / 100);
+
+    for (var i = 1; i < rowCount; i++) { // Empezar desde 1 para omitir la fila de encabezado
+        var inputTotal = tabla.rows[i].cells[5].querySelector('input');
+        if (inputTotal) {
+            sumaTotal += parseFloat(inputTotal.value) || 0;
+        }
+    }
+
+    // Actualizar el input de suma total
+    sumaTotal = sumaTotal.toFixed(2);
+    inputSumaParcial.value = sumaTotal;
+  
+    var margen = document.getElementById('margen_gan');
+    margen = margen / 100;
+    var TotalFinal = (sumaTotal * multiplicador).toFixed(2);
+    inputSumaTotal.value = TotalFinal;
+    }
+
+  
+    </script>
       </form>
   </body>
 </html>

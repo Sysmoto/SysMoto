@@ -32,7 +32,7 @@
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
                   <i class="menu-icon tf-icons bx bx-cart-alt"></i>
                 
-                  <div data-i18n="Account Settings">Pedidos Clientes</div>
+                  <div data-i18n="Account Settings">Ventas</div>
                 </a>
 
                 <ul class="menu-sub">
@@ -41,18 +41,25 @@
                       <div data-i18n="Notifications">Clientes</div>
                     </a>
                   </li>
+                               
+                                   
                   <li class="menu-item">
-                    <a href="/pedidos/pedidos.php" class="menu-link">
-                      <div data-i18n="Notifications">Pedidos</div>
+                    <a href="/ventas/presupuestos.php" class="menu-link">
+                      <div data-i18n="Notifications">Presupuestos</div>
                     </a>
                   </li>
-                
+
                   <li class="menu-item">
-                    <a href="/clientes/presupuesto.php" class="menu-link">
-                      <div data-i18n="Presupuesto">Presupuesto</div>
+                    <a href="/ventas/ventas.php" class="menu-link">
+                      <div data-i18n="Notifications">Ventas</div>
                     </a>
                   </li>
-                  
+
+                  <li class="menu-item">
+                    <a href="/ventas/estadisticas.php" class="menu-link">
+                      <div data-i18n="Notifications">Estadisticas</div>
+                    </a>
+                  </li>
                  
                  
                 </ul>

@@ -195,7 +195,7 @@ if(isset($_POST["DarAlta"])) {
                           </div>
                           <div class="mb-3 col-md-4">
                             <label for="Apellido" class="form-label">Info</label>
-                            <input class="form-control" type="text" name="Info" id="Info" value="<?php echo $proveedores[0]["PROVE_INFO"];?>" />
+                            <input class="form-control" type="text" name="Info" id="Info" value="<?php echo $proveedores[0]["PROVE_INFO"];?>"  required />
                           </div>
                           
                         </div>
@@ -203,15 +203,15 @@ if(isset($_POST["DarAlta"])) {
                         <div class="row">
                         <div class="mb-3 col-md-3">
                             <label for="Telefono1" class="form-label">Telefono 1</label>
-                            <input class="form-control" type="text" id="Tele1" name="Tele1" value="<?php echo $proveedores[0]["CONTACTO_TEL1"];?>"   />
+                            <input class="form-control" type="text" id="Tele1" name="Tele1" pattern="[0-9]{3,4}-[0-9]{3,4}-[0-9]{4}" placeholder="Nro telefono 0123-4567-8901" value="<?php echo $proveedores[0]["CONTACTO_TEL1"];?>"    required />
                           </div>
                           <div class="mb-3 col-md-3">
                             <label for="Telefono2" class="form-label">Telefono 2</label>
-                            <input class="form-control" type="text" name="Tele2" id="Tele2"  value="<?php echo $proveedores[0]["CONTACTO_TEL2"];?>" />
+                            <input class="form-control" type="text" name="Tele2" id="Tele2"  pattern="[0-9]{3,4}-[0-9]{3,4}-[0-9]{4}" placeholder="Nro telefono 0123-4567-8901" value="<?php echo $proveedores[0]["CONTACTO_TEL2"];?>"  required/>
                           </div>
                           <div class="mb-3 col-md-3">
                             <label for="Email" class="form-label">Email</label>
-                            <input class="form-control" type="email" name="email" id="email"  value="<?php echo $proveedores[0]["CONTACTO_EMAIL"];?>" />
+                            <input class="form-control" type="email" name="email" id="email"  value="<?php echo $proveedores[0]["CONTACTO_EMAIL"];?>"  required/>
                           </div>
                           
                         </div>
@@ -219,7 +219,7 @@ if(isset($_POST["DarAlta"])) {
                         <div class="row">
                         <div class="mb-5 col-md-5">
                             <label for="Web" class="form-label">Web</label>
-                            <input class="form-control" type="url" id="Web" name="Web" value="<?php echo $proveedores[0]["CONTACTO_WEB"];?>" placeholder="https://ejemplo.com"   />
+                            <input class="form-control" type="url" id="Web" name="Web" value="<?php echo $proveedores[0]["CONTACTO_WEB"];?>" placeholder="https://ejemplo.com"   required />
                           </div>
                         </div>  
 
@@ -228,21 +228,24 @@ if(isset($_POST["DarAlta"])) {
                         <div class="mb-3 col-md-3">
                             
                             <label for="Calle" class="form-label">Calle</label>
-                            <input class="form-control" type="text" id="Calle" name="Calle"  value="<?php echo $proveedores[0]["DOM_CALLE"];?>" />
+                            <input class="form-control" type="text" id="Calle" name="Calle"  value="<?php echo $proveedores[0]["DOM_CALLE"];?>"  required/>
                           
                         </div>
-                        <div class="mb-3 col-md-1">
+                        <div class="mb-3 col-md-2">
                             
                             <label for="Altura" class="form-label">Altura</label>
-                            <input class="form-control" type="text" id="Altura" name="Altura"   value="<?php echo $proveedores[0]["DOM_ALTURA"];?>" />
+                            <input class="form-control" type="text" id="Altura" name="Altura"   value="<?php echo $proveedores[0]["DOM_ALTURA"];?>" required />
                           
                         </div>
-                        <div class="mb-3 col-md-1">
+                        <div class="mb-3 col-md-2">
                             
                             <label for="CP" class="form-label">CP</label>
-                            <input class="form-control" type="text" id="CP" name="CP"   value="<?php echo $proveedores[0]["DOM_CP"];?>" />
+                            <input class="form-control" type="text" id="CP" name="CP" pattern="[0-9]{4}" title="Ingrese exactamente 4 dígitos del CP"   value="<?php echo $proveedores[0]["DOM_CP"];?>" />
                           
                         </div>
+                        </div>  
+
+                    <div class="row">
                         <div class="mb-3 col-md-3">
                             <label class="form-label" for="Provincia">Provincia</label>
                             <select id="Provincia"  name="Provincia" class="select2 form-select" >
