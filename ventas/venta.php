@@ -58,7 +58,7 @@ $totales = listar_totales_presupuesto($_POST["id_venta"],$MiConexion);
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>SysMoto v0.0</title>
+    <title>SysMoto V <?php echo $_SESSION['Version']; ?></title>
 
     <meta name="description" content="" />
 
@@ -278,20 +278,26 @@ $totales = listar_totales_presupuesto($_POST["id_venta"],$MiConexion);
                   </div>
                   <div class="col-sm-1 form-group-sm">
                   </div>
+                </form> 
+                
+
                   <div class="col-sm-3 form-group-sm">
+                  <form method='post' action="factura.php" enctype="multipart/form-data" target="_blank" >
+                    <input type="hidden" name="id_venta" value="<?php echo $_POST["id_venta"]; ?>" >
                   <?php 
                     if($presupuesto['ESTADOVENTA_ID'] == 4){ ?>
-                    <button type="submit"  class="btn btn-primary me-2" name="registrar" >Imprimir Factura</button>
+                    <input type="hidden" name="id_venta" value="<?php echo $_POST["id_venta"]; ?>" >
+                    <button type="submit" name="imprimirfact" class="btn btn-primary me-2"  >Imprimir Factura</button>
                     <?php } ?>
-                    
+                    </form>
                 </div>
-
+                    
 
                 </div>
 
                 
             </div>    
-            </form>  
+            
             <!-- Footer -->
             <footer class="content-footer footer bg-footer-theme">
               <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">

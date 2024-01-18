@@ -2,7 +2,7 @@
 
 require_once 'funciones/conexion.php';
 $MiConexion=ConexionBD();
-
+$version= "2.01";
 $Mensaje='';
 if (!empty($_POST['BotonLogin'])) {
 
@@ -24,6 +24,7 @@ if (!empty($_POST['BotonLogin'])) {
         $_SESSION['Usuario_Img']        =   $UsuarioLogueado['FOTO'];
         $_SESSION['Usuario_Saludo']        =   $UsuarioLogueado['SALUDO'];
         $_SESSION['Usuario_Email']        =   $UsuarioLogueado['EMAIL'];
+        $_SESSION['Version']        =   $version;
         if ($UsuarioLogueado['ACTIVO']==0) {
             $Mensaje ='Ud. no se encuentra activo en el sistema.';
         }else {
@@ -140,7 +141,7 @@ if (!empty($_POST['BotonLogin'])) {
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">¡Bienvenido a SysMoto!</h4>
+              <h4 class="mb-2">¡Bienvenido a SysMoto V <?php echo $version;?>!</h4>
               <p class="mb-4">El sistema del motoquero</p>
 
               <form id="formAuthentication" class="mb-3" method="POST">

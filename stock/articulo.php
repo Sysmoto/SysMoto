@@ -77,7 +77,7 @@ if(isset($_POST["CambiarDatos"])) {
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>SysMoto v0.0</title>
+    <title>SysMoto V <?php echo $_SESSION['Version']; ?></title>
 
     <meta name="description" content="" />
 

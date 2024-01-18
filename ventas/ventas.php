@@ -16,8 +16,8 @@ require_once '../funciones/articulos.php';
 
 
 
-$presupuestos=listar_ventas($MiConexion);
-$CantidadPresupuestos=count($presupuestos);
+$ventas=listar_ventas($MiConexion);
+$CantidadVentas=count($ventas);
 
 
 ?>
@@ -38,7 +38,7 @@ $CantidadPresupuestos=count($presupuestos);
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>SysMoto v0.0</title>
+    <title>SysMoto V <?php echo $_SESSION['Version']; ?></title>
 
     <meta name="description" content="" />
 
@@ -135,12 +135,8 @@ $CantidadPresupuestos=count($presupuestos);
             <?php 
              if(empty($_POST["id_cliente"])) { ?>
               <div class="container-xxl flex-grow-1 container-p-y">
-                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Ventas</h4>   
-                <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                    <li class="nav-item">
-                      <a class="nav-link active" href="/ventas/nuevo_presupuesto.php"><i class="bx bx-cart-alt fade-right"></i>Presupuesto Nuevo</a>
-                    </li>
-             </ul>
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Listado de ventas</h4>   
+                
                     <div class="card">
                     
                       <div class="table-responsive text-nowrap">
@@ -148,7 +144,7 @@ $CantidadPresupuestos=count($presupuestos);
                             <thead>
                               <tr>
                          
-                                <th>Nro</th>
+                                <th>Factura</th>
                                 <th>Cliente</th>                        
                                 <th>Fecha</th>
                                 <th>Vendedor</th>
@@ -157,18 +153,18 @@ $CantidadPresupuestos=count($presupuestos);
                               </tr>
                             </thead>
                             <tbody class="table-border-bottom-0">
-                            <?php for ($i=0; $i<$CantidadPresupuestos; $i++) { ?>               
+                            <?php for ($i=0; $i<$CantidadVentas; $i++) { ?>               
                             
                               <tr>
                                 <td><i class="fab fa-angular fa-lg text-danger me-3"></i> 
-                                <strong><?php echo $presupuestos[$i]['VENTA_ID']; ?></strong></td>
+                                <strong><?php echo $ventas[$i]['FACTURA_ID']; ?></strong></td>
                                 <td>
-                                <strong><?php echo $presupuestos[$i]['CLIENTE']; ?></strong></td>
-                                <td><?php echo $presupuestos[$i]['VENTA_FECHAVENTA'];?></td>
-                                <td><?php echo $presupuestos[$i]['VENDEDOR'];?></td>
-                                <td><?php echo $presupuestos[$i]['ESTADOVENTA_NOMBRE'];?></td>
+                                <strong><?php echo $ventas[$i]['CLIENTE']; ?></strong></td>
+                                <td><?php echo $ventas[$i]['VENTA_FECHAVENTA'];?></td>
+                                <td><?php echo $ventas[$i]['VENDEDOR'];?></td>
+                                <td><?php echo $ventas[$i]['ESTADOVENTA_NOMBRE'];?></td>
                                 <td>
-                                  <button type="submit" class="btn btn-secondary" name="id_venta" value="<?php echo $presupuestos[$i]['VENTA_ID']; ?>" >
+                                  <button type="submit" class="btn btn-secondary" name="id_venta" value="<?php echo $ventas[$i]['VENTA_ID']; ?>" >
                                     <span class="bx bx-cart-alt fade-right"></span>&nbsp; Entrar
                                   </button> 
                                 </td>

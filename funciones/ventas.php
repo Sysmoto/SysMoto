@@ -104,30 +104,34 @@ function listar_est_venta($ConexionBD){
         }
         function listar_ventas($ConexionBD){
             $SQL="SELECT p.VENTA_ID,p.CLIENTE_ID, p.VENTA_FECHAVENTA,p.VENTA_MARGEN,p.VENTA_DESCUENTO, m.NOMBRE_METODO,
-            i.NOMBRE, c.CLIENTE_NOMBRE, c.CLIENTE_APELLIDO, u.USUARIO, e.ESTADOVENTA_NOMBRE FROM presupuesto p
+            i.NOMBRE, c.CLIENTE_NOMBRE, c.CLIENTE_APELLIDO, u.USUARIO, e.ESTADOVENTA_NOMBRE,  f.FACTURA_ID
+            
+            FROM presupuesto p
             LEFT JOIN metodopago m ON p.VENTA_METODO = m.ID_METODO
             LEFT JOIN impuestos i ON i.ID_IMP = p.VENTA_IMPUESTO
             LEFT JOIN cliente c ON c.CLIENTE_ID = p.CLIENTE_ID
             LEFT JOIN usuarios u ON u.ID = p.VENTA_VENDEDOR
             LEFT JOIN estadoventa e ON e.ESTADOVENTA_ID = p.ESTADOVENTA_ID
+            LEFT JOIN factura f ON f.VENTA_ID = p.VENTA_ID
+            
             WHERE p.ESTADOVENTA_ID <> 5
             ORDER BY p.VENTA_ID DESC";
             $rs = mysqli_query($ConexionBD, $SQL);
             $i=0;
             while ($data = mysqli_fetch_array($rs)) {
-                $presupuestos[$i]['VENTA_ID'] = $data['VENTA_ID'];
-                $presupuestos[$i]['CLIENTE_ID'] = $data['CLIENTE_ID'];
-                $presupuestos[$i]['VENTA_FECHAVENTA'] = $data['VENTA_FECHAVENTA'];
-                $presupuestos[$i]['VENTA_MARGEN'] = $data['VENTA_MARGEN'];
-                $presupuestos[$i]['VENTA_DESCUENTO'] = $data['VENTA_DESCUENTO'];
-                $presupuestos[$i]['IMPUESTO'] = $data['NOMBRE'];
-                $presupuestos[$i]['VENDEDOR'] = $data['USUARIO'];
-                
-                $presupuestos[$i]['ESTADOVENTA_NOMBRE'] = $data['ESTADOVENTA_NOMBRE'];
-                $presupuestos[$i]['CLIENTE'] = $data['CLIENTE_NOMBRE'] . " " . $data['CLIENTE_APELLIDO'] ;
+                $ventas[$i]['VENTA_ID'] = $data['VENTA_ID'];
+                $ventas[$i]['CLIENTE_ID'] = $data['CLIENTE_ID'];
+                $ventas[$i]['VENTA_FECHAVENTA'] = $data['VENTA_FECHAVENTA'];
+                $ventas[$i]['VENTA_MARGEN'] = $data['VENTA_MARGEN'];
+                $ventas[$i]['VENTA_DESCUENTO'] = $data['VENTA_DESCUENTO'];
+                $ventas[$i]['IMPUESTO'] = $data['NOMBRE'];
+                $ventas[$i]['VENDEDOR'] = $data['USUARIO'];
+                $ventas[$i]['FACTURA_ID'] = $data['FACTURA_ID'];
+                $ventas[$i]['ESTADOVENTA_NOMBRE'] = $data['ESTADOVENTA_NOMBRE'];
+                $ventas[$i]['CLIENTE'] = $data['CLIENTE_NOMBRE'] . " " . $data['CLIENTE_APELLIDO'] ;
                 $i++;
                     }
-            return $presupuestos;
+            return $ventas;
        
             } 
 
@@ -159,6 +163,35 @@ function listar_est_venta($ConexionBD){
             return $presupuestos;
        
             } 
+
+
+            //function listar_venta($ConexionBD){
+            //    $SQL="SELECT p.VENTA_ID,p.CLIENTE_ID, p.VENTA_FECHAVENTA,p.VENTA_MARGEN,p.VENTA_DESCUENTO, m.NOMBRE_METODO,
+            //    i.NOMBRE, c.CLIENTE_NOMBRE, c.CLIENTE_APELLIDO, u.USUARIO, e.ESTADOVENTA_NOMBRE FROM presupuesto p
+            //    LEFT JOIN metodopago m ON p.VENTA_METODO = m.ID_METODO
+            //    LEFT JOIN impuestos i ON i.ID_IMP = p.VENTA_IMPUESTO
+            //    LEFT JOIN cliente c ON c.CLIENTE_ID = p.CLIENTE_ID
+            //    LEFT JOIN usuarios u ON u.ID = p.VENTA_VENDEDOR
+            //    LEFT JOIN estadoventa e ON e.ESTADOVENTA_ID = p.ESTADOVENTA_ID
+            //    ORDER BY p.VENTA_ID DESC";
+            //    $rs = mysqli_query($ConexionBD, $SQL);
+            //    $i=0;
+            //    while ($data = mysqli_fetch_array($rs)) {
+            //        $ventas[$i]['VENTA_ID'] = $data['VENTA_ID'];
+            //        $ventas[$i]['CLIENTE_ID'] = $data['CLIENTE_ID'];
+            //        $ventas[$i]['VENTA_FECHAVENTA'] = $data['VENTA_FECHAVENTA'];
+            //        $ventas[$i]['VENTA_MARGEN'] = $data['VENTA_MARGEN'];
+            //        $ventas[$i]['VENTA_DESCUENTO'] = $data['VENTA_DESCUENTO'];
+            //        $ventas[$i]['IMPUESTO'] = $data['NOMBRE'];
+            //        $ventas[$i]['VENDEDOR'] = $data['USUARIO'];
+                    
+            //        $ventas[$i]['ESTADOVENTA_NOMBRE'] = $data['ESTADOVENTA_NOMBRE'];
+            //        $ventas[$i]['CLIENTE'] = $data['CLIENTE_NOMBRE'] . " " . $data['CLIENTE_APELLIDO'] ;
+            //        $i++;
+              //          }
+              //  return $ventas;
+           
+          //      } 
 
 function listar_presupuesto($id_venta,$ConexionBD){            
     $SQL="SELECT p.VENTA_ID,p.CLIENTE_ID, p.VENTA_FECHAVENTA,p.VENTA_MARGEN,p.VENTA_DESCUENTO, 
@@ -193,42 +226,83 @@ function listar_presupuesto($id_venta,$ConexionBD){
     return $presupuesto;
     }
 
+
+   // function listar_venta($id_venta,$ConexionBD){            
+     //   $SQL="SELECT p.VENTA_ID,p.CLIENTE_ID, p.VENTA_FECHAVENTA,p.VENTA_MARGEN,p.VENTA_DESCUENTO, 
+      //  m.NOMBRE_METODO,m.ID_METODO, i.NOMBRE, c.CLIENTE_NOMBRE, c.CLIENTE_APELLIDO, u.USUARIO, 
+// e.ESTADOVENTA_NOMBRE, DATEDIFF(CURDATE(), p.VENTA_FECHAVENTA) AS VIGENCIA ,e.ESTADOVENTA_ID
+  //      FROM presupuesto p
+    //        LEFT JOIN metodopago m ON p.VENTA_METODO = m.ID_METODO
+      //  LEFT JOIN impuestos i ON i.ID_IMP = p.VENTA_IMPUESTO
+       // LEFT JOIN cliente c ON c.CLIENTE_ID = p.CLIENTE_ID
+        //LEFT JOIN usuarios u ON u.ID = p.VENTA_VENDEDOR
+        //LEFT JOIN estadoventa e ON e.ESTADOVENTA_ID = p.ESTADOVENTA_ID
+        //WHERE p.VENTA_ID = $id_venta";
+        //$rs = mysqli_query($ConexionBD, $SQL);
+        
+        //while ($data = mysqli_fetch_array($rs)) {
+          //  $presupuesto['VENTA_ID'] = $data['VENTA_ID'];
+           // $presupuesto['CLIENTE_ID'] = $data['CLIENTE_ID'];
+            //$presupuesto['VENTA_FECHAVENTA'] = $data['VENTA_FECHAVENTA'];
+            //$presupuesto['VENTA_MARGEN'] = $data['VENTA_MARGEN'];
+            //$presupuesto['VENTA_DESCUENTO'] = $data['VENTA_DESCUENTO'];
+            //$presupuesto['IMPUESTO'] = $data['NOMBRE'];
+            //$presupuesto['VENDEDOR'] = $data['USUARIO'];
+            //$presupuesto['ID_METODO'] = $data['ID_METODO'];        
+            //$presupuesto['ESTADOVENTA_NOMBRE'] = $data['ESTADOVENTA_NOMBRE'];
+            //$presupuesto['CLIENTE'] = $data['CLIENTE_NOMBRE'] . " " . $data['CLIENTE_APELLIDO'] ;
+            //$presupuesto['ESTADOVENTA_NOMBRE'] = $data['ESTADOVENTA_NOMBRE'];
+            //$presupuesto['VIGENCIA'] = $data['VIGENCIA'];
+            //$presupuesto['ESTADOVENTA_ID'] = $data['ESTADOVENTA_ID'];
+            
+              //  }
+        
+        //return $venta;
+       // }
+    
     function listar_venta($id_venta,$ConexionBD){            
         $SQL="SELECT p.VENTA_ID,p.CLIENTE_ID, p.VENTA_FECHAVENTA,p.VENTA_MARGEN,p.VENTA_DESCUENTO, 
-        m.NOMBRE_METODO,m.ID_METODO, i.NOMBRE, c.CLIENTE_NOMBRE, c.CLIENTE_APELLIDO, u.USUARIO, 
-        e.ESTADOVENTA_NOMBRE, DATEDIFF(CURDATE(), p.VENTA_FECHAVENTA) AS VIGENCIA ,e.ESTADOVENTA_ID,
-        f.FACTURA_ID
-
-        FROM presupuesto p
-            LEFT JOIN metodopago m ON p.VENTA_METODO = m.ID_METODO
-        LEFT JOIN impuestos i ON i.ID_IMP = p.VENTA_IMPUESTO
-        LEFT JOIN cliente c ON c.CLIENTE_ID = p.CLIENTE_ID
-        LEFT JOIN usuarios u ON u.ID = p.VENTA_VENDEDOR
-        LEFT JOIN estadoventa e ON e.ESTADOVENTA_ID = p.ESTADOVENTA_ID
-        LEFT JOIN factura f ON f.VENTA_ID = p.VENTA_ID
-        WHERE p.VENTA_ID = $id_venta";
-        $rs = mysqli_query($ConexionBD, $SQL);
-        
-        while ($data = mysqli_fetch_array($rs)) {
-            $presupuesto['VENTA_ID'] = $data['VENTA_ID'];
-            $presupuesto['CLIENTE_ID'] = $data['CLIENTE_ID'];
-            $presupuesto['VENTA_FECHAVENTA'] = $data['VENTA_FECHAVENTA'];
-            $presupuesto['VENTA_MARGEN'] = $data['VENTA_MARGEN'];
-            $presupuesto['VENTA_DESCUENTO'] = $data['VENTA_DESCUENTO'];
-            $presupuesto['IMPUESTO'] = $data['NOMBRE'];
-            $presupuesto['VENDEDOR'] = $data['USUARIO'];
-            $presupuesto['ID_METODO'] = $data['ID_METODO'];        
-            $presupuesto['ESTADOVENTA_NOMBRE'] = $data['ESTADOVENTA_NOMBRE'];
-            $presupuesto['CLIENTE'] = $data['CLIENTE_NOMBRE'] . " " . $data['CLIENTE_APELLIDO'] ;
-            $presupuesto['ESTADOVENTA_NOMBRE'] = $data['ESTADOVENTA_NOMBRE'];
-            $presupuesto['VIGENCIA'] = $data['VIGENCIA'];
+        m.NOMBRE_METODO,m.ID_METODO, i.NOMBRE, i.PORCENTAJE, c.CLIENTE_NOMBRE, c.CLIENTE_APELLIDO, u.USUARIO, 
+        e.ESTADOVENTA_NOMBRE, DATEDIFF(CURDATE(), p.VENTA_FECHAVENTA) AS VIGENCIA ,
+          e.ESTADOVENTA_ID, f.FACTURA_ID, d.DOM_CALLE,d.DOM_ALTURA,ci.CIUDAD_NOMBRE,pr.PROVINCIA_NOMBRE
+             FROM presupuesto p
+             LEFT JOIN metodopago m ON p.VENTA_METODO = m.ID_METODO
+             LEFT JOIN impuestos i ON i.ID_IMP = p.VENTA_IMPUESTO
+             LEFT JOIN cliente c ON c.CLIENTE_ID = p.CLIENTE_ID
+             LEFT JOIN usuarios u ON u.ID = p.VENTA_VENDEDOR
+             LEFT JOIN estadoventa e ON e.ESTADOVENTA_ID = p.ESTADOVENTA_ID
+             LEFT JOIN factura f ON f.VENTA_ID = p.VENTA_ID
+             LEFT JOIN domicilio d ON d.DOM_ID = c.DOM_ID
+             LEFT JOIN ciudad ci ON ci.CIUDAD_ID = d.CIUDAD_ID
+             LEFT JOIN provincia pr ON pr.PROVINCIA_ID = ci.PROVINCIA_ID
+            WHERE p.VENTA_ID = $id_venta";
             
-            $presupuesto['FACTURA_ID'] = $data['FACTURA_ID'];
-            $presupuesto['ESTADOVENTA_ID'] = $data['ESTADOVENTA_ID'];
+            $rs = mysqli_query($ConexionBD, $SQL);
+     
+            while ($data = mysqli_fetch_array($rs)) {
+                $presupuesto['VENTA_ID'] = $data['VENTA_ID'];
+                $presupuesto['CLIENTE_ID'] = $data['CLIENTE_ID'];
+                $presupuesto['VENTA_FECHAVENTA'] = $data['VENTA_FECHAVENTA'];
+                $presupuesto['VENTA_MARGEN'] = $data['VENTA_MARGEN'];
+                $presupuesto['VENTA_DESCUENTO'] = $data['VENTA_DESCUENTO'];
+                $presupuesto['IMPUESTO'] = $data['NOMBRE'];
+                $presupuesto['PORCENTAJE'] = $data['PORCENTAJE'];
+                $presupuesto['VENDEDOR'] = $data['USUARIO'];
+                $presupuesto['ID_METODO'] = $data['ID_METODO'];        
+                $presupuesto['ESTADOVENTA_NOMBRE'] = $data['ESTADOVENTA_NOMBRE'];
+                $presupuesto['CLIENTE'] = $data['CLIENTE_NOMBRE'] . " " . $data['CLIENTE_APELLIDO'] ;
+                $presupuesto['ESTADOVENTA_NOMBRE'] = $data['ESTADOVENTA_NOMBRE'];
+                $presupuesto['VIGENCIA'] = $data['VIGENCIA'];
+            
+                $presupuesto['FACTURA_ID'] = $data['FACTURA_ID'];
+                $presupuesto['ESTADOVENTA_ID'] = $data['ESTADOVENTA_ID'];
+
+                $presupuesto['DOMICILIO'] = $data['DOM_CALLE'] . " " . $data['DOM_ALTURA'];
+                $presupuesto['CIUDAD'] = $data['CIUDAD_NOMBRE'] . " (" . $data['PROVINCIA_NOMBRE'] . ")";
             
                 }
         
-        return $presupuesto;
+            return $presupuesto;
         }
        
     
@@ -258,7 +332,9 @@ function listar_item_presupuesto($id_venta,$ConexionBD){
 
 function listar_totales_presupuesto($id_venta,$ConexionBD){ 
     $SQL="SELECT  SUM(d.DETVENTA_CANT * d.DETVENTA_PRECUNIT) AS TOTAL , 
-        ROUND(SUM(d.DETVENTA_CANT * d.DETVENTA_PRECUNIT) * ( 1 + p.VENTA_MARGEN/100 + i.PORCENTAJE/100 - p.VENTA_DESCUENTO/100),2) AS FINAL
+        ROUND(SUM(d.DETVENTA_CANT * d.DETVENTA_PRECUNIT) * ( 1 +  i.PORCENTAJE/100 - p.VENTA_DESCUENTO/100),2) AS FINAL
+        
+
         From detallepresupuesto d
         CROSS JOIN presupuesto p ON d.VENTA_ID = p.VENTA_ID
         CROSS JOIN impuestos i ON i.ID_IMP = p.VENTA_IMPUESTO
@@ -298,5 +374,23 @@ function terminar_venta($id_venta,$ConexionBD){
             $resultado="Incorrectamente porque ".$ConexionBD->error;
         }
 
+}
+
+function datos_facturacion($ConexionBD){
+    $SQL="SELECT empresa,direccion,email,telefono,inscripcion,cuit,
+        ing_bruto,inicio_actividades FROM datos_facturacion";
+    $rs = mysqli_query($ConexionBD, $SQL);
+    
+    while ($data = mysqli_fetch_array($rs)) {
+        $datos['empresa']       =   $data['empresa'] ;
+        $datos['direccion']     =   $data['direccion'];
+        $datos['email']         =   $data['email'];
+        $datos['telefono']      =   $data['telefono'];
+        $datos['inscripcion']   =   $data['inscripcion'];
+        $datos['cuit']          =   $data['cuit'];
+        $datos['ing_bruto']     =   $data['ing_bruto'];
+        $datos['inicio']         =   $data['inicio_actividades'];
+    }
+    return $datos;
 }
 ?>

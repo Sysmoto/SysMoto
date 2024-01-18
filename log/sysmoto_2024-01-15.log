@@ -1,0 +1,46 @@
+14:56:44 - Exito - SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
+    co.CONTACTO_TEL1, co.CONTACTO_TEL2, co.CONTACTO_EMAIL, co.CONTACTO_EMAIL, co.CONTACTO_WEB, co.CONTACTO_INFO, 
+    dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE
+    FROM cliente cl
+    LEFT JOIN contacto co ON cl.CONTACTO_ID = co.CONTACTO_ID
+    LEFT JOIN domicilio dom ON cl.DOM_ID = dom.DOM_ID
+    LEFT JOIN ciudad ci ON dom.CIUDAD_ID = ci.CIUDAD_ID
+    LEFT JOIN provincia pr ON ci.PROVINCIA_ID = pr.PROVINCIA_ID   
+14:56:48 - Exito - SELECT * FROM provincia ORDER BY 2; 
+14:56:48 - Exito - SELECT cl.CLIENTE_ID, cl.DOM_ID, cl.CONTACTO_ID, cl.CLIENTE_NOMBRE, cl.CLIENTE_APELLIDO, cl.CLIENTE_FECHAALTA, cl.CLIENTE_FECHABAJA, 
+    co.CONTACTO_TEL1, co.CONTACTO_TEL2, co.CONTACTO_EMAIL, co.CONTACTO_EMAIL, co.CONTACTO_WEB, co.CONTACTO_INFO, 
+    dom.DOM_CALLE, dom.DOM_ALTURA, dom.DOM_CP, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE, pr.PROVINCIA_ID ,ci.CIUDAD_ID
+    FROM cliente cl
+    LEFT JOIN contacto co ON cl.CONTACTO_ID = co.CONTACTO_ID
+    LEFT JOIN domicilio dom ON cl.DOM_ID = dom.DOM_ID
+    LEFT JOIN ciudad ci ON dom.CIUDAD_ID = ci.CIUDAD_ID
+    LEFT JOIN provincia pr ON ci.PROVINCIA_ID = pr.PROVINCIA_ID 
+    WHERE cl.CLIENTE_ID = 10 
+14:56:48 - Exito - SELECT CIUDAD_ID, CIUDAD_NOMBRE FROM ciudad WHERE PROVINCIA_ID = 14 ORDER BY CIUDAD_NOMBRE 
+14:56:48 - Exito - Array
+(
+    [1438] => Capital
+    [1439] => Chacras de Coria
+    [1440] => Dorrego
+    [1441] => Gllen
+    [1442] => Godoy Cruz
+    [1443] => Gral. Alvear
+    [1444] => Guaymallén
+    [1445] => Junín
+    [1446] => La Paz
+    [1447] => Las Heras
+    [1448] => Lavalle
+    [1449] => Luján
+    [1450] => Luján De Cuyo
+    [1451] => Maipú
+    [1452] => Malargüe
+    [1453] => Rivadavia
+    [1454] => San Carlos
+    [1455] => San Martín
+    [1456] => San Rafael
+    [1457] => Sta. Rosa
+    [1458] => Tunuyán
+    [1459] => Tupungato
+    [1460] => Villa Nueva
+)
+ 

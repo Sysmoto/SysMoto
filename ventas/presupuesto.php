@@ -40,7 +40,7 @@ if(isset($_POST["Terminar"])) {
   $terminar=terminar_venta($_POST["id_venta"],$MiConexion);
 
   echo "<script> 
-    alert('Presupuesto creado') 
+    alert('Venta Finalizada') 
     window.open('/ventas/ventas.php','_top')      
          </script>";
 }
@@ -64,7 +64,7 @@ if(isset($_POST["Terminar"])) {
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
 
-    <title>SysMoto v0.0</title>
+    <title>SysMoto V <?php echo $_SESSION['Version']; ?></title>
 
     <meta name="description" content="" />
 
