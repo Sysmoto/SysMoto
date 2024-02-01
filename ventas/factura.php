@@ -16,6 +16,7 @@ $MiConexion=ConexionBD();
 require_once '../funciones/ventas.php';
 $presupuesto= listar_venta($id_venta,$MiConexion);
 //print_r($presupuesto);
+$nro_factura= str_pad(number_format($presupuesto['FACTURA_ID'], 0, '', ''), 8, '0', STR_PAD_LEFT);
 
 $items = listar_item_presupuesto($_POST["id_venta"],$MiConexion);
 $cantidadItems=count($items);
@@ -25,9 +26,6 @@ $est_ven=listar_est_venta($MiConexion);
 $cantidadEstado=count($est_ven);
 
 $totales = listar_totales_presupuesto($_POST["id_venta"],$MiConexion);
-
-
-
 
 $dat_fact=datos_facturacion($MiConexion);
 //print_r($_POST);
@@ -277,7 +275,7 @@ $pdf->setY($yposdinamic+50);
 $pdf->setX(140);
 $pdf->Cell(5,$textypos,"Powered by Sysmoto");
 
-$nro_factura= 3;
+
 $pdf->output('', 'Factura_N_' . $nro_factura, true);
 
 function numeroATexto($numero) {

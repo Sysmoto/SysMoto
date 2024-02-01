@@ -70,8 +70,8 @@
             <?php if(($_SESSION['Usuario_Nivel_Id']==1) or ($_SESSION['Usuario_Nivel_Id']==2)){ ?>
               <li class="menu-item">
                 <a href="javascript:void(0);" class="menu-link menu-toggle">
-                  <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                  <div data-i18n="Account Settings">Proveedores</div>
+                  <i class="menu-icon tf-icons bx  bx-shopping-bag"></i>
+                  <div data-i18n="Account Settings">Compras</div>
                 </a>
               
                 <ul class="menu-sub">
@@ -79,41 +79,28 @@
                     <a href="/proveedores/proveedores.php" class="menu-link">
                       <div data-i18n="Account">Proveedores</div>
                     </a>
+                  </li>   
+                  <li class="menu-item">
+                    <a href="/compras/pedidos.php" class="menu-link">
+                      <div data-i18n="Account">Pedidos</div>
+                    </a>
                   </li>
                   <li class="menu-item">
-                    <a href="/proveedores/estadisticas.php" class="menu-link">
+                    <a href="/compras/estadisticas.php" class="menu-link">
                       <div data-i18n="Notifications">Estadisticas Proveedor</div>
+                    </a>
+                  </li>
+                  <li class="menu-item">
+                    <a href="/compras/estadisticas.php" class="menu-link">
+                      <div data-i18n="Notifications">Estadisticas Pedidos</div>
                     </a>
                   </li>
                 </ul>
               </li>
             <?php } ?>
           
-            <?php if(($_SESSION['Usuario_Nivel_Id']==1) or ($_SESSION['Usuario_Nivel_Id']==2)){ ?>
-              <li class="menu-item">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                  <i class="menu-icon tf-icons bx bx-shopping-bag"></i>
-                   <div data-i18n="Account Settings">Pedidos Proveedores</div>
-                </a>
-                <ul class="menu-sub">
-                  <li class="menu-item">
-                    <a href="/pedidos_proveedores/productos.php" class="menu-link">
-                      <div data-i18n="Account">Productos</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a href="/pedidos_proveedores/pedidos.php" class="menu-link">
-                      <div data-i18n="Account">Pedidos</div>
-                    </a>
-                  </li>
-                  <li class="menu-item">
-                    <a href="/pedidos_proveedores/estadisticas.php" class="menu-link">
-                      <div data-i18n="Notifications">Estadisticas Pedidos</div>
-                    </a>
-                  </li>
-                  </ul>
-              </li>
-            <?php } ?>
+            
+            
 
             <?php if(($_SESSION['Usuario_Nivel_Id']==1) or ($_SESSION['Usuario_Nivel_Id']==4)){ ?>
               <li class="menu-item">

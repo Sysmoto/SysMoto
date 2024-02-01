@@ -12,12 +12,6 @@ require_once '../funciones/conexion.php';
 $MiConexion=ConexionBD();
 require_once '../funciones/proveedores.php';
 
-$filtro = '';
-
-if(isset($_POST["Buscar"])) {
-  $busqueda = $_POST['Busqueda'];
-    $filtro = " WHERE p.PROVE_NOMBRE LIKE '%" . $busqueda . "%' OR p.PROVE_INFO  LIKE '%" . $busqueda . "%' ";
-}
 
 $proveedores= listar_proveedores($filtro,$MiConexion);
 if (is_array($proveedores) && count($proveedores) > 0) {
@@ -148,12 +142,7 @@ if (is_array($proveedores) && count($proveedores) > 0) {
                 <div class="mb-3 col-md-3">
                 </div>
                 
-                <div class="mb-3 col-md-3">
-                      <input class="form-control" type="text" id="Busqueda" name="Busqueda"  value="<?php ;?>"  />
-                </div>
-                <div class="mb-3 col-md-3">
-                <button type="submit" name="Buscar" class="btn btn-primary me-2">Buscar Proveedor</button>
-                </div>
+               
                 
             </div> 
             </form>
@@ -161,7 +150,7 @@ if (is_array($proveedores) && count($proveedores) > 0) {
               <div class="card">
                 
                 <div class="table-responsive text-nowrap">
-                  <table class="table">
+                  <table class="table" id="example1">
                     <thead>
                       <tr>
                         <th>Nombre</th>
@@ -231,7 +220,7 @@ if (is_array($proveedores) && count($proveedores) > 0) {
       <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     <!-- / Layout wrapper -->
-
+ 
     
 
     <!-- Core JS -->
@@ -252,6 +241,40 @@ if (is_array($proveedores) && count($proveedores) > 0) {
 
     <!-- Page JS -->
     <script src="../assets/js/dashboards-analytics.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="/plugins/jszip/jszip.min.js"></script>
+<script src="/plugins/pdfmake/pdfmake.min.js"></script>
+<script src="/plugins/pdfmake/vfs_fonts.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+
+
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": true,
+      "ordering": false,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>

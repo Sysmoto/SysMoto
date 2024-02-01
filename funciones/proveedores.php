@@ -37,17 +37,55 @@ function listar_proveedores($filtro,$ConexionBD) {
  return $proveedores;
 }
 
-function listar_provincias($ConexionBD) {
-    $SQL = "SELECT * FROM provincia ORDER BY 2;";
-    
-     $rs = mysqli_query($ConexionBD, $SQL);
-    
+function listar_proveedor_corto($id_proveedor,$ConexionBD) {
+    $proveedores = array();
+    $SQL = "SELECT p.PROVE_ID, p.PROVE_NOMBRE, p.PROVE_INFO, p.DOM_ID, p.CONTACTO_ID,
+        c.CONTACTO_TEL1, c.CONTACTO_TEL2, c.CONTACTO_EMAIL, c.CONTACTO_WEB,c.CONTACTO_INFO,
+        d.DOM_CALLE, d.DOM_ALTURA, d.DOM_CP, ci.CIUDAD_ID, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE, 
+        ci.PROVINCIA_ID 
+        FROM proveedores p
+        LEFT JOIN contacto c ON (c.CONTACTO_ID = p.CONTACTO_ID)
+        LEFT JOIN domicilio d ON (p.DOM_ID = d.DOM_ID)
+        LEFT JOIN ciudad ci ON ( ci.CIUDAD_ID = d.CIUDAD_ID)
+        LEFT JOIN 	provincia pr ON (pr.PROVINCIA_ID = ci.PROVINCIA_ID)  
+        WHERE p.PROVE_ID = $id_proveedor";
+    $rs = mysqli_query($ConexionBD, $SQL);
+      // print $SQL;
+    $i=0;
     while ($data = mysqli_fetch_array($rs)) {
-        $provincias[$data['PROVINCIA_ID']] = $data['PROVINCIA_NOMBRE'];    
-        
-    }
-    return $provincias;
+        $proveedor['PROVE_ID']= $data['PROVE_ID'];
+        $proveedor['PROVE_NOMBRE']= $data['PROVE_NOMBRE'];
+        $proveedor['PROVE_INFO']= $data['PROVE_INFO'];
+        $proveedor['CONTACTO_TEL1'] = $data['CONTACTO_TEL1'];
+        $proveedor['CONTACTO_TEL2'] = $data['CONTACTO_TEL2'];
+        $proveedor['CONTACTO_EMAIL'] = $data['CONTACTO_EMAIL'];
+        $proveedor['CONTACTO_WEB'] = $data['CONTACTO_WEB'];
+        $proveedor['CONTACTO_INFO'] = $data['CONTACTO_INFO'];
+        $proveedor['DOM_CALLE'] = $data['DOM_CALLE'];
+        $proveedor['DOM_ALTURA'] = $data['DOM_ALTURA'];
+        $proveedor['DOM_CP'] = $data['DOM_CP'];
+        $proveedor['CIUDAD_NOMBRE'] = $data['CIUDAD_NOMBRE'];
+        $proveedor['CIUDAD_ID'] = $data['CIUDAD_ID'];
+        $proveedor['PROVINCIA_NOMBRE'] = $data['PROVINCIA_NOMBRE'];
+        $proveedor['PROVINCIA_ID'] = $data['PROVINCIA_ID'];
+        $proveedor['DOM_ID'] = $data['DOM_ID'];
+        $proveedor['CONTACTO_ID'] = $data['CONTACTO_ID'];
+        $i++;
+ }
+ return $proveedor;
 }
+
+//function listar_provincias($ConexionBD) {
+  //  $SQL = "SELECT * FROM provincia ORDER BY 2;";
+    
+    // $rs = mysqli_query($ConexionBD, $SQL);
+    
+    //while ($data = mysqli_fetch_array($rs)) {
+      //  $provincias[$data['PROVINCIA_ID']] = $data['PROVINCIA_NOMBRE'];    
+        
+    //}
+    //return $provincias;
+//}
 
 function modificar_proveedor($datos,$ConexionBD) {
     //print_r($datos_clientes);

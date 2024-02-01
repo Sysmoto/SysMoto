@@ -59,7 +59,8 @@ function listar_est_venta($ConexionBD){
             }
             return $articulos;
         }
-        function alta_presupuesto($datos,$ConexionBD,$vendedor) {
+        
+function alta_presupuesto($datos,$ConexionBD,$vendedor) {
             $id_cliente =   $datos['id_cliente'];
             $margen     =   $datos['margen_gan'];
             $impuesto   =   $datos['impuesto'];
@@ -81,7 +82,7 @@ function listar_est_venta($ConexionBD){
 
         }
 
-        function alta_presupuesto_detalle($datos,$id_venta,$ConexionBD) {
+function alta_presupuesto_detalle($datos,$id_venta,$ConexionBD) {
             $contar_item=count($datos);
             echo $id_venta;
             for ($i = 1; $i <= $contar_item; $i++) {
@@ -136,7 +137,7 @@ function listar_est_venta($ConexionBD){
             } 
 
 
-        function listar_presupuestos($ConexionBD){
+function listar_presupuestos($ConexionBD){
             $SQL="SELECT p.VENTA_ID,p.CLIENTE_ID, p.VENTA_FECHAVENTA,p.VENTA_MARGEN,p.VENTA_DESCUENTO, m.NOMBRE_METODO,
             i.NOMBRE, c.CLIENTE_NOMBRE, c.CLIENTE_APELLIDO, u.USUARIO, e.ESTADOVENTA_NOMBRE FROM presupuesto p
             LEFT JOIN metodopago m ON p.VENTA_METODO = m.ID_METODO
