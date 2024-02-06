@@ -12,6 +12,7 @@ require_once '../funciones/conexion.php';
 $MiConexion=ConexionBD();
 require_once '../funciones/proveedores.php';
 
+$filtro="";
 
 $proveedores= listar_proveedores($filtro,$MiConexion);
 if (is_array($proveedores) && count($proveedores) > 0) {
@@ -151,7 +152,9 @@ if (is_array($proveedores) && count($proveedores) > 0) {
                 
                 <div class="table-responsive text-nowrap">
                   <table class="table" id="example1">
+                  <caption class="ms-4"> &nbsp; </caption>
                     <thead>
+                    <hr>
                       <tr>
                         <th>Nombre</th>
                         <th>Telefono 1</th>                        

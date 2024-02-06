@@ -165,7 +165,18 @@
                       <div data-i18n="Clientes">Clientes</div>
                     </a>
                   </li>
-               </ul>
+                  <li class="menu-item">
+                    <a href="/db/databases.php" class="menu-link">
+                      <div data-i18n="DataBase">DataBases</div>
+                    </a>
+                  </li>
+               
+               <li class="menu-item">
+                    <a href="/proveedores/proveedores.php" class="menu-link">
+                      <div data-i18n="Account">Proveedores</div>
+                    </a>
+                  </li>
+          </ul>   
             </li>
           <?php } ?>
 

@@ -14,7 +14,7 @@ require_once '../funciones/pedidos.php';
 
 require_once '../funciones/articulos.php';
 $filtro='';
-if(isset($_POST['proveedor'])) { $filtro = "WHERE PROVE_ID = " . $_POST['proveedor'] ;}
+if(isset($_POST['id_proveedor'])) { $filtro = "WHERE PROVE_ID = " . $_POST['id_proveedor'] ;}
 
 $articulos=listar_articulo_js_filt($filtro,$MiConexion);
 $CantidadArticulos=count($articulos);
@@ -50,16 +50,16 @@ if(isset($_POST["registrar"])) {
   //print_r($_POST);
   
   if(isset($_POST["item"]) > 0 and $_POST["totalParcial"] > 0) {
-    print_r($_POST);
+    //print_r($_POST);
     $cantidadElementos = count($_POST["item"]);
     $vendedor=$_SESSION["ID"];
     $id_pedido=alta_pedido($_POST,$MiConexion,$vendedor);
 
     $alta_detalle_pedido=alta_pedido_detalle($_POST["item"],$id_pedido,$MiConexion);
-    //echo "<script> 
-    //alert('Presupuesto creado') 
-    //window.open('/ventas/presupuestos.php','_top')      
-      //   </script>";
+    echo "<script> 
+    alert('Pedido creado') 
+    window.open('/compras/pedidos.php','_top')      
+        </script>";
 
     }
     else {
