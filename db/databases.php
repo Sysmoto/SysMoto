@@ -137,7 +137,7 @@ require_once '../funciones/clientes.php';
                 
             </div> 
             </form>
-              <form method='post' action="database.php" enctype="multipart/form-data" >
+              
                 <?php 
                 $directorio = getcwd();
                 $contenido = scandir($directorio);
@@ -170,7 +170,7 @@ require_once '../funciones/clientes.php';
                         <strong><?php echo $elemento; ?></strong></td>
                         <td> <?php echo $fecha_creacion; ?> </td>
                         <td> <?php echo $tamaño_archivo . " MB"; ?> </td> 
-                        <td>  <button type="submit" class="btn btn-secondary" name="id_cliente" onclick='descargarSQL(\"$elemento\")' value="" >
+                        <td>  <button  class="btn btn-secondary" onclick="descargarArchivo('<?php echo $elemento; ?>')" >
                             <span class="bx bx-data fade-right"></span>&nbsp; Bajar 
                           </button> 
                         </td>
@@ -262,41 +262,21 @@ require_once '../funciones/clientes.php';
 </script>
 
 <script>
-function descargarSQL(nombreArchivo) {
-    // Obtener la ruta del archivo PHP que manejará la descarga del archivo .sql
-    var rutaDescarga = "descargar_sql.php?archivo=" + encodeURIComponent(nombreArchivo);
+        function descargarArchivo(nombreArchivo) {
+            // URL del archivo a descargar
+            var urlDescarga = 'descargar_archivo.php?archivo=' + encodeURIComponent(nombreArchivo);
 
-    // Crear un objeto XMLHttpRequest para realizar la solicitud al archivo PHP
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', rutaDescarga, true);
-    xhr.responseType = 'blob'; // Se espera una respuesta en formato Blob
-
-    // Configurar la función de callback cuando la solicitud esté completada
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            // Crear un objeto Blob con la respuesta recibida
-            var blob = new Blob([xhr.response], { type: 'application/octet-stream' });
-
-            // Crear un enlace de descarga y simular un clic en él
-            var enlaceDescarga = document.createElement('a');
-            enlaceDescarga.href = URL.createObjectURL(blob);
-            enlaceDescarga.download = nombreArchivo;
-            enlaceDescarga.style.display = 'none'; // Ocultar el enlace
-            document.body.appendChild(enlaceDescarga); // Agregar el enlace al DOM
-            enlaceDescarga.click(); // Simular el clic en el enlace
-            URL.revokeObjectURL(enlaceDescarga.href); // Liberar los recursos del objeto URL
-            document.body.removeChild(enlaceDescarga); // Eliminar el enlace del DOM después de la descarga
+            // Abrir una nueva pestaña con la URL de descarga
+            window.open(urlDescarga, '_blank');
         }
-    };
+    </script>
 
-    // Enviar la solicitud al servidor
-    xhr.send();
-}
-</script>
+
+
 
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
-      </form>
+      
   </body>
 </html>
