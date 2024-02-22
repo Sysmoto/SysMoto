@@ -25,7 +25,8 @@ $articulo = json_encode($articulos);
 
 require_once '../funciones/proveedores.php';
 
-$filtro='';
+$filtro = "WHERE EXISTS ( SELECT 1 FROM articulo a WHERE a.PROVE_ID = p.PROVE_ID )
+GROUP BY p.PROVE_ID" ;
 $proveedores= listar_proveedores($filtro,$MiConexion);
 if (is_array($proveedores) && count($proveedores) > 0) {
     $CantidadProveedores = count($proveedores);

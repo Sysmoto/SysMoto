@@ -15,6 +15,7 @@ require_once '../funciones/proveedores.php';
 
 require_once '../funciones/pedidos.php';
 $filtro='';
+
 $proveedores= listar_proveedores($filtro,$MiConexion);
 if (is_array($proveedores) && count($proveedores) > 0) {
     $CantidadProveedores = count($proveedores);
@@ -136,7 +137,7 @@ if (is_array($pedidos) && count($pedidos) > 0) {
 
             
                 
-            <form method='post' action="presupuesto.php" enctype="multipart/form-data">
+            
 
               
               
@@ -147,7 +148,7 @@ if (is_array($pedidos) && count($pedidos) > 0) {
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Listado de Pedidos a Proveedores</h4>   
                 <ul class="nav nav-pills flex-column flex-md-row mb-3">
                     <li class="nav-item">
-                      <a class="nav-link active" href="/compras/nuevo_pedido.php"><i class="bx   bx-shopping-bag fade-right"></i>  Pedido Nuevo</a>
+                      <a class="nav-link active" href="/compras/nuevo_pedido_p.php"><i class="bx   bx-shopping-bag fade-right"></i>  Pedido Nuevo a Proveedor</a>
                     </li>
              </ul>
                     <div class="card">
@@ -183,9 +184,11 @@ if (is_array($pedidos) && count($pedidos) > 0) {
                                 <td><?php echo $pedidos[$i]['USUARIO'];?></td>
                                 <td><?php echo $pedidos[$i]['ESTPEDPROV_NOMBRE'];?></td>
                                 <td>
+                                <form method='post' action="pedido.php" enctype="multipart/form-data">
                                   <button type="submit" class="btn btn-secondary" name="id_venta" value="<?php echo $pedidos[$i]['PEDIDO_ID']; ?>" >
-                                    <span class="bx bx-cart-alt fade-right"></span>&nbsp; Entrar
+                                    <span class="bx bx-shopping-bag fade-right"></span>&nbsp; Entrar
                                   </button> 
+                                  </form>
                                 </td>
                               </tr>
                               <?php } ?>
@@ -508,6 +511,6 @@ function calcularSumaParcial() {
 
   
     </script>
-      </form>
+     
   </body>
 </html>

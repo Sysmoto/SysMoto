@@ -160,7 +160,6 @@ function listar_proveedor($ConexionBD) {
 
 
 function alta_articulo($datos_articulos,$imagen,$ConexionBD) {
-    print_r($datos_articulos);
     $nombre = $datos_articulos["Nombre"];
     $stock = $datos_articulos["Stock"];
     $proveedor = $datos_articulos["Proveedor"];

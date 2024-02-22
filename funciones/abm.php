@@ -85,6 +85,30 @@ error_log("$hora_actual - Exito - $ciudades2 \n", 3, $archivo_log);
   return $ciudades;
 }
 
+function listar_provincias($ConexionBD) {
+  $sql = "SELECT * FROM provincia ORDER BY 2;";
+  
+   $rs = mysqli_query($ConexionBD, $sql);
+   $fecha_actual = date("Y-m-d");
+   $hora_actual = date("H:i:s");
+   $archivo_log = "../log/sysmoto_$fecha_actual.log";
+   
+   if($rs) {
+       error_log("$hora_actual - Exito - $sql \n", 3, $archivo_log);
+       $resultado="Datos subidos correctamente";
+       } 
+       else {
+           $error_message = $ConexionBD->error;
+           error_log("$hora_actual - Error -  $sql - $error_message \n", 3, $archivo_log);
+           $resultado="Incorrectamente porque ".$ConexionBD->error;  
+       }
+
+  while ($data = mysqli_fetch_array($rs)) {
+      $provincias[$data['PROVINCIA_ID']] = $data['PROVINCIA_NOMBRE'];    
+      
+  }
+  return $provincias;
+}
 
 
 ?>

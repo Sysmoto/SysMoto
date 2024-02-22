@@ -1,0 +1,12 @@
+17:44:29 - Exito - SELECT * FROM provincia ORDER BY 2; 
+17:46:05 - Exito - SELECT CIUDAD_ID, CIUDAD_NOMBRE FROM ciudad WHERE PROVINCIA_ID = 20 ORDER BY CIUDAD_NOMBRE 
+17:46:16 - Exito - SELECT * FROM provincia ORDER BY 2; 
+17:46:16 - Exito - INSERT INTO domicilio () VALUES (NULL,1790,'Solis','345','1755') 
+17:46:16 - Exito - INSERT INTO contacto () VALUES (NULL,'011-4346-6577','','motochiques@gmail.com','http://motochiques.com','bla 2') 
+18:46:13 - Exito - SELECT * FROM provincia ORDER BY 2; 
+18:47:33 - Exito - SELECT CIUDAD_ID, CIUDAD_NOMBRE FROM ciudad WHERE PROVINCIA_ID = 7 ORDER BY CIUDAD_NOMBRE 
+18:47:47 - Exito - SELECT * FROM provincia ORDER BY 2; 
+18:47:47 - Exito - INSERT INTO domicilio () VALUES (NULL,623,'Ruta 161','0','6667') 
+18:47:47 - Exito - INSERT INTO contacto () VALUES (NULL,'034-4546-6757','','ruta161@gmail.com','http://ruta161.com.ar','aceites') 
+18:52:31 - Exito - SELECT * FROM provincia ORDER BY 2; 
+19:02:55 - Exito - SELECT * FROM provincia ORDER BY 2; 

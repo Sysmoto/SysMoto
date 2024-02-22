@@ -2,6 +2,7 @@
 
 function listar_proveedores($filtro,$ConexionBD) {
     $proveedores = array();
+
     $SQL = "SELECT p.PROVE_ID, p.PROVE_NOMBRE, p.PROVE_INFO, p.DOM_ID, p.CONTACTO_ID,
         c.CONTACTO_TEL1, c.CONTACTO_TEL2, c.CONTACTO_EMAIL, c.CONTACTO_WEB,c.CONTACTO_INFO,
         d.DOM_CALLE, d.DOM_ALTURA, d.DOM_CP, ci.CIUDAD_ID, ci.CIUDAD_NOMBRE, pr.PROVINCIA_NOMBRE, 
@@ -12,7 +13,7 @@ function listar_proveedores($filtro,$ConexionBD) {
         LEFT JOIN ciudad ci ON ( ci.CIUDAD_ID = d.CIUDAD_ID)
         LEFT JOIN 	provincia pr ON (pr.PROVINCIA_ID = ci.PROVINCIA_ID) " . $filtro;
     $rs = mysqli_query($ConexionBD, $SQL);
-       
+    
     $i=0;
     while ($data = mysqli_fetch_array($rs)) {
         $proveedores[$i]['PROVE_ID']= $data['PROVE_ID'];
