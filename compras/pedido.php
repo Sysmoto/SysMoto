@@ -11,34 +11,85 @@ if (empty($_SESSION["Usuario"])) {
 require_once '../funciones/conexion.php';
 $MiConexion=ConexionBD();
 require_once '../funciones/clientes.php';
+require_once '../funciones/pedidos.php';
 require_once '../funciones/ventas.php';
-require_once '../funciones/articulos.php';
+
 
 $articulos=listar_articulo_js($MiConexion);
 $CantidadArticulos=count($articulos);
 
 $articulo = json_encode($articulos);
 
-$impuestos=listar_impuestos($MiConexion);
-$CantidadImpuestos=count($impuestos);
 
-$metodo=listar_met_pago($MiConexion);
-$CantidadMetodo=count($metodo);
 
-//$filtro = '';
-$presupuesto= listar_presupuesto($_POST["id_venta"],$MiConexion);
-//print_r($presupuesto);
+$filtro = '';
+$pedido= listar_pedido($_POST["id_venta"],$MiConexion);
+//print_r($pedido);
 
-$items = listar_item_presupuesto($_POST["id_venta"],$MiConexion);
+$items = listar_item_pedido($_POST["id_venta"],$MiConexion);
 $cantidadItems=count($items);
 //print_r($items);
 
-$totales = listar_totales_presupuesto($_POST["id_venta"],$MiConexion);
+
+if(isset($_POST["Mail"])) {
+
+  $tabla="<table border=1><tr><th>Marca<th>Modelo<th>Articulo<th>Cantidad</tr>";
+  for ($i=0; $i<$cantidadItems; $i++) { 
+      $row[$i]['marca']= $items[$i]['MARCA_NOMBRE']; 
+      $row[$i]['modelo']= $items[$i]['MODELO_NOMBRE']; 
+      $row[$i]['articulo']= $items[$i]['ART_INFOADICIONAL'];
+      $row[$i]['cantidad']= $items[$i]['DETPEDPROV_CANT']; 
+      $tabla .= "<tr><td>" . $items[$i]['MARCA_NOMBRE'] . "<td>" . $items[$i]['MODELO_NOMBRE'] . 
+      "<td>" . $items[$i]['ART_INFOADICIONAL'] . "<td>" . $items[$i]['DETPEDPROV_CANT'] . "</tr>"; 
+    }        
+  $tabla .= "</table>";
+  $to = 'kronnopio@gmail.com';
+  $cc = 'walter@reverdito.com.ar';
+  $subject = '"Solicitud de pedido - Sysmoto';
+  $message = '
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla en Correo Electrónico</title>
+    <style> 
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      td, th {
+        border: 2px solid #2f2f2f;
+        text-align: left;
+        padding: 8px;
+      }
+      th {
+        background-color: yellow;
+      }
+    </style>
+    </head>
+    <body>';
+
+  $message .= 'Buen dia <br><br>Estimados proveedores le solcitamos el siguiente pedido de articulos:<br>' . $tabla;
+  $message .= '<br>Muchas gracias. <br><br>SysMoto</body></html>';
+  $message_id = "<" . uniqid() . "@reverdito.com.ar>";
+  $headers = "From: sysmoto@reverdito.com.ar\r\n";
+  $headers .= "MIME-Version: 1.0\r\n";
+  $headers .= "Content-Type: text/html; charset=utf-8\r\n";
+  $headers .= "Message-ID: " . $message_id . "\r\n"; 
+  $headers .= "Cc: " . $cc . "\r\n";
+
+  if (mail($to, $subject, $message, $headers)) {
+     echo "SUCCESS";
+    } else {
+    echo "ERROR";
+  }
+
+}
 
 if(isset($_POST["Terminar"])) {
   
-  $terminar=terminar_venta($_POST["id_venta"],$MiConexion);
-
+  
   echo "<script> 
     alert('Venta Finalizada') 
     window.open('/ventas/ventas.php','_top')      
@@ -158,104 +209,55 @@ if(isset($_POST["Terminar"])) {
             <form method='post' action="" enctype="multipart/form-data" id="printJS-form">
               <input type="hidden" name="id_venta" value="<?php echo $_POST["id_venta"]; ?>" >
               <div class="container-xxl flex-grow-1 container-p-y">
-                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Presupuesto N° <?php echo $presupuesto["VENTA_ID"]; ?> ( Valido por 5 días - No valido como comprobante de  compra) </h4>   
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Pedido Proveedor N° <?php echo $pedido["PEDIDO_ID"]; ?>  </h4>   
          
               <div class="container-xxl flex-grow-1 container-p-y">
               <div class="row">
                   <div class="col-sm-4 form-group-sm">
-                    <label for="mg" class="form-label">Cliente</label>
-                    <input type="TEXT" min="0" id="cliente" name="cliente" class="form-control" value="<?php echo $presupuesto["CLIENTE"];  ?>" disabled>
+                    <label for="mg" class="form-label">Proveedor</label>
+                    <input type="TEXT" min="0" id="cliente" name="cliente" class="form-control" value="<?php echo $pedido["PROVE_NOMBRE"];  ?>" disabled>
                   </div>
                   <div class="col-sm-2 form-group-sm">
-                    <label for="mg" class="form-label">Fecha</label>
-                    <input type="date" min="0" id="date" name="date" class="form-control" value="<?php echo $presupuesto["VENTA_FECHAVENTA"];  ?>" disabled>
+                    <label for="mg" class="form-label">Fecha Creación</label>
+                    <input type="date" min="0" id="date" name="date" class="form-control" value="<?php echo $pedido["PEDIDO_FECHACREACION"];  ?>" disabled>
                   </div>
 
                   <div class="col-sm-2 form-group-sm">
                     <label for="mg" class="form-label">Estado</label>
-                    <input type="text" min="0" id="estado" name="estado" class="form-control" value="<?php echo $presupuesto["ESTADOVENTA_NOMBRE"];  ?>" disabled>
+                    <input type="text" min="0" id="estado" name="estado" class="form-control" value="<?php echo $pedido["ESTPEDPROV_NOMBRE"];  ?>" disabled>
                   </div>
                 </div>
                 <div class="row"> &nbsp;</DIV>
-                <div class="row">
-                 
-                  
-                  <div class="col-sm-2 form-group-sm">
-                    <label for="impuesto" class="form-label">Impuestos</label>
-                    <select id="impuesto" name="impuesto" class="select2 form-select" disabled>
-                    <?php
-                      for ($i = 0; $i < $CantidadImpuestos; $i++) {
-                        if( $presupuesto["IMPUESTO"] == $impuestos[$i]['NOMBRE']) {
-                          echo '<option value="' . $impuestos[$i]['PORCENTAJE'] . '" SELECTED>' . $impuestos[$i]['NOMBRE'] . '</option>';
-                        }
-                        else{
-                          echo '<option value="' . $impuestos[$i]['PORCENTAJE'] . '">' . $impuestos[$i]['NOMBRE'] . '</option>';
-                        }
-                          }
-                        ?>
-                    </select>
-                    </div>
-                    
-                  <div class="col-sm-2 form-group-sm">
-                    <label for="metodo" class="form-label">Metodo Pago</label>
-                    <select id="impuestoSelect" name="metodo" class="select2 form-select" disabled>
-                    <?php
-                      for ($i = 0; $i < $CantidadMetodo; $i++) {
-                        if( $presupuesto["ID_METODO"] == $metodo[$i]['ID_METODO']){ 
-                            echo '<option value="' . $metodo[$i]['ID_METODO'] . '" selected >' . $metodo[$i]['NOMBRE_METODO'] . '</option>';
-                          }
-                          else{
-                            echo '<option value="' . $metodo[$i]['ID_METODO'] . '">' . $metodo[$i]['NOMBRE_METODO'] . '</option>';
-                          }
-                          }
-                        ?>
-                    </select>
-                  </div>
-                 
-                  <div class="col-sm-1 form-group-sm">
-                    <label for="descuento" class="form-label">Descuento(%)</label>
-                    <input type="number" name="descuento" min="0" id="descuento" class="form-control" value="<?php echo $presupuesto["VENTA_DESCUENTO"];  ?>"" disabled>
-                  </div>
-                  <div class="col-sm-1 form-group-sm"> </div>
-                  <div class="col-sm-2 form-group-sm">
-                    <label for="metodo" class="form-label">Total Parcial</label>
-                    <input type="text" min="0" name="totalParcial" id="inputSumaParcial" class="form-control" value="<?php echo $totales['TOTAL']; ?>" disabled>
-                  </div>
-                  <div class="col-sm-2 form-group-sm">
-                    <label for="metodo" class="form-label">Total Final</label>
-                    <input type="text" min="0" name="totalCompra" id="inputSumaTotal" class="form-control" value="<?php echo $totales['FINAL']; ?>" disabled>
-                  </div>
-                </div>
-                &nbsp;
-                
                 
                 <div class="row"> &nbsp;</div> <hr>
                 <table id="tabla" class="table"  >
                     <thead>
-                      <tr >
-                       
-                        <th style=" text-align: left;" >Artículo</th>
+                      <tr>
+                      <th>
+                        <th>Artículo</th>
                         <th>Cantidad</th>
-                        <th>Precio Unitario</th>
-                        <th>Total</th> 
+                        <th>Precio Original</th>
+                        <th>Precio Compra</th>
                       </tr>
                     </thead>
                     <tbody>
                     <?php for ($i=0; $i<$cantidadItems; $i++) { ?>               
                             
                             <tr>
+                              <td>&nbsp;
                               <td>
-                                <input type="text" name="articulo" class="form-control" style="width: 250px;" value="<?php echo $items[$i]['ART_INFOADICIONAL']; ?>" disabled> 
+                                <?php echo $items[$i]['ART_INFOADICIONAL']; ?>
                               </td>
                               <td>
-                                <input type="text" name="inputCantidad" class="form-control" style="width: 80px;" id="inputCantidad" value="<?php echo $items[$i]['DETVENTA_CANT']; ?>" disabled>
+                                <?php echo $items[$i]['DETPEDPROV_CANT']; ?>
                               </td>
                               <td>
-                                <input type="text" name="inputPrecioCompra" class="form-control"  style="width: 100px;" id="inputPrecioCompra" value="<?php echo $items[$i]['DETVENTA_PRECUNIT']; ?>" disabled>
+                                <?php echo $items[$i]['DETPEDPROV_PRECIO_ORIG']; ?>
                               </td>
                               <td>
-                                <input type="text" name="inputTotal" class="form-control"  style="width: 100px;" id="inputTotal" value="<?php echo $items[$i]['TOTAL']; ?>" disabled>
+                                <?php echo $items[$i]['DETPEDPROV_PRECIO_COMPRA']; ?>
                               </td>
+                        </tr> 
                      <?php } ?>         
                     </tbody>
                   </table>
@@ -263,16 +265,18 @@ if(isset($_POST["Terminar"])) {
                 <div class="row">
                   <hr> 
                   <div class="col-sm-1 form-group-sm">
+                    </div>
+                  <div class="col-sm-1 form-group-sm">
+                      <a class="btn btn-primary me-2" href="/compras/pedido_pdf.php?id_venta=<?php echo $_POST["id_venta"];?>" target="_blank" >Imprimir</a>
                   </div>
-                  <div class="col-sm-1 form-group-sm"> 
-                  <button type="button" class="btn btn-primary me-2" onclick="printJS({ printable: 'printJS-form', type: 'html', header: 'Sysmoto' })"> Imprimir </button>
-                  </div>
+                  
                   <div class="col-sm-1 form-group-sm">
                   </div>
                   <div class="col-sm-3 form-group-sm">
                   <?php 
-                    if($presupuesto['VIGENCIA'] <= 5 AND  $presupuesto['ESTADOVENTA_ID'] == 5){ ?>
-                    <button type="submit"  class="btn btn-primary me-2" name="Terminar" >Terminar Venta</button>
+                    if($pedido['ESTADOPEDIDO_ID'] == 1){ 
+                     ?>
+                      <button type="submit"  class="btn btn-primary me-2" name="Mail" >Enviar Mail</button>
                     <?php } ?>
                     
                 </div>
@@ -510,6 +514,24 @@ function calcularSumaParcial() {
  doc.save('div.pdf');
 }
 
+function enviarCorreo() {
+    // Obtener variables PHP en JavaScript
+    var destinatario = '<?php echo $destinatario; ?>';
+    var asunto = '<?php echo $asunto; ?>';
+    var cuerpoHTML = '<?php echo $cuerpoHTML; ?>';
+    var cuerpoHTML2 = '<?php echo $tabla2; ?>';
+    var content = '<?php echo $tipo_contenido; ?>';
+
+
+    // Construir el enlace mailto con los parámetros del correo electrónico y el archivo adjunto
+    var mailto_link = 'mailto:' + destinatario +
+                      '?subject=' + encodeURIComponent(asunto) +
+                      '&content-type= ' + encodeURIComponent(content) +
+                      '&body=' + encodeURIComponent(cuerpoHTML2);
+
+    // Abrir el cliente de correo electrónico del usuario con el correo predefinido
+    window.location.href = mailto_link;
+}
 
   
     </script>
