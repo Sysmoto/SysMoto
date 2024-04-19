@@ -109,6 +109,6 @@ function listar_provincias($ConexionBD) {
   }
   return $provincias;
 }
-
+ 
 
 ?>

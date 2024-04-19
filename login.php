@@ -2,7 +2,7 @@
 
 require_once 'funciones/conexion.php';
 $MiConexion=ConexionBD();
-$version= "2.05";
+$version= "2.06";
 $Mensaje='';
 if (!empty($_POST['BotonLogin'])) {
 

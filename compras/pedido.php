@@ -80,7 +80,10 @@ if(isset($_POST["Mail"])) {
   $headers .= "Cc: " . $cc . "\r\n";
 
   if (mail($to, $subject, $message, $headers)) {
-     echo "SUCCESS";
+     echo "<script> 
+    alert('Pedido enviado a $to') 
+    window.open('/compras/pedidos.php','_top')      
+        </script>";
     } else {
     echo "ERROR";
   }
