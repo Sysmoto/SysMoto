@@ -5,8 +5,8 @@ function DatosLogin($vUsuario, $vClave, $MiConexion){
     $SQL="SELECT usuarios.Id, usuarios.Nombre, usuarios.Apellido, usuarios.IdRol, 
      usuarios.Foto, usuarios.Sexo, usuarios.Activo, roles.Rol, usuarios.email
      FROM usuarios
-     LEFT JOIN roles  on Usuarios.IdRol = roles.Id
-     WHERE Usuario='$vUsuario' AND Clave= MD5('$vClave')  ";
+     LEFT JOIN roles  on usuarios.IdRol = roles.Id
+     WHERE usuario='$vUsuario' AND Clave= MD5('$vClave')  ";
      //echo $SQL;
      
     $rs = mysqli_query($MiConexion, $SQL);
@@ -41,7 +41,7 @@ function DatosLogin($vUsuario, $vClave, $MiConexion){
         $Usuario['Foto'] = $data['Foto'];
         $Usuario['ACTIVO'] = $data['Activo'];
         $Usuario['EMAIL'] = $data['email'];
-        $SQL2="UPDATE Usuarios SET Ult_Login = NOW() WHERE Id = '".$data['Id']."'";
+        $SQL2="UPDATE usuarios SET Ult_Login = NOW() WHERE Id = '".$data['Id']."'";
         if (mysqli_query($MiConexion, $SQL2)) 
        {
             //echo "Record updated successfully";

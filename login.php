@@ -192,7 +192,7 @@ if (!empty($_POST['BotonLogin'])) {
               
             </div>
           </div> <div class="buy-now">
-     <div class="btn btn-danger btn-buy-now">Autores: Benitez.Bonamino.Reverdito</div>
+     <div class="btn btn-danger btn-buy-now">	&#169; Bonamino.Reverdito</div>
     </div>
           <!-- /Register -->
         </div>

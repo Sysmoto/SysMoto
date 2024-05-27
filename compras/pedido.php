@@ -13,7 +13,7 @@ $MiConexion=ConexionBD();
 require_once '../funciones/clientes.php';
 require_once '../funciones/pedidos.php';
 require_once '../funciones/ventas.php';
-
+require_once '../funciones/ascii_table.php';
 
 $articulos=listar_articulo_js($MiConexion);
 $CantidadArticulos=count($articulos);
@@ -31,64 +31,32 @@ $cantidadItems=count($items);
 //print_r($items);
 
 
-if(isset($_POST["Mail"])) {
 
-  $tabla="<table border=1><tr><th>Marca<th>Modelo<th>Articulo<th>Cantidad</tr>";
-  for ($i=0; $i<$cantidadItems; $i++) { 
-      $row[$i]['marca']= $items[$i]['MARCA_NOMBRE']; 
-      $row[$i]['modelo']= $items[$i]['MODELO_NOMBRE']; 
-      $row[$i]['articulo']= $items[$i]['ART_INFOADICIONAL'];
-      $row[$i]['cantidad']= $items[$i]['DETPEDPROV_CANT']; 
-      $tabla .= "<tr><td>" . $items[$i]['MARCA_NOMBRE'] . "<td>" . $items[$i]['MODELO_NOMBRE'] . 
-      "<td>" . $items[$i]['ART_INFOADICIONAL'] . "<td>" . $items[$i]['DETPEDPROV_CANT'] . "</tr>"; 
-    }        
-  $tabla .= "</table>";
-  $to = 'kronnopio@gmail.com';
-  $cc = 'walter@reverdito.com.ar';
-  $subject = '"Solicitud de pedido - Sysmoto';
-  $message = '
-    <!DOCTYPE html>
-    <html lang="es">
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tabla en Correo Electrónico</title>
-    <style> 
-      table {
-        border-collapse: collapse;
-        width: 100%;
-      }
-      td, th {
-        border: 2px solid #2f2f2f;
-        text-align: left;
-        padding: 8px;
-      }
-      th {
-        background-color: yellow;
-      }
-    </style>
-    </head>
-    <body>';
 
-  $message .= 'Buen dia <br><br>Estimados proveedores le solcitamos el siguiente pedido de articulos:<br>' . $tabla;
-  $message .= '<br>Muchas gracias. <br><br>SysMoto</body></html>';
-  $message_id = "<" . uniqid() . "@reverdito.com.ar>";
-  $headers = "From: sysmoto@reverdito.com.ar\r\n";
-  $headers .= "MIME-Version: 1.0\r\n";
-  $headers .= "Content-Type: text/html; charset=utf-8\r\n";
-  $headers .= "Message-ID: " . $message_id . "\r\n"; 
-  $headers .= "Cc: " . $cc . "\r\n";
-
-  if (mail($to, $subject, $message, $headers)) {
-     echo "<script> 
-    alert('Pedido enviado a $to') 
+if(isset($_POST["cancelar"])) {
+  $id=$_POST["cancelar"];
+  $salida=cambiar_estado_cancelar($id,4,$MiConexion);
+  
+  echo "<script> 
+    alert('Compra cancelada!') 
     window.open('/compras/pedidos.php','_top')      
-        </script>";
-    } else {
-    echo "ERROR";
-  }
-
+         </script>";
 }
+
+
+
+if(isset($_POST["enviado"])) {
+  $id=$_POST["enviado"];
+  $salida=cambiar_estado_enviado($id,2,$MiConexion);
+  
+  echo "<script> 
+    alert('Cambiado a enviado!') 
+    window.open('/compras/pedidos.php','_top')      
+         </script>";
+}
+
+
+
 
 if(isset($_POST["Terminar"])) {
   
@@ -260,6 +228,7 @@ if(isset($_POST["Terminar"])) {
                               <td>
                                 <?php echo $items[$i]['DETPEDPROV_PRECIO_COMPRA']; ?>
                               </td>
+                              <?php $lista .= "- Articulo: " . $items[$i]['ART_INFOADICIONAL'] . " | Cantidad: " . $items[$i]['DETPEDPROV_CANT'] . " .";?>
                         </tr> 
                      <?php } ?>         
                     </tbody>
@@ -267,23 +236,69 @@ if(isset($_POST["Terminar"])) {
                 </div>
                 <div class="row">
                   <hr> 
-                  <div class="col-sm-1 form-group-sm">
-                    </div>
-                  <div class="col-sm-1 form-group-sm">
-                      <a class="btn btn-primary me-2" href="/compras/pedido_pdf.php?id_venta=<?php echo $_POST["id_venta"];?>" target="_blank" >Imprimir</a>
-                  </div>
                   
-                  <div class="col-sm-1 form-group-sm">
+                  <div class="col-sm-2 form-group-sm">
+                      <a class="btn btn-primary me-2" href="/compras/pedido_pdf.php?id_venta=<?php echo $_POST["id_venta"];?>" target="_blank" >Imprimir/PDF</a>
                   </div>
-                  <div class="col-sm-3 form-group-sm">
+                                  
+                                    
                   <?php 
                     if($pedido['ESTADOPEDIDO_ID'] == 1){ 
-                     ?>
-                      <button type="submit"  class="btn btn-primary me-2" name="Mail" >Enviar Mail</button>
-                    <?php } ?>
+                      $datos=preg_replace('/\./', '', $lista);
+                      $datos=preg_replace('/\s+/', '%20', $datos);
+                      $body_encoded = urlencode($lista);
+                      $body = "Estimados " . $pedido['PROVE_NOMBRE'] . ": \r\n\r\n";
+                      $body .= "Pedimos un presupuesto por los siguientes articulos:\r\n\r\n" ;
+                      foreach ($items as $item) {
+                          $body .= "Articulo: " . $item['ART_INFOADICIONAL'] . "\r\n";
+                          $body .= "Cantidad: " . $item['DETPEDPROV_CANT'] . "\r\n";
+                          $body .= "Modelo: " . $item['MODELO_NOMBRE'] . "\r\n";
+                          $body .= "Marca: " . $item['MARCA_NOMBRE'] . "\r\n";
+                          $body .= "\r\n"; // Añadir una línea en blanco entre artículos
+                      }
+                      $body .= "Desde ya muchas gracias y saludos.\r\n";
+                      // Codificar la cadena del cuerpo
+                      $body_encoded = urlencode($body);
+                      $body_encoded = str_replace('+', '%20', $body_encoded);
+                      $mail_proveeodor=$pedido['CONTACTO_EMAIL'];
+                      
+             ?>
+                  
+                  
+                     <div class="col-sm-2 form-group-sm">   
+                     <a class="btn btn-primary me-1"  href="mailto:<?php echo $mail_proveeodor;?>?subject=Pedido%20by%20Sysmoto&body=Tabla%20<?php echo $body_encoded;?>"> Enviar Email </a>
+                     </div>  
                     
-                </div>
+                     <?php } ?>   
 
+                    </div>
+                <div class="row">
+                  &nbsp; </div>
+                <div class="row">
+                <?php 
+                if($pedido['ESTADOPEDIDO_ID'] == 1){  ?>
+                  <div class="col-sm-3 form-group-sm">
+                    <button type="submit" class="btn btn-primary me-3"  name="enviado" value="<?php echo $pedido['PEDIDO_ID']; ?>" > Pasar a Enviado </button>
+                  </div>
+                  <?php } ?>
+                  
+                  <?php
+                    if($pedido['ESTADOPEDIDO_ID'] == 2){  ?>
+                  <div class="col-sm-3 form-group-sm">
+                    <button type="submit" class="btn btn-primary me-3"  name="ing_presupuesto" value="<?php echo $pedido['PEDIDO_ID']; ?>" > Ing. Presupuesto</button>
+                  </div>
+                  <div class="col-sm-3 form-group-sm">
+                    <button type="submit" class="btn btn-primary me-3"  name="ing_compra" value="<?php echo $pedido['PEDIDO_ID']; ?>" > Ing. Compra </button>  
+                  </div>
+                  <?php
+                    }
+                    if($pedido['ESTADOPEDIDO_ID'] <= 2){  ?>
+                  <div class="col-sm-2 form-group-sm">
+                    <button type="submit" class="btn btn-primary me-2"  name="cancelar" value="<?php echo $pedido['PEDIDO_ID']; ?>" > Cancelar </button>  
+                    <?php } ?>
+                  </div>
+                </div>
+               
 
                 </div>
 

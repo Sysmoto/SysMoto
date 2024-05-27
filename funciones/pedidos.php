@@ -141,8 +141,19 @@ function listar_pedidos($ConexionBD) {
             return $item;
         }
         
-        function cambiar_estado_pedido($id_venta,$estado,$ConexionBD){ 
-          $SQL="UPDATE pedido_proveedor SET ESTADOPEDIDO_ID = $estado WHERE ped.PEDIDO_ID = $id_pedido ";
+        function cambiar_estado_cancelar($id_pedido,$estado,$ConexionBD){ 
+          $SQL="UPDATE pedido_proveedor SET ESTADOPEDIDO_ID = $estado, PEDIDO_FECHACIERRE = CURDATE() WHERE PEDIDO_ID = $id_pedido ";
+          if($ConexionBD->query($SQL) === TRUE) {
+              $salida = "Se cambio estado";
+            } else {
+              $salida = "Error al insertar el registro: " . $ConexionBD->error;
+        }
+        return $salida;
+
+        }
+
+        function cambiar_estado_enviado($id_pedido,$estado,$ConexionBD){ 
+          $SQL="UPDATE pedido_proveedor SET ESTADOPEDIDO_ID = $estado, PEDIDO_FECHAENVIO = CURDATE() WHERE PEDIDO_ID = $id_pedido ";
           if($ConexionBD->query($SQL) === TRUE) {
               $salida = "Se cambio estado";
             } else {
